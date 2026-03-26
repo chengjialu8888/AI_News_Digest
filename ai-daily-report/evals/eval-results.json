@@ -1,0 +1,70 @@
+{
+  "skill_name": "ai-daily-report",
+  "eval_date": "2026-03-26",
+  "results": [
+    {
+      "eval_id": 1,
+      "prompt": "跑一下今天的AI日报",
+      "expected": "完整的AI日报Markdown + CSV，包含5-15条带原始链接的新闻，附5道质量审核报告",
+      "output_file": "eval-1-standard-daily/with_skill/outputs/ai-daily-report-2026-03-26.md",
+      "grade": "A",
+      "score": 92,
+      "criteria_scores": {
+        "news_count": {"score": 10, "max": 10, "note": "14条新闻，在5-15条目标范围内"},
+        "inline_citations": {"score": 9, "max": 10, "note": "13/14条有原始URL，#14来源为社交媒体帖子"},
+        "signal_grading": {"score": 10, "max": 10, "note": "🔴4条 🟡6条 ⚪4条，分级合理"},
+        "qa_report": {"score": 10, "max": 10, "note": "5道Gate全部覆盖并通过"},
+        "csv_output": {"score": 10, "max": 10, "note": "12列CSV完整输出"},
+        "section_structure": {"score": 9, "max": 10, "note": "偏fact/偏观点/海外建设者三板块齐全"},
+        "source_diversity": {"score": 9, "max": 10, "note": "中英文双语源覆盖；Tier 1-3均有"},
+        "timeliness": {"score": 9, "max": 10, "note": "100%新闻在24-72小时窗口内"},
+        "one_liner_summary": {"score": 8, "max": 10, "note": "一句话总结覆盖核心事件"},
+        "kol_coverage": {"score": 8, "max": 10, "note": "覆盖Karpathy和Altman，其他KOL未搜到近期动态"}
+      }
+    },
+    {
+      "eval_id": 2,
+      "prompt": "帮我生成3月25日的AI行业新闻速递，重点关注Agent和大模型方向",
+      "expected": "AI日报格式，Agent和大模型新闻优先排列，每条附链接，含CSV输出",
+      "output_file": "eval-2-agent-focus/with_skill/outputs/ai-daily-report-2026-03-25-agent-focus.md",
+      "grade": "A",
+      "score": 90,
+      "criteria_scores": {
+        "focus_adherence": {"score": 9, "max": 10, "note": "Agent方向4条+大模型方向4条优先排列"},
+        "news_count": {"score": 10, "max": 10, "note": "10条新闻"},
+        "inline_citations": {"score": 9, "max": 10, "note": "全部附有原始URL"},
+        "csv_output": {"score": 9, "max": 10, "note": "CSV嵌入文档内，格式正确"},
+        "qa_report": {"score": 9, "max": 10, "note": "5道Gate表格式审核"},
+        "section_structure": {"score": 9, "max": 10, "note": "按Agent/大模型/其他分组"},
+        "source_diversity": {"score": 8, "max": 10, "note": "中英文源均覆盖"},
+        "timeliness": {"score": 9, "max": 10, "note": "新闻时效良好"},
+        "one_liner_summary": {"score": 9, "max": 10, "note": "总结突出Agent和大模型主线"}
+      }
+    },
+    {
+      "eval_id": 3,
+      "prompt": "出一期日报，今天有什么值得关注的AI新闻？",
+      "expected": "标准AI日报，含偏fact类/偏观点类/海外建设者三板块，质量审核报告完整",
+      "output_file": "eval-3-casual-trigger/with_skill/outputs/ai-daily-report-2026-03-26-casual.md",
+      "grade": "A-",
+      "score": 88,
+      "criteria_scores": {
+        "trigger_recognition": {"score": 10, "max": 10, "note": "口语化prompt正确触发日报技能"},
+        "news_count": {"score": 10, "max": 10, "note": "13条新闻"},
+        "three_sections": {"score": 10, "max": 10, "note": "偏fact/偏观点/海外建设者三板块齐全"},
+        "inline_citations": {"score": 8, "max": 10, "note": "部分短条目仅有来源链接无详细描述"},
+        "qa_report": {"score": 9, "max": 10, "note": "5道Gate表格简明版"},
+        "signal_grading": {"score": 9, "max": 10, "note": "信号分级合理"},
+        "readability": {"score": 8, "max": 10, "note": "长短结合，3分钟可读完"},
+        "one_liner_summary": {"score": 8, "max": 10, "note": "总结精炼"}
+      }
+    }
+  ],
+  "aggregate": {
+    "mean_score": 90.0,
+    "min_score": 88,
+    "max_score": 92,
+    "pass_rate": "3/3 (100%)",
+    "grade_distribution": {"A": 2, "A-": 1}
+  }
+}
