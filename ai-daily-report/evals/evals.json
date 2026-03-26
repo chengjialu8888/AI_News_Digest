@@ -1,0 +1,23 @@
+{
+  "skill_name": "ai-daily-report",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "跑一下今天的AI日报",
+      "expected_output": "完整的AI日报Markdown + CSV，包含5-15条带原始链接的新闻，附5道质量审核报告",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "帮我生成3月25日的AI行业新闻速递，重点关注Agent和大模型方向",
+      "expected_output": "AI日报格式，Agent和大模型新闻优先排列，每条附链接，含CSV输出",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "出一期日报，今天有什么值得关注的AI新闻？",
+      "expected_output": "标准AI日报，含偏fact类/偏观点类/海外建设者三板块，质量审核报告完整",
+      "files": []
+    }
+  ]
+}
