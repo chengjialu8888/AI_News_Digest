@@ -1,0 +1,15 @@
+日期,编号,板块,标题,信号等级,事实核验,关联公司,关联赛道,来源,原文URL,摘要,是否推送
+2026-03-26,1,大厂动向,OpenAI宣布关停Sora视频平台,🔴,双源+,OpenAI/迪士尼,视频生成,CNN/NYT/Reuters,https://edition.cnn.com/2026/03/24/tech/openai-sora-video-app-shutting-down,OpenAI关停Sora平台及App；迪士尼10亿美元合作终止；团队转向机器人世界模拟研究,是
+2026-03-26,2,大厂动向,Arm发布首颗自研芯片AGI CPU,🔴,双源+,Arm/Meta,AI芯片,TechCrunch/CNBC/Arm官网,https://techcrunch.com/2026/03/24/arm-is-releasing-its-first-in-house-chip-in-its-35-year-history/,35年历史首颗自研芯片；专为AI推理设计；Meta首家客户；预计2031年年收入150亿美元；股价涨16%,是
+2026-03-26,3,大厂动向,快手2025年全年营收1428亿元可灵AI贡献超10亿,🟡,单源,快手,AI视频生成/电商,科创板日报,https://finance.sina.com.cn/jjxw/2026-03-25/doc-inhsfmmn0813847.shtml,全年营收1428亿元同比+12.5%；可灵AI Q4收入3.4亿；2026年Capex增至260亿元,是
+2026-03-26,4,大厂动向,中国四大互联网巨头2027年AI投资将达840亿美元,🟡,单源,阿里/腾讯/字节/百度,AI基础设施,日经中文网,https://cn.nikkei.com/china/ccompany/61884-2026-03-26-05-00-46.html,四大巨头合计投资额较2025年增长60%达840亿美元,是
+2026-03-26,5,初创/融资,Reflection AI洽谈25亿美元融资估值250亿,🔴,双源+,Reflection AI/英伟达,大模型,Reuters/WSJ/Invezz,https://www.reuters.com/business/nvidia-backed-reflection-ai-eyes-25-billion-valuation-wsj-reports-2026-03-26/,英伟达支持的AI初创洽谈25亿美元融资；估值较此前翻逾三倍,是
+2026-03-26,6,初创/融资,Sand.ai开源三连击填补Sora真空,🟡,双源,Sand.ai,AI视频生成/开源,新浪科技/机器之心,https://finance.sina.com.cn/tech/roll/2026-03-26/doc-inhshtfa2969910.shtml,150亿参数音视频模型+分布式Attention+编译框架；马尔奖得主曹越创立,是
+2026-03-26,7,生态/政策,博鳌论坛定调2026年为智能体AI元年,🔴,双源+,清华大学/中国信通院,AI Agent/治理,中国新闻网/东方财富,https://www.chinanews.com.cn/cj/2026/03-26/10592940.shtml,张亚勤提出三大趋势：智能体AI/物理智能/AI+；建议智能体须有责任主体,是
+2026-03-26,8,生态/政策,国家数据局官宣Token中文译名为词元,🟡,单源,国家数据局,AI生态,新浪科技,https://k.sina.com.cn/article_7857201856_1d45362c001903lqjk.html?from=tech,日均Token调用量突破140万亿；词元成为官方中文译名,是
+2026-03-26,9,生态/政策,2026中关村论坛年会开幕,⚪,单源,-,AI创新,新浪科技,https://k.sina.com.cn/article_7857201856_1d45362c001903mcgm.html,聚焦AI创新与开放；月之暗面杨植麟等出席,否
+2026-03-26,10,生态/政策,具身智能国家标准发布华为开源ROS-LLM,🟡,单源,华为,具身智能/机器人,稀土掘金,https://juejin.cn/post/7621114155243782207,国家标准发布；华为开源框架；行业从千台交付迈向万台量产,是
+2026-03-26,11,偏观点类,国产AI应用从会说话到会做事,⚪,单源,-,AI应用,人民日报海外版,http://paper.people.com.cn/rmrbhwb/pc/content/202603/25/content_30147227.html,从OpenClaw到钉钉悟空；算力变现数据闭环入口重构,否
+2026-03-26,12,偏观点类,腾讯AI静悄悄困于微信生态,⚪,双源,腾讯,AI生态/Agent,观察者网,https://www.guancha.cn/economy/2026_03_18_810557.shtml,SkillHub争议后获OpenClaw赞助；但在AI入口竞争中相对被动,否
+2026-03-26,13,海外建设者,Karpathy坦言12月以来未写一行代码,⚪,单源,OpenAI/Tesla,AI Agent/开发工具,Fortune,https://fortune.com/2026/03/21/andrej-karpathy-openai-cofounder-ai-agents-coding-state-of-psychosis-openclaw/,AI Agent接管80%+软件开发；用psychosis形容对AI能力的震撼,是
+2026-03-26,14,海外建设者,Sam Altman称AI未来可像公用事业出售,⚪,单源,OpenAI,AI商业化,Instagram/社交媒体,https://www.instagram.com/p/DWLLydkgrQi/,AI基础设施公用事业化趋势,否
