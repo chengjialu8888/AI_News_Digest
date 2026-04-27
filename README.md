@@ -5,7 +5,7 @@
 **AI 行业日报自动化引擎 · Automated AI Industry Daily Report Engine**
 
 [![Mira Skill](https://img.shields.io/badge/Mira_Skill-Installed-blue?style=flat-square)](https://github.com/chengjialu8888/AI_News_Digest)
-[![Sources](https://img.shields.io/badge/信源覆盖-45+-orange?style=flat-square)](#信源架构--source-architecture)
+[![Sources](https://img.shields.io/badge/信源覆盖-55+-orange?style=flat-square)](#信源架构--source-architecture)
 [![QA Gates](https://img.shields.io/badge/质量关卡-5_Gates-green?style=flat-square)](#五道质量审核--5-qa-gates)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
@@ -25,7 +25,7 @@
 
 | 痛点 | 现有方案 | AI News Digest |
 |------|---------|---------------|
-| 信息分散 | 手动刷 10+ 网站/公众号 | **45+ 信源自动巡检**，一次出稿 |
+| 信息分散 | 手动刷 10+ 网站/公众号 | **55+ 信源自动巡检**，一次出稿 |
 | 海外盲区 | 中文媒体转译延迟 24-48h | **25 位 Builder 实时 Feed** + 28 信源英文直连 |
 | 假新闻/噪声 | 无验证机制 | **5 道 QA Gate**：交叉验证 + 事实核验 + 信号分级 |
 | 原文不可达 | 聚合平台只给摘要 | **每条必附一手原文链接** + 5 层反爬降级 |
@@ -51,6 +51,9 @@
 │ 海外独角兽   │ GitHub      │ AI Builder  │ (趋势验证)         │
 ├─────────────┴─────────────┴─────────────┴───────────────────┤
 │  Tier 4: 数据型 (aicpb.com / AIwatch / Toolify / Trust MRR) │
+├─────────────────────────────────────────────────────────────┤
+│  Tier 7: agents-radar MCP (GitHub/ArXiv/HN/HF/PH/Dev.to/   │
+│          Lobste.rs + Anthropic/OpenAI sitemap diff)          │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -63,6 +66,22 @@
 | **全网新闻聚合助手** | 28 信源一键批量抓取（HN / GitHub / HF Papers / AI Newsletters / 华尔街见闻 / 微博 / Product Hunt 等） | 减少逐站巡检耗时，从 30min → 5min |
 | **Smart Web Fetch** | 5 层反爬降级（markdown.new → defuddle.md → r.jina.ai → Scrapling → Playwright） | 抓取成功率从 ~70% 提升至 ~95% |
 | **内容趋势研究** | 跨 10+ 平台趋势分析（Google Trends / Reddit / X / YouTube） | 用数据而非直觉判断新闻重要性 |
+
+### Tier 7 agents-radar MCP（v0427 新增）
+
+通过 [agents-radar](https://github.com/duanyytop/agents-radar) 的托管 MCP Server 直接获取预结构化的 AI 生态日报数据。每日 08:00 CST 自动聚合 10 个数据源，追踪 17+ AI CLI 工具和 11+ Agent 生态项目。
+
+**MCP Endpoint**: `https://agents-radar-mcp.duanyytop.workers.dev`
+
+| 报告类型 | 覆盖内容 | 映射到日报板块 |
+|----------|---------|---------------|
+| `ai-cli` | 17+ AI CLI 工具对比（Claude Code / Codex / Gemini CLI 等） | 🏢 大厂动向 |
+| `ai-agents` | OpenClaw + 11 个 Agent 生态项目 | 🏢 大厂 / 🌐 生态 |
+| `ai-trending` | GitHub Trending AI 仓库 + 趋势信号 | 🌐 生态 / 🚀 初创 |
+| `ai-hn` | Hacker News Top 30 AI 故事 + 社区情绪 | 💬 观点类 |
+| `ai-arxiv` | ArXiv cs.AI/cs.CL/cs.LG 最新论文 | 💬 观点类 |
+| `ai-hf` | HuggingFace 周热门模型 Top 30 | 🌐 生态 |
+| `ai-web` | Anthropic + OpenAI 官网新文章（sitemap diff） | 🏢 大厂动向 |
 
 ## 五道质量审核 · 5 QA Gates
 
@@ -106,7 +125,7 @@ Gate 5: 完整性自检        → 是否覆盖所有板块，是否有遗漏
 
 | 维度 | AI News Digest | 传统 RSS 阅读器 | ChatGPT 生成新闻 | 人工编辑日报 |
 |------|---------------|----------------|-----------------|-------------|
-| 信源数量 | **45+** | 取决于订阅 | 训练数据截止 | 5-10 个 |
+| 信源数量 | **55+** | 取决于订阅 | 训练数据截止 | 5-10 个 |
 | 实时性 | **当日实时** | 实时 | 延迟数月 | 当日但慢 |
 | 信号分级 | **🔴🟡⚪ 三级** | 无 | 无 | 人工主观 |
 | 事实核验 | **5 道 QA Gate** | 无 | 易幻觉 | 人工有限 |
@@ -133,7 +152,8 @@ AI_News_Digest/
 │   └── scripts/fetch.py
 ├── content-trend-researcher/  # 虾评：趋势验证
 │   └── SKILL.md
-└── README.md
+├── README.md
+└── [MCP] agents-radar    # 外部 MCP: https://agents-radar-mcp.duanyytop.workers.dev
 ```
 
 ## 快速开始 · Quick Start
@@ -162,7 +182,7 @@ cp -r ai-daily-report /opt/tiger/mira_nas/plugins/prod/<your_id>/skills/
 
 AI News Digest is an **automated AI industry daily report engine** that eliminates the gap between scattered news sources and actionable intelligence. Unlike generic AI summarizers that hallucinate links and miss breaking news, this system:
 
-- **Inspects 45+ sources** systematically — from Chinese tech media to HuggingFace Papers to 25 top AI builders' real-time feeds
+- **Inspects 55+ sources** systematically — from Chinese tech media to HuggingFace Papers to 25 top AI builders' real-time feeds
 - **Verifies every claim** through 5 QA gates — cross-validation, fact-checking, and signal grading (🔴/🟡/⚪)
 - **Attaches original source links** to every single news item — no fabricated URLs, no dead links
 - **Defeats anti-scraping** with 5-layer fallback (markdown.new → defuddle.md → r.jina.ai → Scrapling → Playwright)
@@ -172,7 +192,7 @@ AI News Digest is an **automated AI industry daily report engine** that eliminat
 
 | Feature | AI News Digest | RSS Readers | ChatGPT News | Manual Curation |
 |---------|---------------|-------------|--------------|----------------|
-| Source Count | **45+** | Varies | Training cutoff | 5-10 |
+| Source Count | **55+** | Varies | Training cutoff | 5-10 |
 | Real-time | **Same day** | Real-time | Months delayed | Same day, slow |
 | Fact Verification | **5 QA Gates** | None | Hallucinations | Limited |
 | Source Links | **Every item** | Yes | Often fabricated | Partial |
@@ -193,6 +213,7 @@ AI News Digest is an **automated AI industry daily report engine** that eliminat
 | **Tier 4** (Data) | aicpb.com, AIwatch.ai, Toolify.ai | Product data & rankings |
 | **Tier 5** (Builder Feed) | follow-builders (25 AI builders' X posts, podcasts, blogs) | Builder-level real-time insights |
 | **Tier 6** (Enhanced) | news-aggregator (28 sources), smart-web-fetch (anti-scrape), content-trend (validation) | Coverage boost + reliability |
+| **Tier 7** (agents-radar) | MCP Server — 10 sources (GitHub, ArXiv, HN, HF, PH, Dev.to, Lobste.rs, Anthropic/OpenAI sitemap) | Pre-structured AI ecosystem data + cross-tool comparison |
 
 ### Tier 6: XiaPing Skill Enhancements (v0407)
 
@@ -203,6 +224,19 @@ Integrated from the [XiaPing Skill](https://xiaping.coze.site) marketplace:
 | **News Aggregator** | Batch-fetch from 28 sources (HN, GitHub, HF Papers, AI Newsletters, etc.) | Reduces per-source scan time from 30min to 5min |
 | **Smart Web Fetch** | 5-layer anti-scraping fallback | Raises fetch success rate from ~70% to ~95% |
 | **Content Trend Researcher** | Cross-platform trend analysis (Google Trends, Reddit, X, YouTube) | Data-driven signal grading instead of gut feeling |
+
+### Tier 7: agents-radar MCP (v0427)
+
+Hosted MCP Server from [agents-radar](https://github.com/duanyytop/agents-radar) — pre-structured AI ecosystem daily reports from 10 sources, tracking 17+ AI CLI tools and 11+ agent ecosystem projects. Updated daily at 08:00 CST.
+
+**MCP Endpoint**: `https://agents-radar-mcp.duanyytop.workers.dev`
+
+| Tool | Description |
+|------|-------------|
+| `list_reports` | List available dates and report types |
+| `get_latest` | Fetch the most recent report by type (ai-cli, ai-trending, ai-hn, ai-arxiv, ai-hf, ai-web, ai-agents) |
+| `get_report` | Fetch a specific report by date and type |
+| `search` | Keyword search across recent reports |
 
 ## Quick Start
 
