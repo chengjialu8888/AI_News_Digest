@@ -8,6 +8,8 @@ Differences from stage9.py:
 """
 import json
 import csv
+import re
+from html import escape
 from pathlib import Path
 
 DATA_DIR = Path("/data/userdata/daily-report/data")
@@ -78,6 +80,21 @@ def fmt_item(it):
     if url:
         head += f" [[{src}]]({url})"
     return head
+
+
+def compact(text, limit=120, ellipsis=True):
+    text = re.sub(r"\s+", " ", text or "").strip()
+    if len(text) <= limit:
+        return text
+    if not ellipsis:
+        return text[:limit].rstrip()
+    return text[: limit - 1].rstrip() + "..."
+
+
+def item_link(it):
+    title = it.get("title", "")
+    url = it.get("url", "")
+    return f"[{title}]({url})" if url else title
 
 
 red_count = sum(1 for it in items if it["signal_level"] == "🔴")
@@ -309,6 +326,103 @@ with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
             push,
         ])
 
+def render_feishu_card():
+    push_items = [it for it in items if it.get("signal_level") in ("🔴", "🟡")][:8]
+    lines = [
+        f"# {DATE.replace('-', '/')} Newsrun",
+        "",
+        f"> {DATE.replace('-', '/')} Newsrun：{total} 条 AI 新闻，{red_count} 条高影响。",
+        "",
+        "## 今日主线",
+        one_liner,
+        "",
+        "## 顶部指标",
+        f"- 新闻条目：{total}",
+        f"- 高影响：{red_count}",
+        f"- 今天就做：{sum(1 for it in items if it.get('board') == '今天就做')}",
+        "",
+        "## 推送卡片正文",
+    ]
+    for it in push_items:
+        lines.append(f"- {it.get('signal_level', '⚪')} {item_link(it)} - {compact(it.get('summary'), 80, ellipsis=False)}")
+    lines.extend([
+        "",
+        "## 点击与按钮规则",
+        "- 默认 open_url：当日飞书详细版文档 URL（生成卡片时由 `detailed_report_doc` 注入）。",
+        "- 底部按钮：长期趋势沉淀 -> https://bytedance.larkoffice.com/docx/JPs1dxjemo6HWMxn1mncxBOEnhg",
+    ])
+    return "\n".join(lines)
+
+
+def render_structured_archive():
+    lines = [
+        "---",
+        f"date: {DATE}",
+        "type: ai-newsrun-archive",
+        f"items: {total}",
+        f"high_signal: {red_count}",
+        f"qa_status: {qa.get('overall_status')}",
+        "---",
+        "",
+        f"# AI 日报结构化沉淀 · {DATE}",
+        "",
+        "## 长期趋势索引",
+        one_liner,
+        "",
+        "## 结构化条目",
+    ]
+    for board in sorted({it.get("board", "未分类") for it in items}):
+        board_items = [it for it in items if it.get("board", "未分类") == board]
+        lines.append(f"### {board}")
+        for it in board_items:
+            lines.append(f"- {it.get('signal_level', '⚪')} {item_link(it)}")
+            lines.append(f"  - 摘要：{compact(it.get('summary'), 160)}")
+            lines.append(f"  - 来源：{it.get('source', '未知来源')}；事实核验：{'多源验证' if it.get('cross_validated') else '待复核'}")
+        lines.append("")
+    lines.extend([
+        "## Kleisli Trace",
+        f"- 跨日去重：{trace.get('status') if trace else '未生成'}",
+        f"- 版本一致性：{vtrace.get('status') if vtrace else '未生成'}",
+        "",
+        "## 运营字段",
+        "- 可进入 CSV / Base / 知识库的字段：日期、板块、标题、信号等级、事实核验、关联公司、关联赛道、来源、URL、摘要、是否推送。",
+        "- 长期沉淀目的：复盘趋势命中率、追踪公司/赛道变化、沉淀选题池和团队运营素材。",
+    ])
+    return "\n".join(lines)
+
+
+def render_html(markdown_text):
+    return f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 行业日报 · {escape(DATE)}</title>
+  <style>
+    body {{ margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #172033; background: #f6f7fb; }}
+    main {{ max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }}
+    article {{ background: #fff; border: 1px solid #e5e8f0; border-radius: 8px; padding: 28px; box-shadow: 0 16px 40px rgba(23, 32, 51, .06); }}
+    pre {{ white-space: pre-wrap; word-wrap: break-word; line-height: 1.7; font: 15px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
+  </style>
+</head>
+<body>
+  <main>
+    <article>
+      <pre>{escape(markdown_text)}</pre>
+    </article>
+  </main>
+</body>
+</html>
+"""
+
+
+feishu_card_path = OUT_DIR / "feishu-card.md"
+structured_archive_path = OUT_DIR / "structured-archive.md"
+html_path = OUT_DIR / "daily-report.html"
+feishu_card_path.write_text(render_feishu_card(), encoding="utf-8")
+structured_archive_path.write_text(render_structured_archive(), encoding="utf-8")
+html_path.write_text(render_html(md_text), encoding="utf-8")
+
 md_size = md_path.stat().st_size
 csv_lines = sum(1 for _ in open(csv_path, encoding="utf-8-sig"))
 
@@ -316,6 +430,9 @@ print(f"✅ Markdown 日报已写入: {md_path}")
 print(f"   字符数: {len(md_text)}")
 print(f"✅ CSV 文件已写入: {csv_path}")
 print(f"   总行数: {csv_lines} (含表头)")
+print(f"✅ 飞书卡片草稿已写入: {feishu_card_path}")
+print(f"✅ 结构化沉淀文档已写入: {structured_archive_path}")
+print(f"✅ HTML 日报已写入: {html_path}")
 
 print("\n=== 完成条件验证 ===")
 print(f"  [{'✓' if (DATA_DIR/'06-hn-consensus.json').exists() else '✗'}] 06 JSON 存在")
@@ -327,3 +444,6 @@ with open(csv_path, encoding="utf-8-sig") as f:
 print(f"  [{'✓' if len(header) == 12 else '✗'}] CSV 包含 12 列 (实际 {len(header)})")
 print(f"  [{'✓' if '📌 三大关键趋势' in md_text else '✗'}] MD 末尾含「📌 三大关键趋势」章节")
 print(f"  [{'✓' if 'Kleisli' in md_text else '✗'}] MD 顶部含 Kleisli banner")
+print(f"  [{'✓' if feishu_card_path.exists() else '✗'}] feishu-card.md 存在")
+print(f"  [{'✓' if structured_archive_path.exists() else '✗'}] structured-archive.md 存在")
+print(f"  [{'✓' if html_path.exists() else '✗'}] daily-report.html 存在")

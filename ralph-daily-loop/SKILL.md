@@ -38,8 +38,11 @@ description: |
 │  Goal 6: HN_CONSENSUS        ──→ data/06-hn-consensus.json    │
 │  Goal 7: MERGE_DEDUP         ──→ data/07-merged.json          │
 │  Goal 8: QA_GATES            ──→ data/08-qa-report.json       │
-│  Goal 9: RENDER_OUTPUT       ──→ output/daily-report.md       │
+│  Goal 9: RENDER_OUTPUT       ──→ output/feishu-card.md        │
+│                                   output/daily-report.md       │
+│                                   output/structured-archive.md │
 │                                   output/daily-report.csv      │
+│                                   output/daily-report.html     │
 │                                                                │
 │  每个 Goal 独立上下文窗口 (~20-40k tokens)                      │
 │  总计 token 分布在多个干净窗口里，避免单轮上下文爆炸              │
@@ -665,7 +668,21 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 若验证失败：回退 `.progress` 到 `QA_GATES` 并退出，让 Ralph Loop 自动重跑上一阶段。
 
 ## 任务
-读取 `data/07-merged.json` + `data/08-qa-report.json`，执行 Gate 0.6 URL 验证后渲染为双格式输出。
+读取 `data/07-merged.json` + `data/08-qa-report.json`，执行 Gate 0.6 URL 验证后渲染为五类产物输出。
+
+## 首次使用产物偏好门禁
+
+在渲染前检查 `data/output-preferences.json`：
+- 如果文件不存在，先询问用户产物偏好，再继续渲染。
+- 如果文件存在，按其中配置选择产物、语言、语气、推送位置和沉淀规则。
+- 用户未特别选择时，默认生成全部五类产物，但仍必须先完成偏好确认。
+
+首次询问必须覆盖：
+1. 使用场景：个人速读 / 团队晨会 / 投研记录 / 内容运营 / 知识库沉淀。
+2. 产物组合：飞书卡片、详细版文档、结构化沉淀文档、CSV、HTML。
+3. 语言与语气：中文 / 英文 / 中英双语；事实简报 / 投研判断 / 运营选题 / Builder 行动建议。
+4. 推送位置：只落本地 / 写入飞书 / 推送卡片 / 本地 + 飞书。
+5. 沉淀规则：是否按公司、赛道、信号等级、周趋势和内容选题池进入长期知识库。
 
 ## Gate 0.6 — HTTP 实拨 URL 可达性验证（渲染前必做）
 
@@ -692,7 +709,21 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 
 ---
 
-## Markdown 日报格式
+## 产物一：飞书 Newsrun 卡片
+
+输出 `output/feishu-card.md` 作为卡片内容草稿，并在实际推送时生成 `newsrun-card-YYYY-MM-DD.json` 与 `newsrun-card-metadata.json`。
+
+规则：
+- 卡片只承载可快速消费的主线、指标和高信号条目，不替代详细文档。
+- 所有可点击区域默认跳转到当日飞书详细版文档 URL。
+- 底部只保留「长期趋势沉淀」入口，链接到长期知识库。
+- 卡片内容必须来自最终结构化沉淀文档，不为卡片额外编造新闻。
+
+## 产物二：Markdown / 飞书详细版文档
+
+输出 `output/daily-report.md`，并可导出到飞书 Docx 作为详细版文档。
+
+### Markdown 日报格式
 ```markdown
 # AI 日报 YYYY-MM-DD
 
@@ -733,16 +764,42 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 筛选标准：🔴 重磅优先 → 多源交叉验证强度高的优先 → HN 共识揭示的行业信号 → 三趋势覆盖不同板块
 ```
 
-## CSV 格式（12 列）
+## 产物三：结构化沉淀文档
+
+输出 `output/structured-archive.md`，并可写入飞书 Newsrun 结构化沉淀文档。
+
+结构：
+- 顶部保留日期、条目数、高信号数、QA 状态等 metadata。
+- 主体按板块、公司、赛道和信号等级沉淀条目。
+- 每条保留标题、摘要、来源、URL、事实核验状态和是否推送。
+- 用途是长期知识库、选题池、复盘趋势命中率和团队运营素材库。
+
+## 产物四：CSV 格式（12 列）
 日期,编号,板块,标题,信号等级,事实核验,关联公司,关联赛道,来源,原文URL,摘要,是否推送
 
+## 产物五：HTML 版日报
+
+输出 `output/daily-report.html`。
+
+规则：
+- 内容以最终 Markdown 详细版为准。
+- 自包含基础样式，无需构建即可浏览器打开。
+- 用于历史归档、内部静态站点、周报回看和跨团队分享。
+
 ## 输出路径
+- `output/feishu-card.md`
 - `output/daily-report.md`
+- `output/structured-archive.md`
 - `output/daily-report.csv`
+- `output/daily-report.html`
 
 ## 完成条件
+- [ ] 首次使用时已确认并保存 `data/output-preferences.json`
+- [ ] 飞书卡片草稿存在，且只包含高信号压缩摘要和详细版文档跳转规则
 - [ ] MD 文件存在且 > 2000 字符
+- [ ] 结构化沉淀文档存在，且可进入知识库/运营复盘
 - [ ] CSV 文件存在且包含 12 列
+- [ ] HTML 文件存在且可直接打开阅读
 - [ ] MD 包含所有 6 个板块标题
 - [ ] 每条新闻都有可点击的原文链接 `[[来源]](url)` 格式
 - [ ] MD 末尾包含「📌 三大关键趋势」章节，每个趋势含核心观点/关键数据/批判性判断/下周观察/原文链接
@@ -945,6 +1002,9 @@ check "07-merged"       "$WORK_DIR/data/07-merged.json"       20
 # 输出文件
 [[ -f "$WORK_DIR/output/daily-report.md" ]] && { echo "✅ MD output"; PASS=$((PASS+1)); } || { echo "❌ MD missing"; FAIL=$((FAIL+1)); }
 [[ -f "$WORK_DIR/output/daily-report.csv" ]] && { echo "✅ CSV output"; PASS=$((PASS+1)); } || { echo "❌ CSV missing"; FAIL=$((FAIL+1)); }
+[[ -f "$WORK_DIR/output/feishu-card.md" ]] && { echo "✅ Feishu card output"; PASS=$((PASS+1)); } || { echo "❌ Feishu card missing"; FAIL=$((FAIL+1)); }
+[[ -f "$WORK_DIR/output/structured-archive.md" ]] && { echo "✅ Structured archive output"; PASS=$((PASS+1)); } || { echo "❌ Structured archive missing"; FAIL=$((FAIL+1)); }
+[[ -f "$WORK_DIR/output/daily-report.html" ]] && { echo "✅ HTML output"; PASS=$((PASS+1)); } || { echo "❌ HTML missing"; FAIL=$((FAIL+1)); }
 
 echo ""
 echo "Result: $PASS passed, $FAIL failed"

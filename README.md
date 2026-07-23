@@ -12,7 +12,7 @@
 [![Mira Skill](https://img.shields.io/badge/Mira_Skill-Ready-blue?style=flat-square)](https://github.com/chengjialu8888/AI_News_Digest)
 [![Sources](https://img.shields.io/badge/Sources-60%2B-orange?style=flat-square)](#source-system)
 [![QA Gates](https://img.shields.io/badge/QA_Gates-5-green?style=flat-square)](#trust-layer)
-[![Outputs](https://img.shields.io/badge/Outputs-Markdown_%2B_CSV-purple?style=flat-square)](#outputs)
+[![Outputs](https://img.shields.io/badge/Outputs-Feishu_%2B_MD_%2B_Archive_%2B_CSV_%2B_HTML-purple?style=flat-square)](#outputs)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](#license)
 
 [中文](#中文) · [English](#english) · [快速开始](#快速开始) · [Quick Start](#quick-start) · [Source System](#source-system)
@@ -32,8 +32,10 @@ AI News Digest 是一个面向 **AI 从业者、投资研究者、产品经理�
 - 微信公众号文章可抓取 **全文 Markdown 归档**，不只依赖搜索片段
 - 带信号等级的内容筛选：重磅 / 值得关注 / 常规
 - 可沉淀到表格、看板或知识库的 **12 列 CSV**
+- 飞书 **Newsrun 卡片**、**详细版文档**、**结构化沉淀文档**、CSV 和 HTML 五类产物
 - 适合团队同步、选题会、投研记录和公众号素材库的结构化输出
 - 面向长程运行的 **Codex Goal × Ralph Loop × Kleisli Gate** 工作流
+- 首次使用前先询问你的产物偏好，避免把个人速读、团队同步、投研和内容运营混成同一种交付
 
 ## 它解决什么问题？
 
@@ -44,7 +46,8 @@ AI News Digest 是一个面向 **AI 从业者、投资研究者、产品经理�
 | AI 生成新闻容易编链接、混事实 | 让通用模型直接总结 | 5 道 QA Gate：去重、交叉验证、事实核验、信号分级 |
 | 微信公众号只有标题片段，正文难回溯 | 凭搜索摘要判断内容 | wechat-article-fetch 抓取 mp.weixin.qq.com 全文，保存 Markdown 和图片资源 |
 | 有摘要但不能复盘来源 | 只保存最终文章 | 每条内容保留原文 URL，方便团队回溯和验证 |
-| 日报只能阅读，不能运营 | 复制粘贴再整理 | Markdown + 12 列 CSV，方便进入表格、知识库和内容流水线 |
+| 日报只能阅读，不能运营 | 复制粘贴再整理 | 飞书卡片 + 详细版文档 + 结构化沉淀 + CSV + HTML，方便进入表格、知识库和内容流水线 |
+| 产物一开始就不适配自己的工作方式 | 先生成，再人工删改 | 首次使用前确认场景、语言、语气、产物组合、推送位置和沉淀规则 |
 | 全量日报跑到一半上下文爆炸 | 单个 prompt 硬塞采集、分析、出稿 | Codex Goal 分阶段运行，每个阶段独立上下文，只把结构化结果落盘 |
 | 中途失败只能从头再来 | 人工重跑，容易漏步骤 | Ralph Loop 用 `.progress` / `.done` 断点续跑，失败后回到最近有效阶段 |
 | 多阶段处理后出现跨日重复、版本冲突 | 最后人工检查，证据散落 | Kleisli Gate 逐步传递 Report 状态、证据和告警，可短路失败并写入 QA trace |
@@ -83,8 +86,10 @@ flowchart LR
     D --> E["事实核验"]
     E --> F["Markdown 日报"]
     E --> G["12 列 CSV"]
-    F --> H["团队同步 / 内容选题 / 投研记录"]
+    F --> H["询问用户补充"]
     G --> H
+    H --> I["最终版飞书结构化沉淀"]
+    I --> J["Newsrun 卡片推送"]
 ```
 
 ### 产品架构
@@ -124,7 +129,19 @@ AI News Digest 使用 9 层信源系统，把“覆盖面”和“可靠性”�
 
 ## Outputs
 
-### Markdown 日报
+第一次运行前，工作流会先询问产物偏好：使用场景、产物组合、语言语气、推送位置和沉淀规则。确认后写入 `data/output-preferences.json`，后续运行默认复用；这让同一套日报可以稳定服务个人速读、团队晨会、投研记录、内容运营和知识库沉淀。
+
+五类产物各自承担不同工作：
+
+| 产物 | 用途 | 长期价值 |
+| --- | --- | --- |
+| 飞书 Newsrun 卡片 | 每日高信号速览和团队推送 | 降低分发摩擦，让运营动作每天稳定发生 |
+| Markdown / 飞书详细版文档 | 完整日报、趋势判断、QA 说明 | 保留可阅读叙事，方便周报和复盘引用 |
+| 结构化沉淀文档 | 按板块、公司、赛道、信号等级归档 | 构建长期知识库、选题池和趋势命中率样本 |
+| 12 列 CSV | 表格、Base、Dashboard、检索和二次分析 | 让新闻从文章变成可查询、可聚合的数据资产 |
+| HTML | 浏览器预览、静态归档、跨团队分享 | 低成本发布和历史日报回看 |
+
+### Markdown / 飞书详细版文档
 
 ```markdown
 # AI 日报 2026-04-07
@@ -149,6 +166,16 @@ AI News Digest 使用 9 层信源系统，把“覆盖面”和“可靠性”�
 
 | 日期 | 编号 | 板块 | 标题 | 信号等级 | 事实核验 | 关联公司 | 关联赛道 | 来源 | 原文URL | 摘要 | 是否推送 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+### 本地输出路径
+
+```text
+output/feishu-card.md
+output/daily-report.md
+output/structured-archive.md
+output/daily-report.csv
+output/daily-report.html
+```
 
 ## 快速开始
 
@@ -182,7 +209,7 @@ cp -r ai-daily-report /opt/tiger/mira_nas/plugins/prod/<your_id>/skills/
 curl -L https://raw.githubusercontent.com/chengjialu8888/AI_News_Digest/main/ai-daily-report/SKILL.md -o ai-news-digest.system.md
 ```
 
-安装后对你的助手说：“跑一下今天的 AI 日报”或“出一期适合团队晨会的 AI 行业日报”。通用个人助手可把 `ai-news-digest.system.md` 作为 System Prompt 使用。
+安装后对你的助手说：“跑一下今天的 AI 日报”或“出一期适合团队晨会的 AI 行业日报”。首次运行时，它会先问你产物偏好；通用个人助手可把 `ai-news-digest.system.md` 作为 System Prompt 使用。
 
 ## 项目结构
 
@@ -224,8 +251,10 @@ It helps you produce:
 - Full Markdown archives for WeChat articles, not just search snippets
 - Signal grading for what is important, interesting, or routine
 - A 12-column CSV for databases, spreadsheets, dashboards, and knowledge bases
+- Five outputs: Feishu Newsrun cards, detailed docs, structured archive docs, CSV, and HTML
 - A reusable workflow for team syncs, research notes, editorial planning, and market tracking
 - A long-running **Codex Goal × Ralph Loop × Kleisli Gate** workflow for complex daily intelligence
+- A first-run preference check so personal scanning, team distribution, research, and content operations do not get forced into the same output shape
 
 ## Why Star This Repo?
 
@@ -235,9 +264,10 @@ Star this repo if you want a practical starting point for building a reliable AI
 - It combines **Chinese context + international first-hand sources**.
 - It can fetch `mp.weixin.qq.com` articles into local Markdown archives for traceable Chinese-source verification.
 - It ships with a reusable **Mira Skill / system prompt**.
-- It outputs both **human-readable briefs** and **structured data**.
+- It outputs **Feishu cards**, **detailed docs**, **structured archives**, **CSV**, and **HTML**.
 - It is designed to keep running as new AI sources, MCP servers, feeds, newsletters, and QA gates appear.
 - It treats long-context failure as a product problem: stages, checkpoints, files, and traces are part of the design.
+- It turns daily news into an operating system for memory: each issue becomes a readable brief, a pushable card, and a queryable dataset for future trend reviews.
 
 Tier 5 builder signals come from [follow-builders](https://github.com/zarazhangrui/follow-builders), which tracks 25 curated AI builders on X, 6 AI podcasts, and official Anthropic/Claude blog updates.
 
@@ -287,7 +317,19 @@ cp -r ai-daily-report /opt/tiger/mira_nas/plugins/prod/<your_id>/skills/
 curl -L https://raw.githubusercontent.com/chengjialu8888/AI_News_Digest/main/ai-daily-report/SKILL.md -o ai-news-digest.system.md
 ```
 
-After installation, ask your assistant: "Generate today's AI daily report" or "Create an AI industry brief for my team sync." For generic assistants, use `ai-news-digest.system.md` as the system prompt.
+After installation, ask your assistant: "Generate today's AI daily report" or "Create an AI industry brief for my team sync." On the first run, it will ask for output preferences before producing or pushing artifacts. For generic assistants, use `ai-news-digest.system.md` as the system prompt.
+
+## Output Workflow
+
+The workflow produces five artifacts and asks for preferences before the first run:
+
+| Output | Purpose | Operational value |
+| --- | --- | --- |
+| Feishu Newsrun card | Fast daily signal distribution | Keeps the daily push lightweight and repeatable |
+| Markdown / Feishu detailed doc | Full brief, trend judgement, and QA notes | Preserves the narrative record for weekly reviews |
+| Structured archive doc | Board/company/track/signal-level archive | Builds a long-term knowledge base and topic pool |
+| 12-column CSV | Spreadsheet, Base, dashboard, and search workflows | Turns news into queryable operational data |
+| HTML | Browser preview, static archive, internal sharing | Makes historical reports easy to browse and circulate |
 
 ## How It Compares
 
@@ -298,7 +340,7 @@ After installation, ask your assistant: "Generate today's AI daily report" or "C
 | Fact verification | 5 QA gates | None | Risk of hallucinated claims | Manual and inconsistent |
 | Source links | Required per item | Available but scattered | Often missing or fabricated | Partial |
 | WeChat article depth | Full article fetch + Markdown archive | Title/snippet only | Usually unavailable | Manual copy/paste |
-| Output | Markdown + CSV | Raw feeds | Plain text | Varies by editor |
+| Output | Feishu card + detailed doc + structured archive + CSV + HTML | Raw feeds | Plain text | Varies by editor |
 | Best for | Repeatable intelligence workflow | Reading feeds | Quick brainstorming | High-touch editorial work |
 
 ## License
