@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-label="Contra style AI weekly cover">
+  <rect width="1600" height="820" fill="#FBFAF6"/>
+  <g opacity=".06">
+    <path d="M0 120 H1600 M0 240 H1600 M0 360 H1600 M0 480 H1600 M0 600 H1600 M0 720 H1600 M0 840 H1600 M0 960 H1600 M0 1080 H1600" stroke="#111111"/>
+    <path d="M160 0 V820 M320 0 V820 M480 0 V820 M640 0 V820 M800 0 V820 M960 0 V820 M1120 0 V820 M1280 0 V820 M1440 0 V820" stroke="#111111"/>
+  </g>
+  <rect x="72" y="62" width="109.8" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="126.9" y="84" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">AI WEEKLY</text>
+<rect x="198" y="62" width="167.2" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="281.6" y="84" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">2026.07.21-07.27</text>
+<rect x="396" y="62" width="159.0" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="475.5" y="84" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">HUMAN TASTE LAB</text>
+<text x="72" y="185.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="920" text-anchor="start" letter-spacing="0">Execution is free. Ju</text>
+<text x="72" y="273.32" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="920" text-anchor="start" letter-spacing="0">dgment is everything.</text>
+<text x="76" y="478.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="560" text-anchor="start" letter-spacing="0">本周主线：当模型更成熟，AI 日报不该堆更多新闻，而要判断哪些约</text>
+<text x="76" y="518.2" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="560" text-anchor="start" letter-spacing="0">束真的改变了。</text>
+<line x1="72" y1="654" x2="908" y2="654" stroke="#111111" stroke-width="2"/>
+<text x="72" y="720" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">FIRST PRINCIPLES</text>
+<text x="330" y="720" fill="#070707" font-family="Menlo, Monaco, monospace" font-size="22" font-weight="720" text-anchor="start" letter-spacing="0">agent_value = task_complexity x success_rate x verifiability / total_system_cost</text>
+<rect x="996" y="74" width="530" height="430" fill="#070707"/>
+<rect x="1018" y="96" width="104" height="104" fill="#FF6B2C" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1070" cy="148" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1140" y="96" width="104" height="104" fill="#2F54FF" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1158 166 L1182 134 L1206 154 L1228 121" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1262" y="96" width="104" height="104" fill="#18D68A" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1314" y="158" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">03</text>
+<rect x="1384" y="96" width="104" height="104" fill="#FF8BCB" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1436" cy="148" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1018" y="218" width="104" height="104" fill="#D7FF3F" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1036 288 L1060 256 L1084 276 L1106 243" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1140" y="218" width="104" height="104" fill="#B69CFF" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1192" y="280" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">06</text>
+<rect x="1262" y="218" width="104" height="104" fill="#FBFAF6" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1314" cy="270" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1384" y="218" width="104" height="104" fill="#FF6B2C" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1402 288 L1426 256 L1450 276 L1472 243" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1018" y="340" width="104" height="104" fill="#2F54FF" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1070" y="402" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">09</text>
+<rect x="1140" y="340" width="104" height="104" fill="#18D68A" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1192" cy="392" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1262" y="340" width="104" height="104" fill="#FBFAF6" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1280 410 L1304 378 L1328 398 L1350 365" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1384" y="340" width="104" height="104" fill="#FF8BCB" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1436" y="402" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">12</text>
+<rect x="996" y="548" width="530" height="184" fill="#F0EEE7" stroke="#111111" stroke-width="2"/>
+<text x="1028" y="610" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="850" text-anchor="start" letter-spacing="0">WEEKLY SIGNAL</text>
+<text x="1028" y="666.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" text-anchor="start" letter-spacing="0">把 Agent 当成熟员工管</text>
+<text x="1028" y="708.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" text-anchor="start" letter-spacing="0">理</text>
+</svg>

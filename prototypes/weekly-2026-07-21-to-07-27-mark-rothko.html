@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 周报｜Colour Fields for an Agent Economy</title>
+  <style>
+    :root {
+      --ink: #201d1d;
+      --muted: #665d5a;
+      --paper: #e9ddc8;
+      --wine: #41242d;
+      --plum: #281c2b;
+      --rust: #a95245;
+      --coral: #c97761;
+      --ochre: #b68749;
+      --clay: #dba67d;
+      --blue: #304f63;
+      --blue-deep: #1e2c39;
+      --sage: #727d62;
+      --cream: #eee5cf;
+      --rose: #9b5260;
+      --line: rgba(32, 29, 29, .32);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: #b9ae9f; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #b9ae9f;
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.45;
+    }
+
+    .exhibition {
+      width: min(100%, 1540px);
+      margin: 0 auto;
+      padding: 28px 28px 72px;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 28px;
+      padding: 4px 0 22px;
+      border-bottom: 1px solid rgba(32, 29, 29, .35);
+    }
+
+    .masthead h1 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(24px, 3vw, 48px);
+      line-height: .98;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .masthead p {
+      max-width: 520px;
+      margin: 0;
+      color: #5c514d;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: clip;
+      margin: 28px 0;
+      isolation: isolate;
+    }
+
+    .frame::before,
+    .frame::after { content: ""; position: absolute; pointer-events: none; }
+
+    .frame-label {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 248, 235, .82);
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .frame-label .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--clay);
+    }
+
+    .caption {
+      position: absolute;
+      z-index: 8;
+      margin: 0;
+      max-width: 420px;
+      color: rgba(255, 248, 235, .84);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .micro {
+      color: rgba(255, 248, 235, .68);
+      font: 700 10px/1.2 Arial, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .frame h2,
+    .frame h3 { position: relative; z-index: 8; }
+
+    .frame p { z-index: 8; }
+
+    .field {
+      position: absolute;
+      z-index: 2;
+      overflow: hidden;
+      border-radius: 9px 7px 11px 8px;
+    }
+
+    .field::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(255, 247, 232, .16);
+      border-radius: 7px 9px 8px 10px;
+      pointer-events: none;
+    }
+
+    .field::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 15%;
+      background: rgba(255, 249, 235, .07);
+      pointer-events: none;
+    }
+
+    .field-tag {
+      position: absolute;
+      z-index: 3;
+      left: 16px;
+      bottom: 14px;
+      color: rgba(255, 249, 235, .82);
+      font: 700 10px/1.2 Arial, sans-serif;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .field-tag.dark { color: rgba(32, 29, 29, .76); }
+
+    /* 01 */
+    .f01 { background: var(--plum); color: var(--cream); }
+    .f01 .field-a { left: 8%; top: 15%; width: 73%; height: 40%; background: var(--rust); }
+    .f01 .field-b { right: 8%; bottom: 10%; width: 66%; height: 32%; background: var(--blue); }
+    .f01 .field-c { left: 22%; top: 57%; width: 37%; height: 3px; border-radius: 0; background: var(--clay); }
+    .f01 h2 { position: absolute; left: 8%; bottom: 11%; width: 50%; margin: 0; color: var(--cream); font-size: clamp(42px, 5.5vw, 84px); line-height: .88; font-weight: 800; text-transform: uppercase; }
+    .f01 h2 span { color: var(--clay); }
+    .f01 .caption { right: 8%; top: 17%; width: 26%; color: rgba(255, 248, 235, .78); }
+    .f01 .frame-label .dot { background: var(--clay); }
+    .f01 .micro { right: 8%; bottom: 8%; position: absolute; }
+
+    /* 02 */
+    .f02 { background: var(--clay); color: var(--ink); }
+    .f02 .field-a { left: 7%; top: 17%; width: 69%; height: 27%; background: var(--wine); }
+    .f02 .field-b { left: 25%; top: 47%; width: 52%; height: 35%; background: var(--ochre); }
+    .f02 .field-c { right: 7%; bottom: 9%; width: 36%; height: 17%; background: var(--blue); }
+    .f02 .frame-label { color: rgba(32, 29, 29, .68); }
+    .f02 .frame-label .dot { background: var(--wine); }
+    .f02 h2 { position: absolute; left: 8%; top: 9%; width: 48%; margin: 0; font-size: clamp(36px, 4.7vw, 70px); line-height: .9; text-transform: uppercase; }
+    .f02 h2 span { color: var(--wine); }
+    .f02 .equation { position: absolute; left: 8%; right: 8%; bottom: 11%; z-index: 8; display: grid; grid-template-columns: repeat(3, 1fr) 34px 1.8fr; gap: 14px; align-items: end; }
+    .f02 .term { min-width: 0; color: var(--cream); font-size: clamp(17px, 2.1vw, 31px); font-weight: 800; line-height: .9; text-transform: uppercase; }
+    .f02 .term span, .f02 .denominator span { display: block; margin-top: 8px; color: rgba(255, 249, 235, .74); font-size: 10px; font-weight: 400; line-height: 1.3; text-transform: none; }
+    .f02 .operator { color: var(--wine); font-size: 30px; text-align: center; }
+    .f02 .denominator { min-width: 0; color: var(--ink); font-size: clamp(15px, 1.8vw, 27px); font-weight: 800; line-height: .95; overflow-wrap: anywhere; text-transform: uppercase; }
+    .f02 .denominator span { color: rgba(32, 29, 29, .7); }
+
+    /* 03 */
+    .f03 { background: var(--blue-deep); color: var(--cream); }
+    .f03 .field-a { left: 9%; top: 15%; width: 70%; height: 29%; background: var(--rust); }
+    .f03 .field-b { left: 26%; top: 35%; width: 51%; height: 37%; background: var(--cream); }
+    .f03 .field-c { left: 15%; bottom: 9%; width: 63%; height: 16%; background: var(--blue); }
+    .f03 .frame-label .dot { background: var(--rose); }
+    .f03 h2 { position: absolute; right: 8%; top: 15%; width: 27%; margin: 0; color: var(--cream); font-size: clamp(34px, 4.6vw, 70px); line-height: .88; text-transform: uppercase; }
+    .f03 .number { position: absolute; left: 37%; top: 43%; z-index: 8; color: var(--wine); font-size: clamp(62px, 8.2vw, 126px); line-height: .78; font-weight: 900; }
+    .f03 .number small { display: block; margin-top: 16px; color: rgba(65, 36, 45, .74); font: 700 10px/1 Arial; letter-spacing: .06em; text-align: center; text-transform: uppercase; }
+    .f03 .caption { right: 8%; bottom: 14%; width: 28%; }
+    .f03 .micro { left: 9%; bottom: 8%; position: absolute; }
+
+    /* 04 */
+    .f04 { background: var(--wine); color: var(--cream); }
+    .f04 .field-a { left: 8%; top: 16%; width: 82%; height: 28%; background: var(--ochre); }
+    .f04 .field-b { left: 15%; bottom: 12%; width: 73%; height: 34%; background: var(--blue); }
+    .f04 .field-c { left: 26%; top: 41%; width: 38%; height: 5%; background: var(--rust); border-radius: 4px; }
+    .f04 .frame-label .dot { background: var(--ochre); }
+    .f04 h2 { position: absolute; left: 8%; top: 25%; margin: 0; color: var(--wine); font-size: clamp(42px, 5.4vw, 82px); line-height: .86; text-transform: uppercase; }
+    .f04 h2 span { color: var(--cream); }
+    .f04 .runtime-list { position: absolute; right: 9%; top: 19%; width: 30%; z-index: 8; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+    .f04 .runtime-list div { padding-top: 8px; border-top: 1px solid rgba(65, 36, 45, .62); color: var(--wine); }
+    .f04 .runtime-list b { display: block; margin-bottom: 6px; font-size: 14px; }
+    .f04 .runtime-list span { display: block; font-size: 10px; line-height: 1.25; }
+    .f04 .caption { left: 8%; bottom: 8%; width: 28%; }
+
+    /* 05 */
+    .f05 { background: var(--paper); color: var(--ink); }
+    .f05 .field-a { left: 8%; top: 17%; width: 55%; height: 31%; background: var(--rust); }
+    .f05 .field-b { right: 8%; bottom: 13%; width: 56%; height: 28%; background: var(--blue); }
+    .f05 .field-c { left: 41%; top: 39%; width: 23%; height: 8%; background: var(--sage); }
+    .f05 .frame-label { color: rgba(32, 29, 29, .68); }
+    .f05 .frame-label .dot { background: var(--rust); }
+    .f05 h2 { position: absolute; left: 8%; top: 24%; width: 42%; margin: 0; color: var(--cream); font-size: clamp(35px, 4.3vw, 66px); line-height: .9; text-transform: uppercase; }
+    .f05 h2 span { color: var(--clay); }
+    .f05 .caption { right: 8%; top: 18%; width: 27%; color: rgba(32, 29, 29, .72); }
+    .f05 .legend { position: absolute; left: 8%; right: 8%; bottom: 8%; z-index: 8; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .f05 .legend div { min-width: 0; padding-top: 8px; border-top: 1px solid rgba(32, 29, 29, .45); color: var(--ink); }
+    .f05 .legend b { display: block; margin-bottom: 5px; font-size: 13px; }
+    .f05 .legend span { display: block; color: var(--muted); font-size: 10px; line-height: 1.2; }
+
+    /* 06 */
+    .f06 { background: var(--rose); color: var(--cream); }
+    .f06 .field-a { left: 8%; top: 14%; width: 39%; height: 34%; background: var(--coral); }
+    .f06 .field-b { right: 8%; top: 15%; width: 37%; height: 31%; background: var(--cream); }
+    .f06 .field-c { left: 16%; bottom: 12%; width: 49%; height: 28%; background: var(--blue); }
+    .f06 .field-d { right: 8%; bottom: 12%; width: 28%; height: 14%; background: var(--ochre); }
+    .f06 .frame-label .dot { background: var(--cream); }
+    .f06 h2 { position: absolute; left: 8%; top: 22%; width: 36%; margin: 0; color: var(--cream); font-size: clamp(36px, 4.8vw, 73px); line-height: .88; text-transform: uppercase; }
+    .f06 h2 span { color: var(--clay); }
+    .f06 .delivery-list { position: absolute; right: 8%; bottom: 16%; width: 34%; z-index: 8; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+    .f06 .delivery-list div { min-width: 0; padding-top: 8px; border-top: 1px solid rgba(238, 229, 207, .5); }
+    .f06 .delivery-list b { display: block; margin-bottom: 5px; color: var(--cream); font-size: 13px; }
+    .f06 .delivery-list span { display: block; color: rgba(238, 229, 207, .78); font-size: 10px; }
+
+    /* 07 */
+    .f07 { background: var(--blue-deep); color: var(--cream); }
+    .f07 .field-a { left: 18%; top: 14%; width: 59%; height: 27%; background: var(--rose); }
+    .f07 .field-b { left: 7%; bottom: 12%; width: 85%; height: 29%; background: var(--ochre); }
+    .f07 .field-c { right: 13%; bottom: 18%; width: 37%; height: 17%; background: var(--wine); }
+    .f07 .frame-label .dot { background: var(--ochre); }
+    .f07 h2 { position: absolute; left: 8%; top: 18%; width: 30%; margin: 0; color: var(--cream); font-size: clamp(39px, 5vw, 76px); line-height: .87; text-transform: uppercase; }
+    .f07 h2 span { color: var(--clay); }
+    .f07 .metrics { position: absolute; right: 8%; top: 21%; width: 51%; z-index: 8; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .f07 .metric { min-width: 0; padding-top: 10px; border-top: 1px solid rgba(238, 229, 207, .5); }
+    .f07 .metric b { display: block; margin-bottom: 8px; color: var(--cream); font-size: clamp(24px, 3vw, 44px); line-height: .9; }
+    .f07 .metric span { display: block; color: rgba(238, 229, 207, .78); font-size: 10px; line-height: 1.25; }
+    .f07 .caption { left: 8%; bottom: 9%; width: 34%; }
+
+    /* 08 */
+    .f08 { background: var(--plum); color: var(--cream); }
+    .f08 .field-a { left: 8%; top: 15%; width: 65%; height: 26%; background: var(--coral); }
+    .f08 .field-b { right: 8%; bottom: 12%; width: 58%; height: 34%; background: var(--blue); }
+    .f08 .field-c { left: 23%; top: 42%; width: 39%; height: 7%; background: var(--ochre); }
+    .f08 .frame-label .dot { background: var(--sage); }
+    .f08 h2 { position: absolute; left: 8%; top: 24%; width: 39%; margin: 0; color: var(--cream); font-size: clamp(38px, 4.9vw, 75px); line-height: .88; text-transform: uppercase; }
+    .f08 h2 span { color: var(--clay); }
+    .f08 .caption { right: 8%; top: 18%; width: 28%; }
+    .f08 .closing-list { position: absolute; right: 8%; bottom: 17%; width: 39%; z-index: 8; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .f08 .closing-list div { min-width: 0; padding-top: 8px; border-top: 1px solid rgba(238, 229, 207, .56); }
+    .f08 .closing-list b { display: block; margin-bottom: 6px; color: var(--cream); font-size: 13px; }
+    .f08 .closing-list span { display: block; color: rgba(238, 229, 207, .76); font-size: 10px; line-height: 1.25; }
+    .f08 .micro { right: 8%; top: 8%; position: absolute; color: var(--clay); }
+
+    .sources {
+      margin-top: 38px;
+      padding: 18px 20px;
+      color: var(--muted);
+      background: rgba(233, 221, 200, .76);
+      border-top: 1px solid rgba(32, 29, 29, .3);
+      font-size: 12px;
+    }
+    .sources summary { cursor: pointer; color: var(--ink); font-weight: 800; }
+    .sources ul { columns: 2; margin: 14px 0 0; padding-left: 18px; }
+    .sources li { margin: 4px 0; overflow-wrap: anywhere; }
+    .sources a { color: var(--blue-deep); }
+
+    @media (max-width: 800px) {
+      .exhibition { padding: 18px 12px 42px; }
+      .masthead { display: block; }
+      .masthead p { margin-top: 14px; text-align: left; }
+      .frame { aspect-ratio: auto; min-height: 720px; margin: 18px 0; }
+      .frame-label { top: 17px; left: 18px; }
+      .f01 h2, .f02 h2, .f03 h2, .f04 h2, .f05 h2, .f06 h2, .f07 h2, .f08 h2 { left: 18px; right: 18px; width: auto; top: 88px; font-size: 48px; }
+      .f01 .field-a { left: 8%; top: 34%; width: 84%; height: 23%; }
+      .f01 .field-b { right: 8%; bottom: 9%; width: 82%; height: 23%; }
+      .f01 .field-c { left: 24%; top: 58%; width: 50%; }
+      .f01 h2 { bottom: auto; }
+      .f01 .caption { left: 18px; right: 18px; top: 245px; width: auto; }
+      .f01 .micro { right: 18px; bottom: 19px; }
+      .f02 .field-a { left: 6%; top: 31%; width: 88%; height: 17%; }
+      .f02 .field-b { left: 10%; top: 49%; width: 78%; height: 22%; }
+      .f02 .field-c { right: 6%; bottom: 9%; width: 62%; height: 12%; }
+      .f02 h2 { top: 88px; font-size: 45px; }
+      .f02 .equation { left: 18px; right: 18px; bottom: 34px; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .f02 .operator, .f02 .denominator { display: none; }
+      .f02 .term { font-size: 20px; }
+      .f03 .field-a { left: 6%; top: 34%; width: 88%; height: 17%; }
+      .f03 .field-b { left: 15%; top: 48%; width: 70%; height: 21%; }
+      .f03 .field-c { left: 8%; bottom: 9%; width: 84%; height: 13%; }
+      .f03 h2 { top: 88px; }
+      .f03 .number { left: 30%; top: 51%; font-size: 90px; }
+      .f03 .caption { left: 18px; right: 18px; bottom: 19px; width: auto; }
+      .f03 .micro { left: 18px; bottom: 89px; }
+      .f04 .field-a { left: 6%; top: 31%; width: 88%; height: 17%; }
+      .f04 .field-b { left: 9%; bottom: 10%; width: 82%; height: 22%; }
+      .f04 .field-c { left: 18%; top: 47%; width: 56%; height: 4%; }
+      .f04 h2 { top: 88px; }
+      .f04 .runtime-list { left: 18px; right: 18px; top: 264px; width: auto; gap: 10px; }
+      .f04 .caption { left: 18px; right: 18px; bottom: 18px; width: auto; }
+      .f05 .field-a { left: 6%; top: 33%; width: 88%; height: 19%; }
+      .f05 .field-b { right: 6%; bottom: 9%; width: 88%; height: 18%; }
+      .f05 .field-c { left: 31%; top: 51%; width: 38%; height: 5%; }
+      .f05 h2 { top: 88px; }
+      .f05 .caption { left: 18px; right: 18px; top: 266px; width: auto; color: rgba(32, 29, 29, .75); }
+      .f05 .legend { left: 18px; right: 18px; bottom: 18px; gap: 8px; }
+      .f05 .legend b { font-size: 11px; }
+      .f05 .legend span { font-size: 9px; }
+      .f06 .field-a { left: 6%; top: 33%; width: 45%; height: 18%; }
+      .f06 .field-b { right: 6%; top: 34%; width: 43%; height: 16%; }
+      .f06 .field-c { left: 9%; bottom: 9%; width: 55%; height: 18%; }
+      .f06 .field-d { right: 6%; bottom: 9%; width: 32%; height: 12%; }
+      .f06 h2 { top: 88px; }
+      .f06 .delivery-list { left: 18px; right: 18px; bottom: 35px; width: auto; gap: 8px; }
+      .f06 .delivery-list b { font-size: 11px; }
+      .f06 .delivery-list span { font-size: 9px; }
+      .f07 .field-a { left: 6%; top: 34%; width: 88%; height: 15%; }
+      .f07 .field-b { left: 6%; bottom: 9%; width: 88%; height: 20%; }
+      .f07 .field-c { right: 9%; bottom: 13%; width: 48%; height: 11%; }
+      .f07 h2 { top: 88px; }
+      .f07 .metrics { left: 18px; right: 18px; top: 286px; width: auto; gap: 8px; }
+      .f07 .metric b { font-size: 25px; }
+      .f07 .metric span { font-size: 9px; }
+      .f07 .caption { left: 18px; right: 18px; bottom: 18px; width: auto; }
+      .f08 .field-a { left: 6%; top: 33%; width: 88%; height: 16%; }
+      .f08 .field-b { right: 6%; bottom: 9%; width: 88%; height: 22%; }
+      .f08 .field-c { left: 22%; top: 49%; width: 48%; height: 5%; }
+      .f08 h2 { top: 88px; }
+      .f08 .caption { left: 18px; right: 18px; top: 266px; width: auto; }
+      .f08 .closing-list { left: 18px; right: 18px; bottom: 30px; width: auto; gap: 8px; }
+      .f08 .closing-list b { font-size: 11px; }
+      .f08 .closing-list span { font-size: 9px; }
+      .f08 .micro { right: 18px; top: 47px; }
+      .sources ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="exhibition">
+    <header class="masthead">
+      <h1>AI WEEKLY / COLOUR FIELDS</h1>
+      <p>2026.07.21—07.27 · 不画一个“AI 的样子”，只让颜色关系把结构压出来。<br>八个画面，八个压力场。</p>
+    </header>
+
+    <section class="frame f01" data-frame="01">
+      <div class="frame-label"><span class="dot"></span>FIELD 01 / ENTRANCE</div>
+      <div class="field field-a"><span class="field-tag">pressure / mature model</span></div>
+      <div class="field field-b"><span class="field-tag">quiet / what remains</span></div>
+      <div class="field field-c"></div>
+      <h2>THE<br><span>SCAFFOLD</span><br>AFTER<br>THE MODEL</h2>
+      <p class="caption">本周不是又一个模型排行榜。真正的对象是：当模型成熟，外面那层 prompt、skills、harness、review 和 memory，哪些仍然是结构，哪些只是噪音？</p>
+      <p class="micro">AI WEEKLY · 30 / 2026</p>
+    </section>
+
+    <section class="frame f02" data-frame="02">
+      <div class="frame-label"><span class="dot"></span>FIELD 02 / FIRST PRINCIPLES</div>
+      <div class="field field-a"><span class="field-tag">task · success · proof</span></div>
+      <div class="field field-b"><span class="field-tag dark">the cost of completion</span></div>
+      <div class="field field-c"></div>
+      <h2>Agent 的价值<br><span>是系统属性</span></h2>
+      <div class="equation">
+        <div class="term">Task<span>可完成任务的复杂度</span></div>
+        <div class="term">Success<span>一次完成的概率</span></div>
+        <div class="term">Proof<span>结果如何被验证</span></div>
+        <div class="operator">×</div>
+        <div class="denominator">÷ Context · Compute · Governance · Integration<span>上下文、推理、治理、集成成本</span></div>
+      </div>
+    </section>
+
+    <section class="frame f03" data-frame="03">
+      <div class="frame-label"><span class="dot"></span>FIELD 03 / CONTEXT ENGINEERING</div>
+      <div class="field field-a"><span class="field-tag">what the model can infer</span></div>
+      <div class="field field-b"><span class="field-tag dark">what still needs to be held</span></div>
+      <div class="field field-c"></div>
+      <h2>消失的<br>脚手架</h2>
+      <div class="number">80%<small>常驻系统提示词被删掉</small></div>
+      <p class="caption">删掉 80% 以上系统提示词，不等于不要上下文。被删掉的是模型读文件、看工具、跑测试就能自行推断的废说明；留下的是偏好、参考、验证流程和判断边界。</p>
+      <p class="micro">THICK CONTEXT / THIN PROMPT</p>
+    </section>
+
+    <section class="frame f04" data-frame="04">
+      <div class="frame-label"><span class="dot"></span>FIELD 04 / RUNTIME</div>
+      <div class="field field-a"><span class="field-tag dark">the process gets a body</span></div>
+      <div class="field field-b"><span class="field-tag">the boundary is the product</span></div>
+      <div class="field field-c"></div>
+      <h2>Agent<br><span>≠ Model</span></h2>
+      <div class="runtime-list">
+        <div><b>IDENTITY</b><span>谁在执行？用哪个账号？</span></div>
+        <div><b>PERMISSION</b><span>能读什么、写什么、改什么？</span></div>
+        <div><b>NETWORK</b><span>出口、依赖与外部系统边界</span></div>
+        <div><b>CHECKPOINT</b><span>验证、审批、日志与回滚</span></div>
+      </div>
+      <p class="caption">安全边界从发布前评测推到了运行时。长程 Agent 需要像软件进程一样被隔离、授权、审计和回滚。</p>
+    </section>
+
+    <section class="frame f05" data-frame="05">
+      <div class="frame-label"><span class="dot"></span>FIELD 05 / COMPETITION UNIT</div>
+      <div class="field field-a"><span class="field-tag">generation</span></div>
+      <div class="field field-b"><span class="field-tag">trace / revision</span></div>
+      <div class="field field-c"></div>
+      <h2>模型不是<br>完整作品。<br><span>流水线才是。</span></h2>
+      <p class="caption">Hyra、Cursor Agent Swarm、Google Tunix、Microsoft MagenticLite 的共同信号：竞争单位正在从一个聪明大脑，变成一条可复盘的工作流水线。</p>
+      <div class="legend">
+        <div><b>MODEL</b><span>候选行动</span></div>
+        <div><b>HARNESS</b><span>环境约束</span></div>
+        <div><b>VERIFIER</b><span>外部评分</span></div>
+        <div><b>TRACE</b><span>失败与修正</span></div>
+      </div>
+    </section>
+
+    <section class="frame f06" data-frame="06">
+      <div class="frame-label"><span class="dot"></span>FIELD 06 / DELIVERY SURFACE</div>
+      <div class="field field-a"><span class="field-tag">office / email</span></div>
+      <div class="field field-b"><span class="field-tag dark">canvas / shared work</span></div>
+      <div class="field field-c"><span class="field-tag">image / design</span></div>
+      <div class="field field-d"><span class="field-tag dark">feedback</span></div>
+      <h2>聊天框<br>不是终点。</h2>
+      <div class="delivery-list">
+        <div><b>OFFICE</b><span>Excel / Outlook / 公式 / 邮件</span></div>
+        <div><b>CANVAS</b><span>计划 / 看板 / checklist</span></div>
+        <div><b>IMAGE</b><span>图表 / UI / 知识视觉</span></div>
+        <div><b>DESIGN</b><span>规范 / 素材 / 审稿</span></div>
+      </div>
+    </section>
+
+    <section class="frame f07" data-frame="07">
+      <div class="frame-label"><span class="dot"></span>FIELD 07 / INDUSTRIAL LEDGER</div>
+      <div class="field field-a"><span class="field-tag">data centre / capacity</span></div>
+      <div class="field field-b"><span class="field-tag dark">power · chip · debt · throughput</span></div>
+      <div class="field field-c"></div>
+      <h2>Token<br>不是全部<br><span>账单</span></h2>
+      <div class="metrics">
+        <div class="metric"><b>3.2GW</b><span>OpenAI 数据中心规划</span></div>
+        <div class="metric"><b>2GW</b><span>AMD × Anthropic 产能绑定</span></div>
+        <div class="metric"><b>$1.65T</b><span>AI 隐性债务进入工业账本</span></div>
+      </div>
+      <p class="caption">AI 从软件行业重新显出工业系统的轮廓：电力、土地、水、芯片、租赁、债务和吞吐，共同决定谁能跑得久。</p>
+    </section>
+
+    <section class="frame f08" data-frame="08">
+      <div class="frame-label"><span class="dot"></span>FIELD 08 / MANAGEMENT NOTE</div>
+      <div class="field field-a"><span class="field-tag">authorization</span></div>
+      <div class="field field-b"><span class="field-tag">review / responsibility</span></div>
+      <div class="field field-c"></div>
+      <h2>把 AI 当作<br><span>成熟员工</span><br>管理</h2>
+      <p class="caption">给产品团队：清理常驻上下文，把规则变成判断框架，把流程拆成按需 skills，把交付物变成测试、HTML、rubric 和真实参考。少一点噪音，多一点结构。</p>
+      <div class="closing-list">
+        <div><b>授权</b><span>目标、资源、边界</span></div>
+        <div><b>复盘</b><span>轨迹、失败、验证</span></div>
+        <div><b>责任</b><span>成本、权限、结果</span></div>
+      </div>
+      <p class="micro">COLOUR IS RELATIONAL / THEN SHIP</p>
+    </section>
+
+    <details class="sources">
+      <summary>来源与事实索引</summary>
+      <ul>
+        <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models">Anthropic context engineering</a></li>
+        <li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI / Hugging Face security incident</a></li>
+        <li><a href="https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations">AISI frontier evaluation cheating</a></li>
+        <li><a href="https://unu.edu/publication/engineering-and-governing-agent-harness-technology-and-policy-framework-runtime-layer">UNU Agent Harness framework</a></li>
+        <li><a href="https://cursor.com/blog/agent-swarm-model-economics">Cursor Agent Swarm</a></li>
+        <li><a href="https://developers.googleblog.com/scaling-agentic-rl-high-throughput-agentic-training-with-tunix/">Google Tunix</a></li>
+        <li><a href="https://www.microsoft.com/en-us/research/blog/magenticlite-magenticbrain-fara1-5-an-agentic-experience-optimized-for-small-models/?lang=ja">Microsoft MagenticLite</a></li>
+        <li><a href="https://github.blog/ai-and-ml/github-copilot/how-to-build-interactive-experiences-with-canvases/">GitHub Copilot Canvases</a></li>
+        <li><a href="https://x.ai/news/introducing-excel-addin">xAI Grok for Excel</a></li>
+        <li><a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community/">OpenAI Project Camellia</a></li>
+        <li><a href="https://www.theverge.com/ai-artificial-intelligence/969285/amd-anthropic-ai-infrastructure-deal">AMD × Anthropic infrastructure deal</a></li>
+        <li><a href="https://asia.nikkei.com/business/technology/five-us-tech-giants-hidden-debts-soar-to-1.65tn-on-opaque-ai-funding">Nikkei AI hidden debt report</a></li>
+        <li><a href="https://www.moma.org/artists/5047-mark-rothko">MoMA: Mark Rothko</a></li>
+      </ul>
+    </details>
+  </main>
+</body>
+</html>

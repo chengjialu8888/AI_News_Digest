@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="840" viewBox="0 0 1600 840" role="img" aria-label="Contra style WeChat header">
+  <rect width="1600" height="840" fill="#FBFAF6"/>
+  <g opacity=".06">
+    <path d="M0 120 H1600 M0 240 H1600 M0 360 H1600 M0 480 H1600 M0 600 H1600 M0 720 H1600 M0 840 H1600 M0 960 H1600 M0 1080 H1600" stroke="#111111"/>
+    <path d="M160 0 V840 M320 0 V840 M480 0 V840 M640 0 V840 M800 0 V840 M960 0 V840 M1120 0 V840 M1280 0 V840 M1440 0 V840" stroke="#111111"/>
+  </g>
+  <rect x="0" y="0" width="1600" height="840" fill="#070707"/>
+<rect x="994" y="72" width="530" height="430" fill="#070707"/>
+<rect x="1016" y="94" width="104" height="104" fill="#FF6B2C" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1068" cy="146" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1138" y="94" width="104" height="104" fill="#2F54FF" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1156 164 L1180 132 L1204 152 L1226 119" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1260" y="94" width="104" height="104" fill="#18D68A" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1312" y="156" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">03</text>
+<rect x="1382" y="94" width="104" height="104" fill="#FF8BCB" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1434" cy="146" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1016" y="216" width="104" height="104" fill="#D7FF3F" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1034 286 L1058 254 L1082 274 L1104 241" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1138" y="216" width="104" height="104" fill="#B69CFF" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1190" y="278" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">06</text>
+<rect x="1260" y="216" width="104" height="104" fill="#FBFAF6" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1312" cy="268" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1382" y="216" width="104" height="104" fill="#FF6B2C" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1400 286 L1424 254 L1448 274 L1470 241" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1016" y="338" width="104" height="104" fill="#2F54FF" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1068" y="400" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">09</text>
+<rect x="1138" y="338" width="104" height="104" fill="#18D68A" stroke="#FBFAF6" stroke-width="1"/>
+<circle cx="1190" cy="390" r="30" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1260" y="338" width="104" height="104" fill="#FBFAF6" stroke="#FBFAF6" stroke-width="1"/>
+<path d="M1278 408 L1302 376 L1326 396 L1348 363" fill="none" stroke="#070707" stroke-width="8"/>
+<rect x="1382" y="338" width="104" height="104" fill="#FF8BCB" stroke="#FBFAF6" stroke-width="1"/>
+<text x="1434" y="400" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="middle" letter-spacing="0">12</text>
+<rect x="82" y="76" width="257.4" height="34" rx="17" fill="#070707" stroke="#FBFAF6" stroke-width="1.5"/><text x="210.7" y="98" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">AI WEEKLY / HUMAN TASTE LAB</text>
+<text x="82" y="190.0" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="86" font-weight="920" text-anchor="start" letter-spacing="0">Execution is free. Ju</text>
+<text x="82" y="272.56" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="86" font-weight="920" text-anchor="start" letter-spacing="0">dgment is everything.</text>
+<text x="86" y="524.0" fill="#CFCBC0" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="560" text-anchor="start" letter-spacing="0">当模型更成熟，日报的价值不再是追热点，而是判断哪些约束真的改变</text>
+<text x="86" y="564.5" fill="#CFCBC0" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="560" text-anchor="start" letter-spacing="0">了。</text>
+<rect x="82" y="704" width="658" height="2" fill="#FBFAF6"/>
+<text x="82" y="762" fill="#CFCBC0" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="850" text-anchor="start" letter-spacing="0">2026.07.21-07.27 / 公众号头图复用版</text>
+</svg>

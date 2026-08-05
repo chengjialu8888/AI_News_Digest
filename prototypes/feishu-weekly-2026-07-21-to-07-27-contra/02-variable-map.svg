@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1020" viewBox="0 0 1600 1020" role="img" aria-label="Contra style variable scoreboard">
+  <rect width="1600" height="1020" fill="#FBFAF6"/>
+  <g opacity=".06">
+    <path d="M0 120 H1600 M0 240 H1600 M0 360 H1600 M0 480 H1600 M0 600 H1600 M0 720 H1600 M0 840 H1600 M0 960 H1600 M0 1080 H1600" stroke="#111111"/>
+    <path d="M160 0 V1020 M320 0 V1020 M480 0 V1020 M640 0 V1020 M800 0 V1020 M960 0 V1020 M1120 0 V1020 M1280 0 V1020 M1440 0 V1020" stroke="#111111"/>
+  </g>
+  <rect x="72" y="64" width="159.0" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="151.5" y="86" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">01 / SCOREBOARD</text>
+<text x="72" y="150.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="920" text-anchor="start" letter-spacing="0">Six variables. One editorial </text>
+<text x="72" y="214.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="920" text-anchor="start" letter-spacing="0">judgment layer.</text>
+<text x="76" y="272" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="560" text-anchor="start" letter-spacing="0">柱高代表本周约束变化强度，不是精确统计。先看变量，再读新闻。</text>
+<rect x="72" y="350" width="1456" height="548" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+
+<rect x="96.0" y="555.7" width="194.7" height="256.3" fill="#FF6B2C"/>
+<text x="96.0" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">01</text>
+<text x="96.0" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">能力</text>
+<text x="96.0" y="535.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">86</text>
+<text x="96.0" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">模型成熟后，prompt 噪音</text>
+<text x="96.0" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">开始被削掉。</text>
+<line x1="314.66666666666663" y1="350" x2="314.66666666666663" y2="898" stroke="#111111" stroke-width="1.5"/>
+<rect x="338.66666666666663" y="567.6" width="194.7" height="244.4" fill="#D7FF3F"/>
+<text x="338.66666666666663" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">02</text>
+<text x="338.66666666666663" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">成本</text>
+<text x="338.66666666666663" y="547.64" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">82</text>
+<text x="338.66666666666663" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">成本从 token 扩展到电力</text>
+<text x="338.66666666666663" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">、吞吐、债务。</text>
+<line x1="557.3333333333333" y1="350" x2="557.3333333333333" y2="898" stroke="#111111" stroke-width="1.5"/>
+<rect x="581.3333333333333" y="579.6" width="194.7" height="232.4" fill="#2F54FF"/>
+<text x="581.3333333333333" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">03</text>
+<text x="581.3333333333333" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">分发</text>
+<text x="581.3333333333333" y="559.56" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">78</text>
+<text x="581.3333333333333" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">Office、画布、设计台成</text>
+<text x="581.3333333333333" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">为交付表面。</text>
+<line x1="800.0" y1="350" x2="800.0" y2="898" stroke="#111111" stroke-width="1.5"/>
+<rect x="824.0" y="549.8" width="194.7" height="262.2" fill="#18D68A"/>
+<text x="824.0" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">04</text>
+<text x="824.0" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">供给</text>
+<text x="824.0" y="529.76" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">88</text>
+<text x="824.0" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">芯片、电力、园区协议决定</text>
+<text x="824.0" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0"> AI 速度。</text>
+<line x1="1042.6666666666665" y1="350" x2="1042.6666666666665" y2="898" stroke="#111111" stroke-width="1.5"/>
+<rect x="1066.6666666666665" y="540.8" width="194.7" height="271.2" fill="#B69CFF"/>
+<text x="1066.6666666666665" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">05</text>
+<text x="1066.6666666666665" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">监管</text>
+<text x="1066.6666666666665" y="520.8199999999999" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">91</text>
+<text x="1066.6666666666665" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">安全与版权边界进入运行时</text>
+<text x="1066.6666666666665" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">。</text>
+<line x1="1285.3333333333333" y1="350" x2="1285.3333333333333" y2="898" stroke="#111111" stroke-width="1.5"/>
+<rect x="1309.3333333333333" y="561.7" width="194.7" height="250.3" fill="#FF8BCB"/>
+<text x="1309.3333333333333" y="414" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" text-anchor="start" letter-spacing="0">06</text>
+<text x="1309.3333333333333" y="468" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="900" text-anchor="start" letter-spacing="0">组织采用</text>
+<text x="1309.3333333333333" y="541.6800000000001" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="920" text-anchor="start" letter-spacing="0">84</text>
+<text x="1309.3333333333333" y="852.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">Agent 需要任务、权限、</text>
+<text x="1309.3333333333333" y="873.6" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="560" text-anchor="start" letter-spacing="0">检查点和复盘。</text>
+<line x1="72" y1="812" x2="1528" y2="812" stroke="#111111" stroke-width="2"/>
+</svg>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="use-iframe" content="true">
+  <meta name="html-box-height-mode" content="auto">
+  <meta name="description" content="Contra Judgment Lab 风格的 AI 周报迁移矩阵动态可视化：筛选变量并点击迁移节点查看判断依据。">
+  <title>迁移矩阵 / Judgment Map</title>
+  <style>
+    :root { --paper:#FFFFFF; --paper-hi:#F7F9FC; --ink:#051C2C; --ink-md:#42566A; --ink-lo:#8595A6; --line:#DBE2EA; --line-lo:#EEF1F6; --blue:#2251FF; --blue-hi:#1233B8; --blue-lo:#7D9BFF; --serif:"et-book", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", Georgia, serif; --mono:Menlo, Consolas, "SF Mono", "PingFang SC", monospace; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.68; -webkit-font-smoothing:antialiased; }
+    .wrap { width:100%; max-width:924px; margin:0 auto; padding:24px 24px 40px; }
+    .topline { display:flex; justify-content:space-between; gap:24px; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:20px; }
+    .kicker { display:block; color:var(--blue); font:11px var(--mono); letter-spacing:.26em; }
+    h1 { margin:20px 0 10px; max-width:760px; font-family:var(--serif); font-size:clamp(34px,5vw,64px); font-weight:700; line-height:1.08; letter-spacing:0; }
+    .lede { margin:0; color:var(--ink-md); font-size:17px; line-height:1.68; max-width:760px; }
+    .score { border:1px solid var(--line); background:var(--paper-hi); padding:12px 15px; min-width:112px; text-align:right; }
+    .score b { display:block; color:var(--blue); font:700 32px/1 var(--mono); }
+    .score span { display:block; margin-top:7px; font:11px var(--mono); color:var(--ink-lo); }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; padding:17px 0 14px; border-bottom:1px solid var(--line-lo); }
+    .filters button { border:1.5px solid var(--ink); background:var(--paper); color:var(--ink); border-radius:6px; padding:8px 11px; font:700 11.5px var(--serif); cursor:pointer; transition:background-color .18s ease,color .18s ease,border-color .18s ease; }
+    .filters button.active, .filters button:hover { background:var(--blue); border-color:var(--blue); color:var(--paper); }
+    #chart { width:100%; height:560px; border-top:1px solid var(--line); border-bottom:1px solid var(--line-lo); background:var(--paper); }
+    .detail { display:grid; grid-template-columns:64px minmax(0,1fr) 260px; gap:18px; align-items:start; margin-top:22px; border-top:1px solid var(--line); padding-top:18px; }
+    .detail-no { color:var(--blue); font:700 28px/1 var(--mono); }
+    .detail h2 { margin:0 0 7px; font:700 23px/1.3 var(--serif); }
+    .detail p { margin:0; color:var(--ink-md); font-size:15px; line-height:1.6; }
+    .detail-side { border-left:1px solid var(--line); padding-left:16px; }
+    .detail-side b { display:block; color:var(--blue); font:11px var(--mono); letter-spacing:.08em; }
+    .detail-side span { display:block; color:var(--ink-md); font-size:14px; margin-top:7px; line-height:1.55; }
+    #fallback { display:none; border-top:1px solid var(--line); border-bottom:1px solid var(--line-lo); background:var(--paper); padding:4px 0; }
+    .fallback-lane { display:grid; grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 54px; gap:8px; align-items:center; padding:13px 0; border-bottom:1px solid var(--line-lo); }
+    .fallback-lane:last-child { border-bottom:0; }
+    .node { border:1.5px solid var(--blue); padding:10px 12px; font-size:14px; font-weight:700; }
+    .node.old { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+    .node.new { color:var(--ink); background:var(--paper-hi); }
+    .arrow { color:var(--blue); font-size:22px; font-weight:700; text-align:center; }
+    .weight { color:var(--blue); font:700 16px var(--mono); text-align:right; }
+    @media (max-width:700px) { .topline { display:block; } .score { margin-top:16px; text-align:left; } .detail { grid-template-columns:56px minmax(0,1fr); } .detail-side { grid-column:2; border-left:0; border-top:1px solid var(--line); padding:10px 0 0; } #chart { height:520px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topline">
+      <div><span class="kicker">MIGRATION / CONTRA CHECK</span><h1>从“更强”到“更会判断”。</h1><p class="lede">旧单位 → 新单位：每条线不是替换关系，而是 AI 产品、采购和组织的判断单位正在迁移。</p></div>
+      <div class="score"><b>6</b><span>迁移路径</span></div>
+    </div>
+    <nav class="filters" aria-label="过滤变量"><button class="active" data-filter="all">ALL</button><button data-filter="能力">能力</button><button data-filter="成本">成本</button><button data-filter="分发">分发</button><button data-filter="供给">供给</button><button data-filter="监管">监管</button><button data-filter="采用">采用</button></nav>
+    <div id="chart" aria-label="AI 周报迁移矩阵图表"></div>
+    <div id="fallback"></div>
+    <section class="detail" aria-live="polite"><div class="detail-no" id="detail-no">01</div><div><h2 id="detail-title">Prompt scaffolding → Mature agent management</h2><p id="detail-why">给成熟模型目标、边界、参考物和复盘机制</p></div><div class="detail-side"><b>TEST / 反问</b><span id="detail-proof">常驻上下文是否变短</span></div></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" onerror="window.__echartsFailed=true"></script>
+  <script>
+    const DATA = [{"id": 1, "source": "Prompt scaffolding", "target": "Mature agent management", "why": "给成熟模型目标、边界、参考物和复盘机制", "variables": "能力 / 成本 / 采用", "proof": "常驻上下文是否变短", "score": 92, "color": "#FF6B2C"}, {"id": 2, "source": "Pre-release eval", "target": "Runtime boundary", "why": "把安全治理搬到身份、权限、日志、审批和回滚", "variables": "监管 / 采用", "proof": "是否记录工具调用轨迹", "score": 94, "color": "#D7FF3F"}, {"id": 3, "source": "Model ranking", "target": "Model-system pair", "why": "比较模型和 harness、验证器、memory 的组合能力", "variables": "能力 / 采用 / 成本", "proof": "采购对象是否变成系统包", "score": 90, "color": "#2F54FF"}, {"id": 4, "source": "Chat interface", "target": "Artifact surface", "why": "让 AI 进入 Excel、Outlook、画布、图片和设计台", "variables": "分发 / 采用", "proof": "交付物是否成为入口", "score": 92, "color": "#18D68A"}, {"id": 5, "source": "Web corpus", "target": "Workflow trajectory", "why": "从内容学习转向过程学习和验收轨迹", "variables": "供给 / 采用", "proof": "是否沉淀可验证任务轨迹", "score": 88, "color": "#B69CFF"}, {"id": 6, "source": "Token price", "target": "Industrial ledger", "why": "从 API 价格表迁移到电力、租赁和债务结构", "variables": "成本 / 供给", "proof": "单位任务成本是否全栈计量", "score": 96, "color": "#FF8BCB"}];
+    const chartEl = document.getElementById('chart');
+    const fallbackEl = document.getElementById('fallback');
+    const detail = { no:document.getElementById('detail-no'), title:document.getElementById('detail-title'), why:document.getElementById('detail-why'), proof:document.getElementById('detail-proof') };
+    let activeFilter = 'all';
+    let chartInstance = null;
+    function setDetail(item) { detail.no.textContent = String(item.id).padStart(2,'0'); detail.title.textContent = item.source + ' → ' + item.target; detail.why.textContent = item.why; detail.proof.textContent = item.proof + ' / ' + item.variables; }
+    function renderFallback() {
+      chartEl.style.display = 'none'; fallbackEl.style.display = 'block';
+      fallbackEl.innerHTML = DATA.filter(item => activeFilter === 'all' || item.variables.includes(activeFilter)).map(item => '<div class="fallback-lane"><div class="node old">'+item.source+'</div><div class="arrow">→</div><div class="node new" style="background:'+item.color+'">'+item.target+'</div><div class="weight">'+item.score+'</div></div>').join('');
+    }
+    function renderChart() {
+      if (typeof echarts === 'undefined' || window.__echartsFailed) { renderFallback(); return; }
+      chartEl.style.display = 'block'; fallbackEl.style.display = 'none';
+      const selected = DATA.filter(item => activeFilter === 'all' || item.variables.includes(activeFilter));
+      const nodes = [];
+      const links = [];
+      const chartWidth = Math.max(320, chartEl.clientWidth || 820);
+      const narrow = chartWidth < 640;
+      const oldWidth = narrow ? 144 : 244;
+      const newWidth = narrow ? 154 : 264;
+      const labelSize = narrow ? 11 : 14;
+      const leftX = narrow ? oldWidth / 2 + 8 : chartWidth * 0.24;
+      const rightX = narrow ? chartWidth * 0.56 : chartWidth * 0.76;
+      const rowStep = narrow ? 104 : (selected.length > 4 ? 76 : 98);
+      const startY = narrow ? 54 : (selected.length > 4 ? 56 : 72);
+      chartEl.style.height = narrow ? Math.max(500, startY + selected.length * rowStep + 26) + 'px' : '560px';
+      const labelFormatter = ({ name }) => {
+        if (!narrow || !name.includes(' ')) return name;
+        const words = name.split(' ');
+        const pivot = Math.ceil(words.length / 2);
+        return words.slice(0, pivot).join(' ') + '\n' + words.slice(pivot).join(' ');
+      };
+      selected.forEach((item, index) => {
+        const y = startY + index * rowStep;
+        nodes.push({ id:'old-'+item.id, name:item.source, x:leftX, y, kind:'old', item, symbol:'roundRect', symbolSize:[oldWidth, narrow ? 52 : 52], itemStyle:{ color:'#051C2C', borderColor:'#051C2C', borderWidth:1 }, label:{ formatter:labelFormatter, color:'#FFFFFF', fontFamily:'Songti SC, Georgia, serif', fontSize:labelSize, fontWeight:700 } });
+        nodes.push({ id:'new-'+item.id, name:item.target, x:rightX, y, kind:'new', item, symbol:'roundRect', symbolSize:[newWidth, narrow ? 52 : 52], itemStyle:{ color:'#F7F9FC', borderColor:item.color, borderWidth:2 }, label:{ formatter:labelFormatter, color:'#051C2C', fontFamily:'Songti SC, Georgia, serif', fontSize:labelSize, fontWeight:700 } });
+        links.push({ source:'old-'+item.id, target:'new-'+item.id, value:item.score, lineStyle:{ color:item.color, width:1.5 + item.score / 36, curveness:0.14, opacity:0.84 } });
+      });
+      chartInstance = echarts.getInstanceByDom(chartEl) || echarts.init(chartEl, null, { renderer:'svg' });
+      chartInstance.setOption({ animationDuration:650, animationEasing:'cubicOut', tooltip:{ trigger:'item', formatter:params => { const item=params.data && params.data.item; return item ? '<b>'+item.source+' → '+item.target+'</b><br/>score '+item.score+'<br/>'+item.why : ''; } }, series:[{ type:'graph', layout:'none', roam:false, data:nodes, links, coordinateSystem:null, edgeSymbol:['none','arrow'], edgeSymbolSize:7, emphasis:{ focus:'adjacency', lineStyle:{ width:6 } }, label:{ show:true, position:'inside' }, lineStyle:{ opacity:0.84 } }] }, true);
+      chartInstance.off('click'); chartInstance.on('click', params => { if (params.data && params.data.item) setDetail(params.data.item); });
+      if (selected.length) setDetail(selected[0]);
+    }
+    window.addEventListener('resize', () => { if (chartInstance) chartInstance.resize(); });
+    document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('[data-filter]').forEach(node => node.classList.remove('active')); button.classList.add('active'); activeFilter=button.dataset.filter; renderChart(); }));
+    let attempts = 0; (function boot(){ if (typeof echarts !== 'undefined' || window.__echartsFailed || attempts++ > 30) renderChart(); else setTimeout(boot,150); })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 日报趋势总结 · 插图系统方向</title>
+  <style>
+    :root {
+      --ink: #1b1814;
+      --paper: #f7f1e6;
+      --warm: #ede2cf;
+      --muted: #776f63;
+      --line: rgba(27, 24, 20, .16);
+      --red: #c94132;
+      --blue: #3d63ad;
+      --green: #5d8067;
+      --amber: #d49a33;
+      --rose: #d88485;
+      --violet: #786ea8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--paper); color: var(--ink); }
+
+    body {
+      margin: 0;
+      font-family: "Times New Roman", "Songti SC", "Noto Serif CJK SC", serif;
+      letter-spacing: 0;
+    }
+
+    button, .sans {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(201,65,50,.10), transparent 30%),
+        radial-gradient(circle at 80% 8%, rgba(61,99,173,.10), transparent 25%),
+        linear-gradient(180deg, #faf6ed, #f1e7d8);
+    }
+
+    .hero {
+      min-height: 88vh;
+      padding: clamp(24px, 5vw, 76px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .82fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow span {
+      border: 1px solid rgba(27,24,20,.22);
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,.38);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 920px;
+      font-size: clamp(50px, 8vw, 126px);
+      line-height: .9;
+      font-weight: 520;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 28px 0 0;
+      color: #3b352d;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.55;
+    }
+
+    .cover-art {
+      min-height: 580px;
+      position: relative;
+      border-radius: 42% 58% 48% 52% / 46% 39% 61% 54%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,.86), transparent 16%),
+        radial-gradient(circle at 64% 47%, rgba(216,132,133,.70), transparent 18%),
+        radial-gradient(circle at 42% 68%, rgba(61,99,173,.54), transparent 22%),
+        linear-gradient(135deg, #eee2d0, #cdd8d2 45%, #efcaa9);
+      filter: saturate(.92);
+      box-shadow: inset 0 0 0 1px rgba(27,24,20,.08);
+    }
+
+    .cover-art::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(12deg, rgba(255,255,255,.26) 0 1px, transparent 1px 9px),
+        radial-gradient(circle at 72% 18%, rgba(27,24,20,.24), transparent 8%);
+      mix-blend-mode: soft-light;
+    }
+
+    .cover-art::after {
+      content: "Daily Trends";
+      position: absolute;
+      left: 32px;
+      bottom: 30px;
+      color: rgba(27,24,20,.54);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 1px;
+      overflow-x: auto;
+      background: rgba(247,241,230,.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav a {
+      min-height: 48px;
+      padding: 15px 18px;
+      text-decoration: none;
+      color: var(--ink);
+      border-right: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .section {
+      padding: clamp(28px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) minmax(260px, 460px);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(36px, 5vw, 76px);
+      line-height: .95;
+      font-weight: 520;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .product-pair {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .doc, .wechat {
+      border: 1px solid rgba(27,24,20,.16);
+      background: rgba(255,255,255,.42);
+      min-height: 720px;
+      padding: clamp(18px, 2.4vw, 30px);
+      overflow: hidden;
+    }
+
+    .doc {
+      border-radius: 12px;
+      box-shadow: 0 16px 46px rgba(49, 39, 25, .07);
+    }
+
+    .wechat {
+      max-width: 430px;
+      justify-self: center;
+      border-radius: 30px;
+      background: #fff;
+    }
+
+    .doc-title, .wechat-title {
+      margin: 0 0 18px;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .hero-image {
+      min-height: 250px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius, 18px);
+      background: var(--art-bg);
+    }
+
+    .hero-image::before,
+    .trend-illu::before {
+      content: "";
+      position: absolute;
+      inset: -12%;
+      background: var(--art-layer);
+      mix-blend-mode: var(--blend, multiply);
+      opacity: var(--alpha, .9);
+    }
+
+    .hero-image::after,
+    .trend-illu::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--texture);
+      opacity: var(--texture-alpha, .38);
+      mix-blend-mode: overlay;
+    }
+
+    .doc h3, .wechat h3 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1.05;
+      font-weight: 560;
+      letter-spacing: 0;
+    }
+
+    .wechat h3 { font-size: 28px; }
+
+    .summary {
+      margin: 14px 0 22px;
+      color: #413a30;
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .trend-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(27,24,20,.12);
+    }
+
+    .trend-illu {
+      min-height: 118px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius, 16px);
+      background: var(--art-bg);
+    }
+
+    .trend-text h4 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.12;
+      font-weight: 620;
+    }
+
+    .trend-text p {
+      margin: 0;
+      color: #50483e;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .wechat .hero-image { min-height: 220px; border-radius: 0; margin: -30px -30px 22px; }
+    .wechat .trend-row { grid-template-columns: 88px 1fr; gap: 12px; }
+    .wechat .trend-illu { min-height: 92px; }
+    .wechat .trend-text h4 { font-size: 17px; }
+    .wechat .trend-text p { font-size: 13px; }
+
+    .direction-a {
+      --art-bg: linear-gradient(140deg, #f8f1e6, #e8d7bf 48%, #d9e0d1);
+      --art-layer:
+        radial-gradient(circle at 24% 30%, rgba(255,255,255,.92) 0 10%, transparent 10.5%),
+        radial-gradient(circle at 62% 40%, rgba(216,132,133,.62) 0 18%, transparent 18.5%),
+        radial-gradient(circle at 48% 72%, rgba(61,99,173,.38) 0 20%, transparent 20.5%);
+      --texture: repeating-linear-gradient(18deg, rgba(27,24,20,.12) 0 1px, transparent 1px 10px);
+      --radius: 28px;
+    }
+
+    .direction-b {
+      --art-bg: linear-gradient(120deg, #fff7df, #ecd39b 36%, #b9624e 72%, #3b4f6f);
+      --art-layer:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,.7) 0 9%, transparent 9.5%),
+        linear-gradient(92deg, rgba(255,255,255,.0), rgba(255,255,255,.54), rgba(255,255,255,0)),
+        radial-gradient(circle at 75% 70%, rgba(30,26,22,.44) 0 16%, transparent 16.5%);
+      --texture: repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 1px, transparent 1px 7px);
+      --radius: 6px;
+      --alpha: .82;
+    }
+
+    .direction-c {
+      --art-bg: #ece4d7;
+      --art-layer:
+        linear-gradient(110deg, transparent 0 30%, rgba(27,24,20,.12) 30% 31%, transparent 31% 100%),
+        radial-gradient(circle at 72% 26%, rgba(120,110,168,.44) 0 14%, transparent 14.5%),
+        radial-gradient(circle at 32% 72%, rgba(93,128,103,.45) 0 22%, transparent 22.5%),
+        conic-gradient(from 20deg at 54% 50%, rgba(201,65,50,.24), transparent, rgba(212,154,51,.36), transparent);
+      --texture:
+        repeating-linear-gradient(0deg, rgba(27,24,20,.08) 0 1px, transparent 1px 18px),
+        repeating-linear-gradient(90deg, rgba(27,24,20,.06) 0 1px, transparent 1px 18px);
+      --radius: 50%;
+    }
+
+    .direction-d {
+      --art-bg: #f8f4ea;
+      --art-layer:
+        linear-gradient(28deg, transparent 0 44%, rgba(27,24,20,.62) 44% 45%, transparent 45%),
+        radial-gradient(circle at 28% 32%, rgba(201,65,50,.52) 0 15%, transparent 15.5%),
+        radial-gradient(circle at 76% 62%, rgba(61,99,173,.48) 0 12%, transparent 12.5%),
+        radial-gradient(circle at 50% 52%, rgba(255,255,255,.9) 0 18%, transparent 18.5%);
+      --texture:
+        repeating-radial-gradient(circle at 30% 50%, rgba(27,24,20,.10) 0 1px, transparent 1px 8px);
+      --radius: 14px;
+    }
+
+    .asset-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .asset {
+      border: 1px solid rgba(27,24,20,.14);
+      padding: 12px;
+      background: rgba(255,255,255,.38);
+      min-height: 112px;
+    }
+
+    .asset strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .asset p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      padding: 30px clamp(24px, 5vw, 72px) 60px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .section-head, .product-pair { grid-template-columns: 1fr; }
+      .wechat { max-width: none; justify-self: stretch; }
+      .asset-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .hero, .section { padding: 22px; }
+      .trend-row { grid-template-columns: 1fr; }
+      .trend-illu { min-height: 160px; }
+      .asset-list { grid-template-columns: 1fr; }
+      .cover-art { min-height: 380px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <div class="eyebrow sans">
+          <span>AI Daily Visual System</span>
+          <span>Feishu Doc + WeChat HTML</span>
+          <span>Reboot</span>
+        </div>
+        <h1>不要把趋势画成图表，要把判断画成气氛。</h1>
+        <p class="hero-copy">这版从 AI 品牌美学里吸收 off-white、digital impressionism、lomo、scribble、morphing objects、surreal / generative art。目标不是更 tech，而是让每日三趋势像一组有作者气质的插图：可放进飞书文档，也能复用成公众号头图和趋势总结图。</p>
+      </div>
+      <div class="cover-art" aria-label="抽象 AI 趋势封面"></div>
+    </section>
+
+    <nav class="nav sans" aria-label="风格目录">
+      <a href="#soft">01 Soft Intelligence Still Life</a>
+      <a href="#lomo">02 Lomo Field Notes</a>
+      <a href="#surreal">03 Morphing Surreal Objects</a>
+      <a href="#archive">04 Generative Art Archive</a>
+    </nav>
+
+    <section class="section direction-a" id="soft">
+      <div class="section-head">
+        <div class="label sans">Direction 01</div>
+        <h2>Soft Intelligence Still Life</h2>
+        <p>关键词：off-white、organic gradient、digital impressionism、柔和但不软弱。适合飞书文档开头，给“第一性原理判断”一个安静、可信、有高级感的视觉容器。</p>
+      </div>
+      <div class="product-pair">
+        <article class="doc">
+          <p class="doc-title sans">Feishu Doc Opening</p>
+          <div class="hero-image"></div>
+          <h3>每日三趋势：能力、成本、分发的关系正在重新排序</h3>
+          <p class="summary">今天的重点不是哪家公司又发布了什么，而是谁改变了约束条件。插图不解释技术细节，只给出一种“智能正在成形”的感受。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>能力不是结论，交付成本才开始定价模型价值</h4>
+              <p>适合配一张柔焦静物：像一团正在凝固的玻璃，暗示能力从抽象流体变成可交易对象。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>Agent 的竞争从 demo 迁移到默认入口</h4>
+              <p>用轻微变形的门、窗、手势作为隐喻，让“分发”和“权限”比机器人形象更重要。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>算力约束继续向供应链下游移动</h4>
+              <p>不用芯片电路图，改用地层、矿物、织物纹理表现约束迁移，更有材料感。</p>
+            </div>
+          </div>
+        </article>
+        <article class="wechat">
+          <p class="wechat-title sans">WeChat HTML Reuse</p>
+          <div class="hero-image"></div>
+          <h3>今日 AI 三趋势</h3>
+          <p class="summary">同一套插图缩放为公众号头图和三张趋势图，正文只保留短 thesis。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>成本审判能力</h4><p>能力强不等于价值高。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>入口定义 Agent</h4><p>权限与场景决定采用。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>约束继续迁移</h4><p>利润追随最紧瓶颈。</p></div>
+          </div>
+        </article>
+      </div>
+      <div class="asset-list sans">
+        <div class="asset"><strong>产物资产</strong><p>1 张横版头图 + 3 张 4:3 趋势插图。</p></div>
+        <div class="asset"><strong>飞书适配</strong><p>插图放在每日三趋势之前，文档不显得像海报。</p></div>
+        <div class="asset"><strong>公众号适配</strong><p>头图可裁 2.35:1，趋势图可作为段落分隔。</p></div>
+        <div class="asset"><strong>风险</strong><p>太克制时记忆点较弱，需要标题足够 sharp。</p></div>
+      </div>
+    </section>
+
+    <section class="section direction-b" id="lomo">
+      <div class="section-head">
+        <div class="label sans">Direction 02</div>
+        <h2>Lomo Field Notes</h2>
+        <p>关键词：lomo imagery、光漏、手写批注、实验记录。更人、更现场，像你每天从新闻废墟里捡出三个真正信号。</p>
+      </div>
+      <div class="product-pair">
+        <article class="doc">
+          <p class="doc-title sans">Feishu Doc Opening</p>
+          <div class="hero-image"></div>
+          <h3>每日三趋势：不是新闻摘要，是观察笔记</h3>
+          <p class="summary">视觉上故意保留“不完美”：光斑、颗粒、错位边缘，抵消 AI 内容常见的过度光滑。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>能力增长开始暴露组织采用的摩擦</h4>
+              <p>把趋势图做成一张被光漏烧到边缘的工作台照片，像现场证据。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>Agent 走向真实工作流，才会遇到真实阻力</h4>
+              <p>图面可加入手写圈注、箭头、删改痕迹，强调判断正在发生。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>供应链约束让 AI 叙事重新落地</h4>
+              <p>用模糊仓库、纸张、阴影表现“宏大叙事碰到物理世界”。</p>
+            </div>
+          </div>
+        </article>
+        <article class="wechat">
+          <p class="wechat-title sans">WeChat HTML Reuse</p>
+          <div class="hero-image"></div>
+          <h3>今日观察笔记</h3>
+          <p class="summary">公众号版更像专栏开头，少一点品牌感，多一点人味。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>采用摩擦显形</h4><p>能力增长撞上组织现实。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>工作流才是战场</h4><p>demo 之外才见输赢。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>物理约束回归</h4><p>AI 仍被世界定价。</p></div>
+          </div>
+        </article>
+      </div>
+      <div class="asset-list sans">
+        <div class="asset"><strong>产物资产</strong><p>头图像胶片封面，三张趋势图像观察手账。</p></div>
+        <div class="asset"><strong>飞书适配</strong><p>文档更有人的编辑感，适合团队读者。</p></div>
+        <div class="asset"><strong>公众号适配</strong><p>很适合作为连载专栏风格，识别度高。</p></div>
+        <div class="asset"><strong>风险</strong><p>需要控制脏感，不然会像随手滤镜。</p></div>
+      </div>
+    </section>
+
+    <section class="section direction-c" id="surreal">
+      <div class="section-head">
+        <div class="label sans">Direction 03</div>
+        <h2>Morphing Surreal Objects</h2>
+        <p>关键词：morphing objects、futuristic surrealism、符号物、梦感。把每条趋势变成一个“不可完全解释的物体”，更接近当代艺术和未来感。</p>
+      </div>
+      <div class="product-pair">
+        <article class="doc">
+          <p class="doc-title sans">Feishu Doc Opening</p>
+          <div class="hero-image"></div>
+          <h3>每日三趋势：三个正在变形的物体</h3>
+          <p class="summary">每个趋势都有一个固定隐喻：成本是秤，分发是门，供给是地层。每天根据新闻变化让物体形态微变。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>成本之秤：模型价值不再只由能力决定</h4>
+              <p>一个介于玻璃、器官、天平之间的物体，表达价值被重新称量。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>分发之门：Agent 要进入默认工作流</h4>
+              <p>门不是入口图标，而是一块会呼吸的建筑碎片，表达权限和场景。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>供给地层：算力瓶颈是一种地质结构</h4>
+              <p>把芯片、电力、封装变成沉积层，让读者感到约束的厚度。</p>
+            </div>
+          </div>
+        </article>
+        <article class="wechat">
+          <p class="wechat-title sans">WeChat HTML Reuse</p>
+          <div class="hero-image"></div>
+          <h3>今日三件物</h3>
+          <p class="summary">更像公众号艺术栏目，有强记忆点。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>成本之秤</h4><p>价值被重新称量。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>分发之门</h4><p>入口改变命运。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>供给地层</h4><p>瓶颈有厚度。</p></div>
+          </div>
+        </article>
+      </div>
+      <div class="asset-list sans">
+        <div class="asset"><strong>产物资产</strong><p>每期 1 张大封面 + 3 个趋势符号物。</p></div>
+        <div class="asset"><strong>飞书适配</strong><p>文档开头显著提升审美记忆点。</p></div>
+        <div class="asset"><strong>公众号适配</strong><p>头图吸引力最强，适合转发传播。</p></div>
+        <div class="asset"><strong>风险</strong><p>抽象度高，需要趋势标题非常明确兜底。</p></div>
+      </div>
+    </section>
+
+    <section class="section direction-d" id="archive">
+      <div class="section-head">
+        <div class="label sans">Direction 04</div>
+        <h2>Generative Art Archive</h2>
+        <p>关键词：generative art、非品牌学术、手稿边注。不是 dashboard，而是“每天一张由规则生成的艺术索引”，保留技术 taste，但让它更像作品。</p>
+      </div>
+      <div class="product-pair">
+        <article class="doc">
+          <p class="doc-title sans">Feishu Doc Opening</p>
+          <div class="hero-image"></div>
+          <h3>每日三趋势：一张规则生成的判断索引</h3>
+          <p class="summary">六个底层变量不是热力图，而是生成图形的规则。能力、成本、分发等变量改变，图形构图也改变。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>能力 × 成本：线条密度决定紧张感</h4>
+              <p>能力越高、成本越紧，图形越密。视觉既是插图，也是趋势编码。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>分发 × 采用：开口角度决定进入性</h4>
+              <p>图形不是装饰，而是对趋势结构的轻量编码。</p>
+            </div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text">
+              <h4>供给 × 监管：断裂越多，约束越强</h4>
+              <p>适合长期沉淀，因为每期图形可以累积成视觉档案。</p>
+            </div>
+          </div>
+        </article>
+        <article class="wechat">
+          <p class="wechat-title sans">WeChat HTML Reuse</p>
+          <div class="hero-image"></div>
+          <h3>今日判断索引</h3>
+          <p class="summary">公众号版保持艺术索引感，不变成数据报表。</p>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>能力 × 成本</h4><p>密度就是压力。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>分发 × 采用</h4><p>开口就是入口。</p></div>
+          </div>
+          <div class="trend-row">
+            <div class="trend-illu"></div>
+            <div class="trend-text"><h4>供给 × 监管</h4><p>断裂就是约束。</p></div>
+          </div>
+        </article>
+      </div>
+      <div class="asset-list sans">
+        <div class="asset"><strong>产物资产</strong><p>可程序化生成：头图 + 三趋势图。</p></div>
+        <div class="asset"><strong>飞书适配</strong><p>长期使用后形成独特视觉档案。</p></div>
+        <div class="asset"><strong>公众号适配</strong><p>既有技术感又不冷，适合严肃读者。</p></div>
+        <div class="asset"><strong>风险</strong><p>需要定义变量到图形的映射规则。</p></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      推荐先选一个主方向，再定资产规范：飞书文档需要 1 张开头横版图 + 3 张趋势插图；公众号 HTML 复用同一套资产，头图用横版，趋势总结图用三张插图或一张三联图。当前文件只是 taste board，不接入现有 AI 日报架构。
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<whiteboard type="svg"><svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1020" viewBox="0 0 1600 1020" role="img" aria-label="AI weekly variable map">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(17,19,24,.07)" stroke-width="1"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1020" fill="#F4EFE4"/>
+  <rect width="1600" height="1020" fill="url(#grid)" opacity=".9"/>
+  <rect x="72" y="62" width="175" height="32" fill="rgba(255,255,255,.42)" stroke="#D8CDBC" /><text x="83" y="84" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >01 / VARIABLE MAP</text>
+<text x="72" y="150.0" fill="#111318" font-family="system-ui" font-size="50" font-weight="900" text-anchor="start" letter-spacing="0" >这周真正变化的，是六个底层变量的权重。</text>
+<text x="72" y="270.0" fill="#3E382F" font-family="system-ui" font-size="22" font-weight="520" text-anchor="start" letter-spacing="0" >柱高不是精确数据，而是编辑判断强度：它告诉读者先看哪一个约束变了，再看新闻本身。</text>
+<rect x="72" y="374" width="1456" height="530" fill="rgba(255,255,255,.38)" stroke="#111318" stroke-width="2"/>
+
+<rect x="94.0" y="479.1" width="198.66666666666666" height="270.9" fill="#D64028" opacity=".84"/>
+<text x="94.0" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >能力</text>
+<text x="94.0" y="439.1" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >86</text>
+<text x="94.0" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >Opus 5 / Claude 5 gener</text>
+<text x="94.0" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >ation 让模型开始要求更少</text>
+<text x="94.0" y="857.76" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >提示词噪音。</text>
+<line x1="314.66666666666663" y1="374" x2="314.66666666666663" y2="904" stroke="#D8CDBC" />
+<rect x="336.66666666666663" y="491.7" width="198.66666666666666" height="258.3" fill="#D6A435" opacity=".84"/>
+<text x="336.66666666666663" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >成本</text>
+<text x="336.66666666666663" y="451.7" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >82</text>
+<text x="336.66666666666663" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >token 成本外溢成吞吐、电</text>
+<text x="336.66666666666663" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >力、债务和数据中心协议。</text>
+<line x1="557.3333333333333" y1="374" x2="557.3333333333333" y2="904" stroke="#D8CDBC" />
+<rect x="579.3333333333333" y="504.3" width="198.66666666666666" height="245.7" fill="#2459D6" opacity=".84"/>
+<text x="579.3333333333333" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >分发</text>
+<text x="579.3333333333333" y="464.3" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >78</text>
+<text x="579.3333333333333" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >Office、画布、邮件、图片</text>
+<text x="579.3333333333333" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >和设计台成为 AI 交付入口</text>
+<text x="579.3333333333333" y="857.76" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >。</text>
+<line x1="800.0" y1="374" x2="800.0" y2="904" stroke="#D8CDBC" />
+<rect x="822.0" y="472.8" width="198.66666666666666" height="277.2" fill="#13865E" opacity=".84"/>
+<text x="822.0" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >供给</text>
+<text x="822.0" y="432.8" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >88</text>
+<text x="822.0" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >3.2GW、2GW 芯片合作和隐</text>
+<text x="822.0" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >性债务把 AI 拉回工业系统</text>
+<text x="822.0" y="857.76" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >。</text>
+<line x1="1042.6666666666665" y1="374" x2="1042.6666666666665" y2="904" stroke="#D8CDBC" />
+<rect x="1064.6666666666665" y="463.35" width="198.66666666666666" height="286.65" fill="#765AD8" opacity=".84"/>
+<text x="1064.6666666666665" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >监管</text>
+<text x="1064.6666666666665" y="423.35" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >91</text>
+<text x="1064.6666666666665" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >评测作弊、安全事件和版权和</text>
+<text x="1064.6666666666665" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >解把边界推到运行时。</text>
+<line x1="1285.3333333333333" y1="374" x2="1285.3333333333333" y2="904" stroke="#D8CDBC" />
+<rect x="1307.3333333333333" y="485.4" width="198.66666666666666" height="264.6" fill="#0F8AA3" opacity=".84"/>
+<text x="1307.3333333333333" y="424" fill="#111318" font-family="system-ui" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0" >组织采用</text>
+<text x="1307.3333333333333" y="445.4" fill="#111318" font-family="system-ui" font-size="52" font-weight="900" text-anchor="start" letter-spacing="0" >84</text>
+<text x="1307.3333333333333" y="818.0" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >Agent 越像数字员工，越需</text>
+<text x="1307.3333333333333" y="837.88" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >要任务、权限、检查点和复盘</text>
+<text x="1307.3333333333333" y="857.76" fill="#4B443A" font-family="system-ui" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0" >记录。</text>
+</svg>
+</whiteboard>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810" role="img" aria-label="权限边界 就是产品">
+  <rect width="1440" height="810" fill="#E8E5DC"/>
+  <rect x="0" y="0" width="1440" height="6" fill="#0E0F0D"/>
+  <text x="48" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#171814" text-anchor="start" letter-spacing="0">第 03 室 / 人工智能周报</text>
+  <text x="1392" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#3159FF" text-anchor="end" letter-spacing="0">安全边界</text>
+  <text x="48" y="108" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="56" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0"><tspan x="48" dy="0">权限边界</tspan><tspan x="48" dy="58">就是产品</tspan></text>
+  <text x="52" y="228" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="560" fill="#171814" text-anchor="start" letter-spacing="0"><tspan x="52" dy="0">安全不再停留在白皮书里。</tspan><tspan x="52" dy="31">事故已经有系统、资产和时间线。</tspan></text>
+  <line x1="48" y1="300" x2="1392" y2="300" stroke="#B9B6AC" stroke-width="1"/>
+  
+        <g transform="translate(55 325)">
+          <rect width="1235" height="280" fill="#F6F4ED" stroke="#3159FF" stroke-width="5"/>
+          <g transform="translate(34 40)">
+              <rect width="155" height="170" fill="#F6F4ED" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">身份</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#3159FF"/>
+            </g><g transform="translate(230 40)">
+              <rect width="155" height="170" fill="#E8E5DC" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">网络</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#3159FF"/>
+            </g><g transform="translate(426 40)">
+              <rect width="155" height="170" fill="#F6F4ED" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">写入范围</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#3159FF"/>
+            </g><g transform="translate(622 40)">
+              <rect width="155" height="170" fill="#E8E5DC" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">日志</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#D9FF3F"/>
+            </g><g transform="translate(818 40)">
+              <rect width="155" height="170" fill="#F6F4ED" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">审批</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#D9FF3F"/>
+            </g><g transform="translate(1014 40)">
+              <rect width="155" height="170" fill="#E8E5DC" stroke="#B9B6AC"/>
+              <text x="18" y="40" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">回滚</text>
+              <line x1="16" y1="70" x2="130" y2="70" stroke="#B9B6AC"/>
+              <circle cx="34" cy="116" r="18" fill="#D9FF3F"/>
+            </g>
+          <path d="M78 242 C246 160 345 229 515 121 C650 36 790 95 920 43 C1040 -5 1135 38 1248 -38" fill="none" stroke="#FF5B3F" stroke-width="7"/>
+          <text x="944" y="250" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="38" font-weight="950" fill="#FF5B3F" text-anchor="start" letter-spacing="0">逃逸路径</text>
+        </g>
+  <g transform="translate(48 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FF5B3F" text-anchor="start" letter-spacing="0">安全回查</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">141006次</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">评测记录</text>
+      </g><g transform="translate(318 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FF5B3F" text-anchor="start" letter-spacing="0">真实入侵</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">3起</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">未授权访问</text>
+      </g><g transform="translate(588 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#3159FF" text-anchor="start" letter-spacing="0">取证日志</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">1.7万+</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">攻击事件</text>
+      </g><g transform="translate(858 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FFB338" text-anchor="start" letter-spacing="0">外部影响</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">第二面</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">客户资产</text>
+      </g><g transform="translate(1128 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#0E0F0D" text-anchor="start" letter-spacing="0">控制项</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">关停</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">必须默认</text>
+      </g>
+  <text x="48" y="790" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="13" font-weight="700" fill="#171814" text-anchor="start" letter-spacing="0">信号整理自 2026 年 7 月 24 日至 7 月 31 日人工智能周报</text>
+</svg>

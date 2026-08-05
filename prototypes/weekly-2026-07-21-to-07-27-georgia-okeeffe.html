@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 周报｜近看，直到结构显形</title>
+  <style>
+    :root {
+      --paper: #f4edcf;
+      --paper-deep: #e7dcba;
+      --ink: #22231d;
+      --ink-soft: #5c5a4e;
+      --blue: #24487e;
+      --blue-deep: #1b3158;
+      --vermilion: #e85237;
+      --coral: #f49a7e;
+      --rose: #c74d69;
+      --ochre: #c7973b;
+      --leaf: #73884f;
+      --white: #fffaf0;
+      --line: rgba(34, 35, 29, .28);
+      --shadow: rgba(34, 35, 29, .11);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: #d8cfb0; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #d8cfb0;
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.45;
+    }
+
+    .exhibition {
+      width: min(100%, 1540px);
+      margin: 0 auto;
+      padding: 28px 28px 72px;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 28px;
+      padding: 4px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .masthead h1 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 48px);
+      line-height: .98;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .masthead p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: clip;
+      margin: 28px 0;
+      background: var(--paper);
+      box-shadow: 0 16px 38px var(--shadow);
+      isolation: isolate;
+    }
+
+    .frame::before,
+    .frame::after { content: ""; position: absolute; pointer-events: none; }
+
+    .frame-label {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-soft);
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .frame-label .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--vermilion);
+    }
+
+    .caption {
+      position: absolute;
+      z-index: 4;
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .micro {
+      color: var(--ink-soft);
+      font: 700 10px/1.2 Arial, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .frame h2,
+    .frame h3,
+    .frame p { position: relative; z-index: 3; }
+
+    /* 01: the exhibition entrance */
+    .f01 { background: var(--paper); }
+    .f01 .frame-label .dot { background: var(--blue); }
+    .f01 .title-block {
+      position: absolute;
+      top: 17.5%;
+      right: 7%;
+      z-index: 4;
+      width: 42%;
+    }
+    .f01 h2 {
+      margin: 0;
+      max-width: 620px;
+      font-size: clamp(42px, 6.7vw, 100px);
+      line-height: .86;
+      letter-spacing: 0;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .f01 h2 span { display: block; color: var(--vermilion); }
+    .f01 .title-block p { max-width: 410px; margin: 14px 0 0; color: var(--ink-soft); font-size: 15px; }
+    .f01 .shape-a {
+      position: absolute;
+      left: -8%;
+      bottom: -24%;
+      width: 66%;
+      height: 92%;
+      z-index: 1;
+      border-radius: 48% 52% 43% 57% / 38% 37% 63% 62%;
+      background: var(--vermilion);
+      transform: rotate(-18deg);
+    }
+    .f01 .shape-b {
+      position: absolute;
+      left: 21%;
+      top: 8%;
+      width: 28%;
+      height: 112%;
+      z-index: 2;
+      border-radius: 60% 40% 55% 45% / 42% 60% 40% 58%;
+      background: var(--coral);
+      transform: rotate(26deg);
+    }
+    .f01 .shape-c {
+      position: absolute;
+      left: 29%;
+      top: 17%;
+      width: 16%;
+      height: 95%;
+      z-index: 3;
+      border-radius: 60% 40% 49% 51% / 35% 62% 38% 65%;
+      background: var(--paper);
+      transform: rotate(23deg);
+    }
+    .f01 .horizon {
+      position: absolute;
+      right: 6%;
+      bottom: 11%;
+      width: 40%;
+      height: 1px;
+      background: var(--blue);
+      opacity: .7;
+    }
+    .f01 .edge-note { left: 7%; bottom: 8%; max-width: 230px; }
+    .f01 .corner-note { position: absolute; right: 7%; bottom: 7%; text-align: right; }
+
+    /* 02: first-principles equation */
+    .f02 { background: var(--blue-deep); color: var(--paper); }
+    .f02 .frame-label, .f02 .caption, .f02 .micro { color: #d9d9c8; }
+    .f02 .frame-label .dot { background: var(--ochre); }
+    .f02 h2 { position: absolute; top: 13%; left: 9%; margin: 0; max-width: 720px; font-size: clamp(34px, 4.5vw, 68px); line-height: .94; text-transform: uppercase; }
+    .f02 h2 span { color: var(--coral); }
+    .f02 .equation {
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      bottom: 25%;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 54px 1.8fr;
+      align-items: center;
+      gap: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .f02 .term { min-width: 0; font-size: clamp(20px, 2.5vw, 38px); line-height: .94; }
+    .f02 .term span { display: block; margin-top: 8px; color: #d9d9c8; font-size: 11px; font-weight: 400; line-height: 1.3; text-transform: none; }
+    .f02 .operator { color: var(--coral); font-size: 40px; text-align: center; }
+    .f02 .denominator { min-width: 0; color: var(--paper); font-size: clamp(19px, 2.2vw, 32px); overflow-wrap: anywhere; }
+    .f02 .denominator span { color: #d9d9c8; }
+    .f02 .petal-a { position: absolute; right: -7%; bottom: -36%; width: 48%; height: 92%; border-radius: 53% 47% 57% 43% / 34% 57% 43% 66%; background: var(--rose); transform: rotate(-22deg); }
+    .f02 .petal-b { position: absolute; right: 19%; top: -36%; width: 20%; height: 94%; border-radius: 50% 50% 62% 38% / 32% 58% 42% 68%; background: var(--ochre); transform: rotate(17deg); }
+    .f02 .bottom-note { left: 9%; bottom: 9%; max-width: 520px; color: #d9d9c8; }
+    .f02 .side-note { position: absolute; right: 9%; bottom: 9%; max-width: 300px; color: #d9d9c8; text-align: right; }
+
+    /* 03: context engineering */
+    .f03 { background: var(--paper-deep); }
+    .f03 .frame-label .dot { background: var(--rose); }
+    .f03 h2 { position: absolute; top: 14%; right: 7%; width: 38%; margin: 0; font-size: clamp(34px, 5vw, 76px); line-height: .9; text-transform: uppercase; }
+    .f03 .body-copy { position: absolute; top: 45%; right: 8%; width: 31%; color: var(--ink-soft); font-size: 14px; }
+    .f03 .body-copy strong { color: var(--ink); }
+    .f03 .core {
+      position: absolute;
+      left: 15%;
+      top: 18%;
+      width: 43%;
+      height: 72%;
+      border: 2px solid var(--rose);
+      border-radius: 46% 54% 42% 58% / 55% 41% 59% 45%;
+      transform: rotate(-14deg);
+    }
+    .f03 .core::before { content: ""; position: absolute; left: 16%; top: 12%; width: 68%; height: 80%; border-radius: 58% 42% 52% 48% / 43% 61% 39% 57%; background: var(--rose); }
+    .f03 .core::after { content: ""; position: absolute; left: 37%; top: 29%; width: 28%; height: 46%; border-radius: 48% 52% 58% 42% / 41% 57% 43% 59%; background: var(--paper-deep); }
+    .f03 .number { position: absolute; left: 30%; top: 43%; z-index: 3; color: var(--paper); font-size: clamp(62px, 9vw, 140px); line-height: .78; font-weight: 900; }
+    .f03 .number small { display: block; margin-top: 16px; color: var(--paper); font: 700 11px/1 Arial; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+    .f03 .leaf { position: absolute; left: 8%; bottom: -17%; width: 26%; height: 45%; border-radius: 68% 32% 58% 42% / 36% 66% 34% 64%; background: var(--leaf); transform: rotate(-22deg); }
+    .f03 .rule { position: absolute; left: 6%; right: 6%; bottom: 10%; height: 1px; background: var(--ink); opacity: .35; }
+    .f03 .footnote { position: absolute; left: 7%; bottom: 5%; }
+
+    /* 04: runtime boundaries */
+    .f04 { background: var(--white); }
+    .f04 .frame-label .dot { background: var(--blue); }
+    .f04 h2 { position: absolute; top: 14%; left: 7%; width: 34%; margin: 0; font-size: clamp(34px, 4.8vw, 72px); line-height: .9; text-transform: uppercase; }
+    .f04 h2 span { color: var(--blue); }
+    .f04 .body-copy { position: absolute; left: 7%; bottom: 15%; width: 30%; color: var(--ink-soft); font-size: 13px; }
+    .f04 .window { position: absolute; right: 7%; top: 13%; width: 45%; height: 70%; border: 2px solid var(--ink); }
+    .f04 .window::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ink); }
+    .f04 .window::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--ink); }
+    .f04 .window-field { position: absolute; width: 50%; height: 50%; padding: 17px; }
+    .f04 .window-field b { display: block; margin-bottom: 8px; font-size: 18px; }
+    .f04 .window-field span { display: block; color: var(--ink-soft); font-size: 11px; }
+    .f04 .identity { left: 0; top: 0; background: var(--coral); }
+    .f04 .permission { right: 0; top: 0; background: var(--paper-deep); }
+    .f04 .network { left: 0; bottom: 0; background: var(--blue); color: var(--white); }
+    .f04 .network span { color: #e3e6eb; }
+    .f04 .checkpoint { right: 0; bottom: 0; background: var(--leaf); }
+    .f04 .checkpoint span { color: #f1f3dc; }
+    .f04 .stamp { position: absolute; right: 3%; bottom: 5%; color: var(--vermilion); font-size: 12px; font-weight: 800; text-transform: uppercase; transform: rotate(-8deg); }
+
+    /* 05: competition unit */
+    .f05 { background: var(--paper); }
+    .f05 .frame-label .dot { background: var(--ochre); }
+    .f05 h2 { position: absolute; top: 13%; left: 7%; margin: 0; width: 52%; font-size: clamp(32px, 4.2vw, 64px); line-height: .9; text-transform: uppercase; }
+    .f05 h2 span { color: var(--vermilion); }
+    .f05 .subtitle { position: absolute; top: 15%; right: 8%; width: 24%; color: var(--ink-soft); font-size: 13px; }
+    .f05 .stack { position: absolute; left: 7%; right: 7%; bottom: 16%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; z-index: 3; }
+    .f05 .stack-cell { min-width: 0; min-height: 180px; padding: 15px; overflow: hidden; border-top: 2px solid var(--ink); background: var(--white); }
+    .f05 .stack-cell:nth-child(1) { border-color: var(--vermilion); }
+    .f05 .stack-cell:nth-child(2) { border-color: var(--blue); }
+    .f05 .stack-cell:nth-child(3) { border-color: var(--leaf); }
+    .f05 .stack-cell:nth-child(4) { border-color: var(--rose); }
+    .f05 .cell-number { margin-bottom: 32px; font: 800 clamp(26px, 3vw, 46px)/.8 Arial; }
+    .f05 .stack-cell h3 { margin: 0 0 10px; font-size: 16px; }
+    .f05 .stack-cell p { margin: 0; color: var(--ink-soft); font-size: 11px; }
+    .f05 .stem { position: absolute; left: 13%; bottom: -25%; width: 24%; height: 66%; border-radius: 58% 42% 48% 52% / 40% 57% 43% 60%; background: var(--ochre); transform: rotate(14deg); }
+    .f05 .stem-b { position: absolute; right: 5%; top: 29%; width: 16%; height: 48%; border-radius: 42% 58% 47% 53% / 58% 43% 57% 42%; background: var(--blue); transform: rotate(-18deg); }
+
+    /* 06: delivery surfaces */
+    .f06 { background: var(--coral); }
+    .f06 .frame-label .dot { background: var(--ink); }
+    .f06 h2 { position: absolute; top: 13%; left: 7%; margin: 0; width: 41%; color: var(--ink); font-size: clamp(34px, 4.5vw, 68px); line-height: .9; text-transform: uppercase; }
+    .f06 .body-copy { position: absolute; left: 7%; bottom: 14%; width: 32%; color: var(--ink); font-size: 13px; }
+    .f06 .surface { position: absolute; right: 8%; top: 14%; width: 46%; height: 70%; border: 2px solid var(--ink); background: var(--paper); }
+    .f06 .surface::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--ink); opacity: .5; }
+    .f06 .surface::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--ink); opacity: .5; }
+    .f06 .surface-cell { position: absolute; width: 50%; height: 50%; min-width: 0; padding: 16px; overflow: hidden; }
+    .f06 .surface-cell strong { display: block; margin-bottom: 8px; font-size: 18px; }
+    .f06 .surface-cell span { display: block; color: var(--ink-soft); font-size: 11px; }
+    .f06 .office { left: 0; top: 0; background: var(--blue); color: var(--white); }
+    .f06 .office span { color: #e3e7ef; }
+    .f06 .canvas { right: 0; top: 0; background: var(--paper-deep); }
+    .f06 .image { left: 0; bottom: 0; background: var(--ochre); }
+    .f06 .design { right: 0; bottom: 0; background: var(--leaf); }
+    .f06 .design span { color: #f2f4df; }
+    .f06 .chat { position: absolute; left: 45%; bottom: 8%; z-index: 4; color: var(--ink); font: 800 12px/1 Arial; letter-spacing: .04em; text-transform: uppercase; transform: rotate(-6deg); }
+
+    /* 07: industrial landscape */
+    .f07 { background: var(--blue); color: var(--white); }
+    .f07 .frame-label, .f07 .caption, .f07 .micro { color: #e1e8ef; }
+    .f07 .frame-label .dot { background: var(--ochre); }
+    .f07 h2 { position: absolute; top: 12%; left: 7%; margin: 0; width: 44%; font-size: clamp(36px, 5vw, 76px); line-height: .9; text-transform: uppercase; }
+    .f07 h2 span { color: var(--ochre); }
+    .f07 .landscape { position: absolute; right: 5%; bottom: 9%; width: 49%; height: 60%; }
+    .f07 .ridge { position: absolute; bottom: 0; width: 100%; height: 70%; clip-path: polygon(0 72%, 12% 54%, 24% 63%, 36% 33%, 52% 51%, 66% 15%, 78% 44%, 91% 27%, 100% 40%, 100% 100%, 0 100%); background: var(--paper); }
+    .f07 .ridge-two { position: absolute; bottom: 0; width: 100%; height: 47%; clip-path: polygon(0 50%, 17% 40%, 31% 65%, 49% 29%, 66% 54%, 82% 15%, 100% 42%, 100% 100%, 0 100%); background: var(--coral); }
+    .f07 .ridge-three { position: absolute; bottom: 0; width: 100%; height: 22%; clip-path: polygon(0 42%, 20% 32%, 43% 65%, 64% 19%, 80% 53%, 100% 28%, 100% 100%, 0 100%); background: var(--ochre); }
+    .f07 .metric { position: absolute; z-index: 3; display: flex; align-items: baseline; gap: 10px; }
+    .f07 .metric b { font-size: clamp(34px, 4.4vw, 68px); line-height: .8; }
+    .f07 .metric span { max-width: 135px; color: var(--ink); font-size: 11px; font-weight: 700; line-height: 1.2; }
+    .f07 .m1 { left: 4%; top: 18%; }
+    .f07 .m2 { left: 43%; top: 42%; }
+    .f07 .m3 { right: 3%; bottom: 5%; }
+    .f07 .m1 b, .f07 .m2 b { color: var(--paper); }
+    .f07 .m1 span, .f07 .m2 span { color: var(--paper); }
+    .f07 .m3 b { color: var(--vermilion); }
+    .f07 .note { left: 7%; bottom: 10%; max-width: 370px; color: #e1e8ef; }
+
+    /* 08: management note */
+    .f08 { background: var(--paper); }
+    .f08 .frame-label .dot { background: var(--leaf); }
+    .f08 h2 { position: absolute; top: 13%; left: 7%; width: 51%; margin: 0; font-size: clamp(36px, 5vw, 78px); line-height: .88; text-transform: uppercase; }
+    .f08 h2 span { color: var(--leaf); }
+    .f08 .body-copy { position: absolute; left: 7%; bottom: 12%; width: 34%; color: var(--ink-soft); font-size: 14px; }
+    .f08 .body-copy strong { color: var(--ink); }
+    .f08 .open-form { position: absolute; right: 10%; top: 16%; width: 34%; height: 60%; border: 2px solid var(--leaf); border-radius: 60% 40% 54% 46% / 39% 58% 42% 61%; transform: rotate(13deg); }
+    .f08 .open-form::before { content: ""; position: absolute; left: 17%; top: 13%; width: 67%; height: 75%; border-radius: 45% 55% 41% 59% / 63% 37% 63% 37%; background: var(--leaf); }
+    .f08 .open-form::after { content: ""; position: absolute; left: 39%; top: 28%; width: 24%; height: 49%; border-radius: 56% 44% 52% 48% / 44% 61% 39% 56%; background: var(--paper); }
+    .f08 .pillars { position: absolute; right: 6%; bottom: 11%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; width: 42%; z-index: 3; }
+    .f08 .pillar { padding: 12px; border-top: 2px solid var(--ink); background: var(--white); }
+    .f08 .pillar b { display: block; margin-bottom: 9px; font-size: 15px; }
+    .f08 .pillar span { display: block; color: var(--ink-soft); font-size: 11px; }
+    .f08 .last-line { position: absolute; right: 7%; top: 8%; color: var(--vermilion); font: 800 12px/1 Arial; letter-spacing: .04em; text-transform: uppercase; transform: rotate(7deg); }
+
+    .sources {
+      margin-top: 38px;
+      padding: 18px 20px;
+      color: var(--ink-soft);
+      background: rgba(244, 237, 207, .72);
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .sources summary { cursor: pointer; color: var(--ink); font-weight: 800; }
+    .sources ul { columns: 2; margin: 14px 0 0; padding-left: 18px; }
+    .sources li { margin: 4px 0; overflow-wrap: anywhere; }
+    .sources a { color: var(--blue); }
+
+    @media (max-width: 800px) {
+      .exhibition { padding: 18px 12px 42px; }
+      .masthead { display: block; }
+      .masthead p { margin-top: 14px; text-align: left; }
+      .frame { aspect-ratio: auto; min-height: 720px; margin: 18px 0; }
+      .frame-label { top: 17px; left: 18px; }
+      .f01 .title-block, .f02 h2, .f03 h2, .f04 h2, .f05 h2, .f06 h2, .f07 h2, .f08 h2 { width: auto; left: 18px; right: 18px; top: 90px; }
+      .f01 .title-block { top: 90px; }
+      .f01 h2 { font-size: 55px; }
+      .f01 .shape-a { left: -20%; bottom: -16%; width: 90%; height: 50%; }
+      .f01 .shape-b { left: 10%; top: 42%; width: 45%; height: 42%; }
+      .f01 .shape-c { left: 23%; top: 45%; width: 19%; height: 42%; }
+      .f01 .title-block p { margin-top: 16px; font-size: 13px; }
+      .f01 .edge-note { left: 18px; bottom: 20px; }
+      .f01 .corner-note { right: 18px; bottom: 20px; }
+      .f02 h2 { font-size: 47px; }
+      .f02 .petal-a { right: 0; width: 46%; height: 45%; transform: none; }
+      .f02 .petal-b { right: 18%; top: 33%; width: 20%; height: 32%; transform: none; }
+      .f02 .equation { left: 18px; right: 18px; bottom: 190px; grid-template-columns: 1fr 1fr; gap: 28px 12px; }
+      .f02 .operator { display: none; }
+      .f02 .term { font-size: 27px; }
+      .f02 .denominator { font-size: 26px; }
+      .f02 .bottom-note { left: 18px; right: 18px; bottom: 60px; width: calc(100% - 36px); max-width: none; }
+      .f02 .side-note { display: none; }
+      .f03 h2 { font-size: 46px; }
+      .f03 .core { left: 10%; top: 36%; width: 70%; height: 39%; transform: none; }
+      .f03 .number { left: 31%; top: 49%; font-size: 92px; }
+      .f03 .body-copy { left: 18px; right: 18px; top: 225px; width: auto; font-size: 13px; }
+      .f03 .leaf { left: 0; bottom: 0; width: 32%; height: 18%; transform: none; }
+      .f03 .footnote { left: 18px; bottom: 18px; width: calc(100% - 36px); max-width: none; }
+      .f04 h2 { font-size: 47px; }
+      .f04 .body-copy { left: 18px; right: 18px; bottom: auto; top: 230px; width: auto; }
+      .f04 .window { left: 18px; right: 18px; top: 365px; width: auto; height: 300px; }
+      .f04 .window-field { padding: 12px; }
+      .f04 .window-field b { font-size: 15px; }
+      .f04 .window-field span { font-size: 10px; }
+      .f04 .stamp { bottom: 16px; right: 18px; }
+      .f05 h2 { font-size: 43px; }
+      .f05 .subtitle { left: 18px; right: 18px; top: 218px; width: auto; }
+      .f05 .stack { left: 18px; right: 18px; bottom: 30px; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .f05 .stack-cell { min-height: 188px; padding: 12px; }
+      .f05 .cell-number { margin-bottom: 24px; font-size: 33px; }
+      .f05 .stem { left: 8%; bottom: 0; width: 34%; height: 23%; transform: none; }
+      .f05 .stem-b { right: 0; top: 36%; width: 23%; height: 18%; transform: none; }
+      .f06 h2 { font-size: 47px; }
+      .f06 .body-copy { left: 18px; right: 18px; bottom: auto; top: 225px; width: auto; }
+      .f06 .surface { left: 18px; right: 18px; top: 365px; width: auto; height: 300px; }
+      .f06 .surface-cell { padding: 12px; }
+      .f06 .surface-cell strong { font-size: 15px; }
+      .f06 .surface-cell span { font-size: 10px; }
+      .f06 .chat { left: 31%; bottom: 18px; }
+      .f07 h2 { font-size: 49px; }
+      .f07 .landscape { left: 18px; right: 18px; top: 355px; width: auto; height: 270px; }
+      .f07 .metric b { font-size: 40px; }
+      .f07 .metric span { max-width: 100px; font-size: 10px; }
+      .f07 .m1 { left: 4%; top: 12%; }
+      .f07 .m2 { left: 33%; top: 39%; }
+      .f07 .m3 { right: 1%; bottom: 4%; }
+      .f07 .note { left: 18px; right: 18px; bottom: 18px; max-width: 280px; }
+      .f08 h2 { font-size: 48px; }
+      .f08 .body-copy { left: 18px; right: 18px; bottom: auto; top: 225px; width: auto; }
+      .f08 .open-form { left: 22%; right: auto; top: 370px; width: 58%; height: 220px; }
+      .f08 .pillars { left: 18px; right: 18px; bottom: 28px; width: auto; gap: 8px; }
+      .f08 .pillar { padding: 9px; }
+      .f08 .pillar b { font-size: 13px; }
+      .f08 .pillar span { font-size: 10px; }
+      .f08 .last-line { right: 18px; top: 48px; }
+      .sources ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="exhibition">
+    <header class="masthead">
+      <h1>AI WEEKLY / CLOSE LOOKING</h1>
+      <p>2026.07.21—07.27 · 用近距离观看，把“模型变强之后”的系统变化显形。<br>一组 16:9 画面，八个结构性判断。</p>
+    </header>
+
+    <section class="frame f01" data-frame="01">
+      <div class="frame-label"><span class="dot"></span>展厅 01 / 入口</div>
+      <div class="shape-a"></div><div class="shape-b"></div><div class="shape-c"></div><div class="horizon"></div>
+      <div class="title-block">
+        <h2>THE<br><span>SCAFFOLD</span><br>AFTER<br>THE MODEL</h2>
+        <p>本周不是又一个模型排行榜。真正的对象是：当模型成熟，外面那层 prompt、skills、harness、review 和 memory，哪些仍然是结构，哪些只是噪音？</p>
+      </div>
+      <p class="caption edge-note">看得更近，才能看到模型之外的工作。</p>
+      <p class="micro corner-note">AI WEEKLY · 30 / 2026</p>
+    </section>
+
+    <section class="frame f02" data-frame="02">
+      <div class="frame-label"><span class="dot"></span>展厅 02 / 第一性原理</div>
+      <div class="petal-a"></div><div class="petal-b"></div>
+      <h2>Agent 的价值<br><span>是系统属性</span></h2>
+      <div class="equation">
+        <div class="term">Task<span>可完成任务的复杂度</span></div>
+        <div class="term">Success<span>一次完成的概率</span></div>
+        <div class="term">Proof<span>结果如何被验证</span></div>
+        <div class="operator">×</div>
+        <div class="denominator">÷ Context · Compute · Governance · Integration<span>上下文、推理、治理、集成成本</span></div>
+      </div>
+      <p class="caption bottom-note">本周所有新闻，都在改写这个式子的一项：提示词变薄，边界变硬，轨迹变贵，交付物变近，基础设施变重。</p>
+      <p class="micro side-note">FORMULA / NOT A SCORECARD</p>
+    </section>
+
+    <section class="frame f03" data-frame="03">
+      <div class="frame-label"><span class="dot"></span>展厅 03 / 上下文工程</div>
+      <div class="core"></div><div class="leaf"></div><div class="number">80%<small>常驻提示词被删掉</small></div><div class="rule"></div>
+      <h2>消失的<br>脚手架</h2>
+      <p class="body-copy">删掉 80% 以上系统提示词，不等于不要上下文。被删掉的是模型读文件、看工具、跑测试就能自行推断的废说明。真正留下来的，是团队偏好、历史包袱、验证流程、真实参考物。</p>
+      <p class="micro footnote">THICK CONTEXT / THIN PROMPT</p>
+    </section>
+
+    <section class="frame f04" data-frame="04">
+      <div class="frame-label"><span class="dot"></span>展厅 04 / 运行时</div>
+      <h2>Agent<br><span>≠ Model</span></h2>
+      <p class="body-copy">安全边界从发布前评测推到了运行时。一个长程 Agent 需要像软件进程一样被隔离、授权、审计和回滚。</p>
+      <div class="window">
+        <div class="window-field identity"><b>IDENTITY</b><span>谁在执行？用哪个账号？</span></div>
+        <div class="window-field permission"><b>PERMISSION</b><span>能读什么、写什么、改什么？</span></div>
+        <div class="window-field network"><b>NETWORK</b><span>出口、依赖与外部系统边界</span></div>
+        <div class="window-field checkpoint"><b>CHECKPOINT</b><span>验证、审批、日志与回滚</span></div>
+      </div>
+      <p class="stamp">runtime layer / not vibes</p>
+    </section>
+
+    <section class="frame f05" data-frame="05">
+      <div class="frame-label"><span class="dot"></span>展厅 05 / 竞争单位</div>
+      <div class="stem"></div><div class="stem-b"></div>
+      <h2>模型不是<br>完整作品。<br><span>流水线才是。</span></h2>
+      <p class="subtitle">Hyra、Cursor Agent Swarm、Google Tunix、Microsoft MagenticLite 的共同信号：竞争单位正在从一个聪明大脑，变成一条可复盘的工作流水线。</p>
+      <div class="stack">
+        <div class="stack-cell"><div class="cell-number" style="color:var(--vermilion)">01</div><h3>MODEL</h3><p>生成候选行动，提出下一步可能性。</p></div>
+        <div class="stack-cell"><div class="cell-number" style="color:var(--blue)">02</div><h3>HARNESS</h3><p>约束环境、工具、并发和资源。</p></div>
+        <div class="stack-cell"><div class="cell-number" style="color:var(--leaf)">03</div><h3>VERIFIER</h3><p>用测试、rubric 或外部事实评分。</p></div>
+        <div class="stack-cell"><div class="cell-number" style="color:var(--rose)">04</div><h3>TRACE</h3><p>保存失败、修正、决策和人类升级。</p></div>
+      </div>
+    </section>
+
+    <section class="frame f06" data-frame="06">
+      <div class="frame-label"><span class="dot"></span>展厅 06 / 交付表面</div>
+      <h2>如果它只能聊天，<br>它还没有交付。</h2>
+      <p class="body-copy">AI 正在从聊天框迁移到真正发生工作的表面：Office、共享画布、邮件、图像编辑器、设计 Agent 和协作面板。离交付物越近，越容易拿到上下文、反馈和付费。</p>
+      <div class="surface">
+        <div class="surface-cell office"><strong>OFFICE</strong><span>Excel / Outlook / 公式 / 邮件线程</span></div>
+        <div class="surface-cell canvas"><strong>CANVAS</strong><span>计划 / 看板 / checklist / dashboard</span></div>
+        <div class="surface-cell image"><strong>IMAGE</strong><span>图表 / UI / 复杂知识视觉</span></div>
+        <div class="surface-cell design"><strong>DESIGN</strong><span>品牌规范 / 素材 / 审稿 / 迭代</span></div>
+      </div>
+      <p class="chat">chat is the foyer</p>
+    </section>
+
+    <section class="frame f07" data-frame="07">
+      <div class="frame-label"><span class="dot"></span>展厅 07 / 工业账</div>
+      <h2>Token<br>不是全部<br><span>账单</span></h2>
+      <div class="landscape"><div class="ridge"></div><div class="ridge-two"></div><div class="ridge-three"></div><div class="metric m1"><b>3.2GW</b><span>OpenAI<br>数据中心规划</span></div><div class="metric m2"><b>2GW</b><span>AMD × Anthropic<br>芯片产能绑定</span></div><div class="metric m3"><b>$1.65T</b><span>AI 隐性债务<br>进入工业账本</span></div></div>
+      <p class="caption note">AI 从软件行业重新显出工业系统的轮廓：电力、土地、水、芯片、租赁、债务和吞吐，共同决定谁能跑得久。</p>
+    </section>
+
+    <section class="frame f08" data-frame="08">
+      <div class="frame-label"><span class="dot"></span>展厅 08 / 管理注</div>
+      <div class="open-form"></div>
+      <h2>把 AI 当作<br><span>成熟员工</span><br>管理</h2>
+      <p class="body-copy">给产品团队：清理常驻上下文，把规则变成判断框架，把流程拆成按需 skills，把交付物变成测试、HTML、rubric 和真实参考。<br><br><strong>少一点噪音，多一点结构。</strong></p>
+      <div class="pillars">
+        <div class="pillar"><b>授权</b><span>目标、资源、边界</span></div>
+        <div class="pillar"><b>复盘</b><span>轨迹、失败、验证</span></div>
+        <div class="pillar"><b>责任</b><span>成本、权限、结果</span></div>
+      </div>
+      <p class="last-line">close looking / then ship</p>
+    </section>
+
+    <details class="sources">
+      <summary>来源与事实索引</summary>
+      <ul>
+        <li><a href="https://www.anthropic.com/news/anthropic-economic-index-connector">Anthropic Economic Index connector</a></li>
+        <li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI / Hugging Face security incident</a></li>
+        <li><a href="https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations">AISI frontier evaluation cheating</a></li>
+        <li><a href="https://unu.edu/publication/engineering-and-governing-agent-harness-technology-and-policy-framework-runtime-layer">UNU Agent Harness framework</a></li>
+        <li><a href="https://cursor.com/blog/agent-swarm-model-economics">Cursor Agent Swarm</a></li>
+        <li><a href="https://developers.googleblog.com/scaling-agentic-rl-high-throughput-agentic-training-with-tunix/">Google Tunix</a></li>
+        <li><a href="https://www.microsoft.com/en-us/research/blog/magenticlite-magenticbrain-fara1-5-an-agentic-experience-optimized-for-small-models/?lang=ja">Microsoft MagenticLite</a></li>
+        <li><a href="https://github.blog/ai-and-ml/github-copilot/how-to-build-interactive-experiences-with-canvases/">GitHub Copilot Canvases</a></li>
+        <li><a href="https://x.ai/news/introducing-excel-addin">xAI Grok for Excel</a></li>
+        <li><a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community/">OpenAI Project Camellia</a></li>
+        <li><a href="https://www.theverge.com/ai-artificial-intelligence/969285/amd-anthropic-ai-infrastructure-deal">AMD × Anthropic infrastructure deal</a></li>
+        <li><a href="https://asia.nikkei.com/business/technology/five-us-tech-giants-hidden-debts-soar-to-1.65tn-on-opaque-ai-funding">Nikkei AI hidden debt report</a></li>
+        <li><a href="https://www.okeefemuseum.org/exhibitions/the-natural-world/">Georgia O'Keeffe Museum: The Natural World</a></li>
+      </ul>
+    </details>
+  </main>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2060" viewBox="0 0 1600 2060" role="img" aria-label="AI weekly trend cards">
+  <defs>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(17,19,24,.07)" stroke-width="1"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="2060" fill="#F4EFE4"/>
+  <rect width="1600" height="2060" fill="url(#grid)" opacity=".9"/>
+  <rect x="72" y="64" width="193" height="32" fill="rgba(255,255,255,.42)" stroke="#D8CDBC" /><text x="83" y="86" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >02 / EVIDENCE ATLAS</text>
+<text x="72" y="150.0" fill="#111318" font-family="system-ui" font-size="50" font-weight="900" text-anchor="start" letter-spacing="0" >六条趋势，不做新闻复述，做约束变化。</text>
+<text x="72" y="270.0" fill="#3E382F" font-family="system-ui" font-size="22" font-weight="520" text-anchor="start" letter-spacing="0" >每张卡保留一条 sharp thesis、三个变量权重和证据标签。适合飞书文档开头，也可以拆成公众</text>
+<text x="72" y="301.9" fill="#3E382F" font-family="system-ui" font-size="22" font-weight="520" text-anchor="start" letter-spacing="0" >号趋势总结图。</text>
+<rect x="72" y="382" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="88" y="398" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="96" y="410" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="107" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 01</text>
+<rect x="208" y="410" width="85" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="219" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Context</text>
+<text x="96" y="494.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >上下文工程从“写更多规则”变成</text>
+<text x="96" y="525.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >“授权成熟模型”</text>
+<text x="96" y="632.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >Opus 5 之后，该删的不是上下文，而是模型能自己推</text>
+<text x="96" y="656.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >断的废上下文。真正贵的是团队偏好、验证流程和真实</text>
+<text x="96" y="681.6" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >参考物。</text>
+<text x="96" y="802" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >能力</text>
+<rect x="160" y="792" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="792" width="193.2" height="8" fill="#D64028"/>
+<text x="382" y="802" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >92</text>
+<text x="96" y="834" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >成本</text>
+<rect x="160" y="824" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="824" width="151.2" height="8" fill="#D6A435"/>
+<text x="382" y="834" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >72</text>
+<text x="96" y="866" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >采用</text>
+<rect x="160" y="856" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="856" width="180.6" height="8" fill="#0F8AA3"/>
+<text x="382" y="866" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >86</text>
+<rect x="96" y="892" width="76" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="107" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Opus 5</text>
+<rect x="180" y="892" width="148" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="191" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >80% prompt cut</text>
+<rect x="336" y="892" width="139" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="347" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >thick context</text>
+<rect x="566" y="382" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="582" y="398" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="590" y="410" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="601" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 02</text>
+<rect x="702" y="410" width="85" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="713" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Runtime</text>
+<text x="590" y="494.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >Agent 安全从发布前评测变成运</text>
+<text x="590" y="525.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >行时边界</text>
+<text x="590" y="632.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >长程 Agent 会搜索、写代码、改环境、调工具。治理</text>
+<text x="590" y="656.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >单位不再只是模型，而是身份、权限、网络、日志和回</text>
+<text x="590" y="681.6" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >滚。</text>
+<text x="590" y="802" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >监管</text>
+<rect x="654" y="792" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="792" width="197.4" height="8" fill="#765AD8"/>
+<text x="876" y="802" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >94</text>
+<text x="590" y="834" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >采用</text>
+<rect x="654" y="824" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="824" width="159.6" height="8" fill="#0F8AA3"/>
+<text x="876" y="834" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >76</text>
+<text x="590" y="866" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >成本</text>
+<rect x="654" y="856" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="856" width="134.4" height="8" fill="#D6A435"/>
+<text x="876" y="866" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >64</text>
+<rect x="590" y="892" width="121" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="601" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >HF incident</text>
+<rect x="719" y="892" width="139" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="730" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >AISI cheating</text>
+<rect x="866" y="892" width="139" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="877" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Agent Harness</text>
+<rect x="1060" y="382" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="1076" y="398" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="1084" y="410" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="1095" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 03</text>
+<rect x="1196" y="410" width="76" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="1207" y="432" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >System</text>
+<text x="1084" y="494.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >竞争单位变成“模型 + Harness</text>
+<text x="1084" y="525.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" > + 验证器 + 轨迹”</text>
+<text x="1084" y="632.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >最强模型不是单点答案。可复盘的工作流水线，才会改</text>
+<text x="1084" y="656.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >写团队规模和代码产出之间的关系。</text>
+<text x="1084" y="802" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >能力</text>
+<rect x="1148" y="792" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="792" width="176.4" height="8" fill="#D64028"/>
+<text x="1370" y="802" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >84</text>
+<text x="1084" y="834" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >采用</text>
+<rect x="1148" y="824" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="824" width="189.0" height="8" fill="#0F8AA3"/>
+<text x="1370" y="834" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >90</text>
+<text x="1084" y="866" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >成本</text>
+<rect x="1148" y="856" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="856" width="142.8" height="8" fill="#D6A435"/>
+<text x="1370" y="866" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >68</text>
+<rect x="1084" y="892" width="70" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1095" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Hyra</text>
+<rect x="1162" y="892" width="130" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1173" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Cursor Swarm</text>
+<rect x="1300" y="892" width="70" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1311" y="914" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Tunix</text>
+<rect x="1084" y="932" width="130" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1095" y="954" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >MagenticLite</text>
+<rect x="72" y="972" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="88" y="988" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="96" y="1000" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="107" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 04</text>
+<rect x="208" y="1000" width="85" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="219" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Surface</text>
+<text x="96" y="1084.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >交付物入口从聊天框转向 Office</text>
+<text x="96" y="1115.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >、画布和设计台</text>
+<text x="96" y="1222.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >谁离最终交付物最近，谁就更容易拿到上下文、反馈和</text>
+<text x="96" y="1246.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >付费。聊天框只是入口之一，不是终点。</text>
+<text x="96" y="1392" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >分发</text>
+<rect x="160" y="1382" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="1382" width="193.2" height="8" fill="#2459D6"/>
+<text x="382" y="1392" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >92</text>
+<text x="96" y="1424" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >采用</text>
+<rect x="160" y="1414" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="1414" width="168.0" height="8" fill="#0F8AA3"/>
+<text x="382" y="1424" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >80</text>
+<text x="96" y="1456" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >能力</text>
+<rect x="160" y="1446" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="160" y="1446" width="147.0" height="8" fill="#D64028"/>
+<text x="382" y="1456" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >70</text>
+<rect x="96" y="1482" width="112" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="107" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Qwen-Image</text>
+<rect x="216" y="1482" width="112" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="227" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Grok Excel</text>
+<rect x="336" y="1482" width="148" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="347" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Copilot Canvas</text>
+<rect x="96" y="1522" width="70" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="107" y="1544" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Miora</text>
+<rect x="566" y="972" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="582" y="988" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="590" y="1000" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="601" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 05</text>
+<rect x="702" y="1000" width="70" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="713" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Data</text>
+<text x="590" y="1084.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >下一轮训练数据红利来自真实工作</text>
+<text x="590" y="1115.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >轨迹</text>
+<text x="590" y="1222.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >网页文本告诉模型世界有什么；轨迹数据告诉模型工作</text>
+<text x="590" y="1246.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >怎么做完。Agent 训练燃料开始从内容转向过程。</text>
+<text x="590" y="1392" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >供给</text>
+<rect x="654" y="1382" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="1382" width="163.8" height="8" fill="#13865E"/>
+<text x="876" y="1392" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >78</text>
+<text x="590" y="1424" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >采用</text>
+<rect x="654" y="1414" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="1414" width="176.4" height="8" fill="#0F8AA3"/>
+<text x="876" y="1424" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >84</text>
+<text x="590" y="1456" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >监管</text>
+<rect x="654" y="1446" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="654" y="1446" width="121.8" height="8" fill="#765AD8"/>
+<text x="876" y="1456" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >58</text>
+<rect x="590" y="1482" width="139" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="601" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >workflow data</text>
+<rect x="737" y="1482" width="148" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="748" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Economic Index</text>
+<rect x="893" y="1482" width="76" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="904" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Unslop</text>
+<rect x="590" y="1522" width="76" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="601" y="1544" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >BigMac</text>
+<rect x="1060" y="972" width="464" height="560" fill="#FFF9EE" stroke="#111318" stroke-width="2"/>
+<rect x="1076" y="988" width="432" height="528" fill="none" stroke="#D8CDBC"/>
+<rect x="1084" y="1000" width="94" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="1095" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >TREND 06</text>
+<rect x="1196" y="1000" width="70" height="32" fill="rgba(255,255,255,.46)" stroke="#D8CDBC" /><text x="1207" y="1022" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Infra</text>
+<text x="1084" y="1084.0" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >成本竞争从 token 单价扩展到电</text>
+<text x="1084" y="1115.25" fill="#111318" font-family="system-ui" font-size="25" font-weight="900" text-anchor="start" letter-spacing="0" >力、债务和数据中心协议</text>
+<text x="1084" y="1222.0" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >AI 不只是软件行业，也越来越像工业系统。谁能用更</text>
+<text x="1084" y="1246.8" fill="#332E27" font-family="system-ui" font-size="16" font-weight="540" text-anchor="start" letter-spacing="0" >低全栈成本完成更多可计费任务，谁才跑得久。</text>
+<text x="1084" y="1392" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >成本</text>
+<rect x="1148" y="1382" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="1382" width="197.4" height="8" fill="#D6A435"/>
+<text x="1370" y="1392" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >94</text>
+<text x="1084" y="1424" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >供给</text>
+<rect x="1148" y="1414" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="1414" width="201.6" height="8" fill="#13865E"/>
+<text x="1370" y="1424" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >96</text>
+<text x="1084" y="1456" fill="#494238" font-family="system-ui" font-size="14" font-weight="760" text-anchor="start" letter-spacing="0" >监管</text>
+<rect x="1148" y="1446" width="210" height="8" fill="none" stroke="#494238" stroke-width="1"/>
+<rect x="1148" y="1446" width="147.0" height="8" fill="#765AD8"/>
+<text x="1370" y="1456" fill="#494238" font-family="system-ui" font-size="13" font-weight="760" text-anchor="start" letter-spacing="0" >70</text>
+<rect x="1084" y="1482" width="130" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1095" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Gemini Flash</text>
+<rect x="1222" y="1482" width="70" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1233" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >3.2GW</text>
+<rect x="1300" y="1482" width="157" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1311" y="1504" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >AMD + Anthropic</text>
+<rect x="1084" y="1522" width="121" height="32" fill="rgba(255,255,255,.48)" stroke="#D8CDBC" /><text x="1095" y="1544" fill="#6E665B" font-family="system-ui" font-size="13" font-weight="800" text-anchor="start" letter-spacing="0" >Nikkei debt</text>
+</svg>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generative Art · 飞书文档版 AI 周报</title>
+<style>
+:root{--paper:#F0ECE1;--ink:#22241F;--muted:#6A6D60;--accent:#E78543;--panel:#E1DCCC;--line:#B8B3A6;}
+*{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans SC",sans-serif;line-height:1.6}
+.doc{max-width:1180px;margin:0 auto;padding:38px 28px 80px} .eyebrow{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--muted)}
+h1{font-size:clamp(42px,7vw,86px);line-height:1.08;max-width:980px;margin:28px 0 20px;letter-spacing:0}
+.lead{font-size:22px;color:var(--muted);max-width:820px;margin:0 0 34px} .hero,.visual{display:block;width:100%;height:auto;border:1px solid var(--line);background:var(--paper)}
+.section{border-top:1px solid var(--line);padding-top:30px;margin-top:52px} .section h2{font-size:28px;margin:0 0 12px} .section-intro{color:var(--muted);max-width:820px}
+.quote{border-left:5px solid var(--accent);padding:12px 0 12px 20px;font-size:24px;font-weight:700;max-width:900px}
+.trend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px} .trend{border:1px solid var(--line);padding:22px;background:var(--panel)}
+.trend-no,.evidence{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--muted)} .trend h3{font-size:22px;line-height:1.25;margin:18px 0 12px} .trend p{color:var(--muted);margin:0 0 18px} .evidence{border-top:1px solid var(--line);padding-top:12px}
+.closing{font-size:25px;max-width:930px} @media(max-width:720px){.doc{padding:24px 16px 54px}.trend-grid{grid-template-columns:1fr}.lead{font-size:19px}}
+</style></head><body><main class="doc">
+<div class="eyebrow">AI WEEKLY / 2026.07.21 — 07.27</div><h1>当模型更成熟，约束开始重排。</h1><p class="lead">本周六条趋势：上下文、运行时、系统、交付物、轨迹、工业成本。</p>
+<img class="hero" src="01-cover.svg" alt="AI 周报封面">
+<section class="section"><h2>01 / 本周判断</h2><p class="section-intro">规则先行、变异可见、形态最后：把本周新闻压成一套可复盘的约束系统。</p>
+<div class="quote">Agent 价值 = 可完成任务的复杂度 × 成功率 × 可验证性 ÷ 上下文、推理、治理与集成成本。</div></section>
+<section class="section"><h2>02 / 六个底层变量</h2><p class="section-intro">新闻表面在变，底层变量集中在能力、成本、分发、供给、监管和组织采用。</p><img class="visual" src="02-variable-map.svg" alt="六个底层变量"></section>
+<section class="section"><h2>03 / 六条趋势</h2><p class="section-intro">每条趋势先给出约束变化，再给出证据和可复盘的判断。</p><div class="trend-grid"><article class="trend"><div class="trend-no">01 / 上下文</div><h3>上下文工程从写更多规则，变成授权成熟模型</h3><p>该删的不是上下文，而是模型能自己推断的废上下文。真正贵的是团队偏好、验证流程和真实参考物。</p><div class="evidence">Opus 5 · 80% prompt cut · thick context</div></article><article class="trend"><div class="trend-no">02 / 运行时</div><h3>Agent 安全从发布前评测变成运行时边界</h3><p>治理单位不再只是模型，而是身份、权限、网络、日志、审批和回滚。</p><div class="evidence">HF incident · AISI cheating · Agent Harness</div></article><article class="trend"><div class="trend-no">03 / 系统</div><h3>竞争单位变成模型、Harness、验证器和轨迹</h3><p>最强模型不是单点答案。可复盘的工作流水线，才会改写团队规模和代码产出关系。</p><div class="evidence">Hyra · Cursor Swarm · Tunix</div></article><article class="trend"><div class="trend-no">04 / 交付物</div><h3>入口从聊天框转向 Office、画布和设计台</h3><p>谁离最终交付物最近，谁就更容易拿到上下文、反馈和付费。聊天框只是入口之一。</p><div class="evidence">Qwen-Image · Grok Excel · Copilot Canvas</div></article><article class="trend"><div class="trend-no">05 / 数据</div><h3>下一轮训练数据红利来自真实工作轨迹</h3><p>网页文本告诉模型世界有什么；轨迹数据告诉模型工作怎么做完。</p><div class="evidence">workflow data · Economic Index · Unslop</div></article><article class="trend"><div class="trend-no">06 / 基础设施</div><h3>成本竞争从 token 单价扩展到工业账本</h3><p>AI 越来越像工业系统，胜负取决于全栈单位任务成本。</p><div class="evidence">Gemini Flash · 3.2GW · AMD + Anthropic</div></article></div><img class="visual" src="03-trend-cards.svg" alt="六条趋势卡" style="margin-top:24px"></section>
+<section class="section"><h2>04 / 行业迁移</h2><p class="section-intro">竞争从单个模型向模型系统、交付物表面、真实工作轨迹和工业账本迁移。</p><img class="visual" src="04-migration-matrix.svg" alt="行业迁移矩阵"></section>
+<section class="section"><h2>05 / 结论</h2><p class="closing">把 AI 当成熟员工管理：少一点噪音，多一点结构；给目标、资源、边界、验证器和复盘机制。</p><img class="visual" src="05-wechat-header.svg" alt="公众号头图"></section>
+</main></body></html>

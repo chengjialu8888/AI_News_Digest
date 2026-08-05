@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 周报｜The Living Evidence Lab</title>
+  <style>
+    body { margin:0; color:#17191a; background:#f1eee5; font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif; }
+    main { width:min(100%, 1120px); margin:0 auto; padding:34px 28px 70px; }
+    header { padding-bottom:20px; border-bottom:1px solid rgba(23,25,26,.3); }
+    h1 { margin:0; font-size:clamp(34px,6vw,78px); line-height:.88; letter-spacing:-.03em; text-transform:uppercase; }
+    h1 em { color:#d45d38; font-style:normal; }
+    header p { max-width:760px; margin:16px 0 0; color:#5e5f59; font-size:13px; line-height:1.6; }
+    article { display:grid; gap:30px; margin-top:30px; }
+    section { padding-bottom:26px; border-bottom:1px solid rgba(23,25,26,.22); }
+    h2 { margin:0 0 9px; font-size:19px; }
+    p { max-width:820px; color:#5e5f59; font-size:13px; line-height:1.65; }
+    img { display:block; width:100%; height:auto; border:1px solid rgba(23,25,26,.28); }
+    .callout { padding:13px 15px; color:#17191a; background:#e8e0d1; border-left:3px solid #d45d38; }
+    .callout p { margin:0; color:#17191a; font-weight:700; }
+    .sources { color:#5e5f59; font-size:12px; line-height:1.6; }
+    @media (max-width:700px) { main { padding:22px 14px 48px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>THE LIVING<br><em>EVIDENCE</em> LAB</h1>
+      <p>AI 周报｜2026.07.21—07.27。把本周新闻看成一间会变形的研究室：模型、harness、成本、轨迹和人的判断共同决定 Agent 能否长程工作。</p>
+    </header>
+    <article>
+      <section><h2>01 / 判断入口</h2><p>本周真正的主角不是一个模型，而是一座会工作、会记忆、会被审计的屋子。</p><img src="frame-01.png" alt="AI 周报封面"></section>
+      <section><h2>02 / 上下文之门</h2><p>删掉不是失忆。被移走的是模型读文件、看工具、跑测试就能推断的废说明；真正留下的是偏好、参考、验证流程和判断边界。</p><img src="frame-02.png" alt="上下文之门"></section>
+      <section><h2>03 / Agent 的运行时身体</h2><p>身份、权限、网络出口、可写范围和检查点，决定了 Agent 是否能成为长程执行者。</p><img src="frame-03.png" alt="Agent 运行时身体"></section>
+      <section><h2>04 / 证据桌</h2><div class="callout"><p>生成不是完成，证据才是。</p></div><p>模型提出候选行动，harness 约束环境，验证器打分，轨迹把失败变成下一次行动的材料。</p><img src="frame-04.png" alt="证据桌"></section>
+      <section><h2>05 / 交付物栖息地</h2><p>AI 产品争夺的不是聊天框，而是离真实交付物最近的位置。</p><img src="frame-05.png" alt="交付物栖息地"></section>
+      <section><h2>06 / 真实工作轨迹</h2><p>下一轮训练数据红利，更可能来自任务如何被完成、卡住、修正和交付，而不是人们说过什么。</p><img src="frame-06.png" alt="真实工作轨迹"></section>
+      <section><h2>07 / 全栈账单</h2><p>Token 只是账单的一行。电力、土地、水、芯片、租赁、债务和吞吐决定系统能否长期运行。</p><img src="frame-07.png" alt="全栈账单"></section>
+      <section><h2>08 / 结论与行动</h2><p>把 AI 当作成熟员工管理：给它目标、资源、边界、验证器和复盘机制。少一点噪音，多一点结构。</p><img src="frame-08.png" alt="结论与行动"></section>
+      <section class="sources"><h2>来源与事实索引</h2><p>Anthropic context engineering；OpenAI / Hugging Face security incident；AISI frontier evaluation cheating；UNU Agent Harness framework；Cursor Agent Swarm；Google Tunix；Microsoft MagenticLite；GitHub Copilot Canvases；xAI Grok for Excel；OpenAI Project Camellia；AMD × Anthropic；Nikkei AI hidden debt report。</p></section>
+    </article>
+  </main>
+</body>
+</html>

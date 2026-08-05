@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 日报趋势总结 · 可视化风格板</title>
+  <style>
+    :root {
+      --ink: #151515;
+      --paper: #f5f1e8;
+      --muted: #777064;
+      --line: rgba(21, 21, 21, .18);
+      --red: #d73222;
+      --blue: #1f5eff;
+      --green: #0d8f6a;
+      --yellow: #e8b637;
+      --violet: #7a4dff;
+      --grid: rgba(21, 21, 21, .07);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), transparent 75%);
+      z-index: 0;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+
+    .hero {
+      min-height: 92vh;
+      padding: clamp(28px, 5vw, 72px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      align-items: end;
+      gap: clamp(28px, 6vw, 84px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .kicker span {
+      border: 1px solid var(--line);
+      padding: 7px 9px;
+      background: rgba(255,255,255,.32);
+    }
+
+    h1 {
+      margin: 28px 0 20px;
+      font-size: clamp(52px, 10vw, 132px);
+      line-height: .88;
+      letter-spacing: 0;
+      max-width: 980px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      font-size: clamp(17px, 2vw, 24px);
+      line-height: 1.55;
+      color: #37332d;
+      margin: 0;
+    }
+
+    .taste-meter {
+      border: 1px solid var(--ink);
+      min-height: 420px;
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      color: #f7f1e6;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .taste-meter::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 34% 36%, rgba(215,50,34,.92) 0 8%, transparent 8.4%),
+        radial-gradient(circle at 64% 58%, rgba(31,94,255,.82) 0 6%, transparent 6.4%),
+        conic-gradient(from 120deg at 50% 50%, transparent, rgba(232,182,55,.28), transparent, rgba(122,77,255,.30), transparent);
+      animation: slowTurn 24s linear infinite;
+    }
+
+    .taste-meter::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 1px, transparent 1px 18px);
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes slowTurn { to { transform: rotate(360deg); } }
+
+    .meter-top,
+    .meter-bottom {
+      position: relative;
+      z-index: 2;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .meter-core {
+      position: relative;
+      z-index: 2;
+      align-self: center;
+      padding: 26px;
+    }
+
+    .meter-core strong {
+      display: block;
+      font-size: clamp(48px, 8vw, 94px);
+      line-height: .9;
+      max-width: 560px;
+    }
+
+    .meter-core em {
+      display: block;
+      margin-top: 22px;
+      max-width: 420px;
+      color: rgba(247,241,230,.72);
+      font-style: normal;
+      line-height: 1.55;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      gap: 1px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+      background: rgba(245,241,232,.88);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav a {
+      min-height: 48px;
+      padding: 15px 18px;
+      text-decoration: none;
+      border-right: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .section {
+      min-height: 100vh;
+      padding: clamp(28px, 5vw, 68px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr) minmax(260px, 420px);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .section-no {
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: .95;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .trend {
+      min-height: 320px;
+      border: 1px solid var(--ink);
+      padding: 20px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,255,255,.34);
+    }
+
+    .trend h3 {
+      margin: 0;
+      font-size: clamp(23px, 3vw, 34px);
+      line-height: 1.02;
+    }
+
+    .thesis {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #332f28;
+      margin: 0;
+    }
+
+    .variables {
+      align-self: end;
+      display: grid;
+      gap: 8px;
+    }
+
+    .var {
+      display: grid;
+      grid-template-columns: 72px 1fr 42px;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 760;
+      color: #484137;
+    }
+
+    .bar {
+      height: 6px;
+      border: 1px solid currentColor;
+      background: linear-gradient(90deg, currentColor var(--w), transparent 0);
+    }
+
+    .evidence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .evidence span {
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      background: rgba(255,255,255,.4);
+    }
+
+    .concept-a {
+      background: #f6f0e5;
+    }
+
+    .concept-a .trend::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(21,21,21,.14);
+      pointer-events: none;
+    }
+
+    .concept-a .map {
+      grid-column: 1 / -1;
+      min-height: 280px;
+      border: 1px solid var(--ink);
+      margin-top: 16px;
+      position: relative;
+      background:
+        linear-gradient(90deg, transparent 0 13%, rgba(21,21,21,.18) 13% 13.2%, transparent 13.2% 100%),
+        linear-gradient(90deg, transparent 0 42%, rgba(21,21,21,.18) 42% 42.2%, transparent 42.2% 100%),
+        linear-gradient(90deg, transparent 0 75%, rgba(21,21,21,.18) 75% 75.2%, transparent 75.2% 100%);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      transform: translate(-50%, -50%);
+    }
+
+    .timeline-dot:nth-child(1) { left: 13%; top: 32%; }
+    .timeline-dot:nth-child(2) { left: 42%; top: 62%; background: var(--red); }
+    .timeline-dot:nth-child(3) { left: 75%; top: 40%; background: var(--blue); }
+
+    .concept-b {
+      background: #0d0d0d;
+      color: #f8f2e7;
+    }
+
+    .concept-b .section-head p,
+    .concept-b .section-no,
+    .concept-b .thesis,
+    .concept-b .var,
+    .concept-b .evidence { color: rgba(248,242,231,.68); }
+
+    .concept-b .trend {
+      background: #0d0d0d;
+      border-color: rgba(248,242,231,.58);
+    }
+
+    .concept-b .trend::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(from var(--angle), transparent, rgba(215,50,34,.62), transparent 38%, rgba(255,255,255,.2), transparent);
+      opacity: .8;
+      animation: slowTurn 18s linear infinite;
+      z-index: 0;
+    }
+
+    .concept-b .trend > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .concept-b .bar {
+      background: linear-gradient(90deg, #f8f2e7 var(--w), transparent 0);
+    }
+
+    .concept-c {
+      background: #eef2f7;
+    }
+
+    .xray {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+
+    .matrix {
+      min-height: 620px;
+      border: 1px solid #0f172a;
+      display: grid;
+      grid-template-columns: 150px repeat(6, 1fr);
+      grid-template-rows: 56px repeat(3, 1fr);
+      background: #fff;
+    }
+
+    .cell {
+      border-right: 1px solid rgba(15,23,42,.16);
+      border-bottom: 1px solid rgba(15,23,42,.16);
+      padding: 12px;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cell.head {
+      background: #0f172a;
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .cell.row {
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .heat::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      background: rgba(31,94,255,var(--heat));
+    }
+
+    .insight-panel {
+      border: 1px solid #0f172a;
+      background: #0f172a;
+      color: #eaf0ff;
+      padding: 22px;
+      min-height: 620px;
+      display: grid;
+      gap: 20px;
+      align-content: start;
+    }
+
+    .insight-panel h3 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .rule {
+      border-top: 1px solid rgba(234,240,255,.24);
+      padding-top: 16px;
+      line-height: 1.55;
+      color: rgba(234,240,255,.76);
+    }
+
+    .concept-d {
+      background: #f3f3f3;
+      color: #121212;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .poster {
+      min-height: 620px;
+      padding: 18px;
+      border: 1px solid #121212;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+      background: #f8f8f8;
+    }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 20%, var(--c1) 0 15%, transparent 15.5%),
+        radial-gradient(circle at 68% 62%, var(--c2) 0 13%, transparent 13.5%),
+        linear-gradient(135deg, transparent 0 52%, var(--c3) 52% 53%, transparent 53%);
+      mix-blend-mode: multiply;
+      opacity: .86;
+    }
+
+    .poster > * { position: relative; z-index: 1; }
+
+    .poster h3 {
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: .92;
+      margin: 0;
+      max-width: 360px;
+    }
+
+    .poster .thesis {
+      align-self: center;
+      font-size: 20px;
+      max-width: 340px;
+      color: #121212;
+      font-weight: 760;
+    }
+
+    .poster code {
+      display: block;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      background: rgba(255,255,255,.58);
+      border: 1px solid rgba(18,18,18,.18);
+      padding: 12px;
+    }
+
+    .footer-note {
+      padding: 28px clamp(28px, 5vw, 68px);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .xray {
+        grid-template-columns: 1fr;
+      }
+
+      .trend-grid,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix {
+        grid-template-columns: 120px repeat(3, 1fr);
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .section,
+      .hero {
+        padding: 22px;
+      }
+
+      .taste-meter,
+      .poster {
+        min-height: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <div class="kicker">
+          <span>AI Daily Trends</span>
+          <span>Style Board 01</span>
+          <span>No Pipeline Change</span>
+        </div>
+        <h1>趋势总结，也应该有技术审美。</h1>
+        <p>这不是给日报加装饰，而是把“能力、成本、分发、供给、监管、组织采用”六个底层变量做成可感知的视觉系统。文字负责判断，图形负责让判断有结构、有张力、有记忆点。</p>
+      </div>
+      <aside class="taste-meter" aria-label="视觉风格封面">
+        <div class="meter-top"><span>First Principles</span><span>Contemporary Taste</span></div>
+        <div class="meter-core">
+          <strong>Signal before story.</strong>
+          <em>先问变量是否变化，再决定新闻是否重要。视觉系统也遵守这条纪律。</em>
+        </div>
+        <div class="meter-bottom"><span>能力 / 成本 / 分发</span><span>供给 / 监管 / 采用</span></div>
+      </aside>
+    </header>
+
+    <nav class="nav" aria-label="风格导航">
+      <a href="#atlas">A · Evidence Atlas</a>
+      <a href="#ink">B · Algorithmic Ink</a>
+      <a href="#xray">C · Market X-Ray</a>
+      <a href="#gallery">D · Post-Internet Gallery</a>
+    </nav>
+
+    <section class="section concept-a" id="atlas">
+      <div class="section-head">
+        <div class="section-no">Concept A</div>
+        <h2>Evidence Atlas</h2>
+        <p>最接近参考页的研究报告气质：米色纸张、硬边框、时间线、证据牌匾。适合“投研版日报”和周报合订，把趋势当作可追溯论证，而不是海报金句。</p>
+      </div>
+      <div class="trend-grid">
+        <article class="trend">
+          <div class="kicker"><span>Trend 01</span><span>Capability</span></div>
+          <h3>模型能力的增量，正在被交付成本重新定价</h3>
+          <p class="thesis">真正变化的不是“又发了新模型”，而是企业开始按可交付任务衡量模型价值。</p>
+          <div class="variables">
+            <div class="var"><span>能力</span><i class="bar" style="--w: 86%"></i><b>86</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w: 72%"></i><b>72</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w: 58%"></i><b>58</b></div>
+          </div>
+          <div class="evidence"><span>模型发布</span><span>价格调整</span><span>企业案例</span></div>
+        </article>
+        <article class="trend">
+          <div class="kicker"><span>Trend 02</span><span>Distribution</span></div>
+          <h3>Agent 的胜负手，从推理能力迁移到分发入口</h3>
+          <p class="thesis">如果用户不改变工作流，再强的 agent 也只是演示；入口和权限才是 adoption 的瓶颈。</p>
+          <div class="variables">
+            <div class="var"><span>分发</span><i class="bar" style="--w: 91%"></i><b>91</b></div>
+            <div class="var"><span>监管</span><i class="bar" style="--w: 64%"></i><b>64</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w: 76%"></i><b>76</b></div>
+          </div>
+          <div class="evidence"><span>OS 权限</span><span>协作工具</span><span>插件生态</span></div>
+        </article>
+        <article class="trend">
+          <div class="kicker"><span>Trend 03</span><span>Supply</span></div>
+          <h3>算力叙事的约束点，继续向供应链下游移动</h3>
+          <p class="thesis">瓶颈不消失，只迁移：芯片、封装、电力、并网，每一层都可能重新分配利润池。</p>
+          <div class="variables">
+            <div class="var"><span>供给</span><i class="bar" style="--w: 88%"></i><b>88</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w: 80%"></i><b>80</b></div>
+            <div class="var"><span>监管</span><i class="bar" style="--w: 42%"></i><b>42</b></div>
+          </div>
+          <div class="evidence"><span>CAPEX</span><span>HBM</span><span>电力</span></div>
+        </article>
+        <div class="map" aria-label="趋势证据地图">
+          <i class="timeline-dot"></i>
+          <i class="timeline-dot"></i>
+          <i class="timeline-dot"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="section concept-b" id="ink">
+      <div class="section-head">
+        <div class="section-no">Concept B</div>
+        <h2>Algorithmic Ink</h2>
+        <p>更当代艺术：黑底、生成式墨迹、少量红色高压信号。适合把三大趋势做成日报开头的“每日视觉封面”，很有作者识别度。</p>
+      </div>
+      <div class="trend-grid">
+        <article class="trend" style="--angle: 20deg">
+          <div class="kicker"><span>01</span><span>constraint changed</span></div>
+          <h3>能力不再是孤立变量，交付成本开始反向定义模型价值</h3>
+          <p class="thesis">Sharp thesis：模型越强，越需要被放回任务、成本、权限和组织采用里重新定价。</p>
+          <div class="variables">
+            <div class="var"><span>能力</span><i class="bar" style="--w: 86%"></i><b>86</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w: 72%"></i><b>72</b></div>
+          </div>
+          <div class="evidence"><span>source cluster A</span><span>qa verified</span></div>
+        </article>
+        <article class="trend" style="--angle: 140deg">
+          <div class="kicker"><span>02</span><span>distribution changed</span></div>
+          <h3>Agent 的下一轮战争，是入口、权限和默认工作流</h3>
+          <p class="thesis">Sharp thesis：真正的 product-market fit 不在 demo，而在用户愿不愿把日常操作权交出去。</p>
+          <div class="variables">
+            <div class="var"><span>分发</span><i class="bar" style="--w: 91%"></i><b>91</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w: 76%"></i><b>76</b></div>
+          </div>
+          <div class="evidence"><span>workflow</span><span>permission</span></div>
+        </article>
+        <article class="trend" style="--angle: 250deg">
+          <div class="kicker"><span>03</span><span>supply changed</span></div>
+          <h3>算力利润池跟着最紧约束走，而不是跟着叙事走</h3>
+          <p class="thesis">Sharp thesis：每当行业以为买到 GPU 就结束，瓶颈就会移动到更下游。</p>
+          <div class="variables">
+            <div class="var"><span>供给</span><i class="bar" style="--w: 88%"></i><b>88</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w: 80%"></i><b>80</b></div>
+          </div>
+          <div class="evidence"><span>capex</span><span>grid</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section concept-c" id="xray">
+      <div class="section-head">
+        <div class="section-no">Concept C</div>
+        <h2>Market X-Ray</h2>
+        <p>偏运营和团队决策：把趋势写成一个可扫描的变量热力图。适合日报、周报、飞书卡片之后进入长期沉淀，数据感强，适合投研和复盘。</p>
+      </div>
+      <div class="xray">
+        <div class="matrix" role="table" aria-label="趋势变量热力图">
+          <div class="cell head"></div>
+          <div class="cell head">能力</div>
+          <div class="cell head">成本</div>
+          <div class="cell head">分发</div>
+          <div class="cell head">供给</div>
+          <div class="cell head">监管</div>
+          <div class="cell head">采用</div>
+          <div class="cell row">模型价值重估</div>
+          <div class="cell heat" style="--heat:.86"></div>
+          <div class="cell heat" style="--heat:.72"></div>
+          <div class="cell heat" style="--heat:.35"></div>
+          <div class="cell heat" style="--heat:.28"></div>
+          <div class="cell heat" style="--heat:.18"></div>
+          <div class="cell heat" style="--heat:.58"></div>
+          <div class="cell row">Agent 入口战</div>
+          <div class="cell heat" style="--heat:.48"></div>
+          <div class="cell heat" style="--heat:.44"></div>
+          <div class="cell heat" style="--heat:.91"></div>
+          <div class="cell heat" style="--heat:.26"></div>
+          <div class="cell heat" style="--heat:.64"></div>
+          <div class="cell heat" style="--heat:.76"></div>
+          <div class="cell row">算力约束迁移</div>
+          <div class="cell heat" style="--heat:.55"></div>
+          <div class="cell heat" style="--heat:.80"></div>
+          <div class="cell heat" style="--heat:.30"></div>
+          <div class="cell heat" style="--heat:.88"></div>
+          <div class="cell heat" style="--heat:.42"></div>
+          <div class="cell heat" style="--heat:.36"></div>
+        </div>
+        <aside class="insight-panel">
+          <h3>读法：先看变量，再看新闻。</h3>
+          <div class="rule">如果一个趋势不能说明六个变量中至少一个真的变化，它就只是新闻聚类，不值得占据日报入口。</div>
+          <div class="rule">蓝色越深，说明这个变量越像本周的约束源。高信号趋势应该同时有证据、反证和下周观察。</div>
+          <div class="rule">适合接入 CSV / Base：每周复盘“我们判断哪个变量变了，后来是否真的变了”。</div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section concept-d" id="gallery">
+      <div class="section-head">
+        <div class="section-no">Concept D</div>
+        <h2>Post-Internet Gallery</h2>
+        <p>把三条趋势做成一组三联画，视觉更像当代艺术海报。适合公众号头图、飞书卡片封面、社群分发，但需要控制信息密度。</p>
+      </div>
+      <div class="gallery">
+        <article class="poster" style="--c1:#d73222;--c2:#e8b637;--c3:#121212">
+          <div class="kicker"><span>01</span><span>not model news</span></div>
+          <h3>成本开始审判能力</h3>
+          <p class="thesis">模型能力的斜率不再自动等于产品价值，交付成本成为新的评判器。</p>
+          <code>changed_variable = cost
+watch_next = adoption proof
+noise = launch frequency</code>
+        </article>
+        <article class="poster" style="--c1:#1f5eff;--c2:#7a4dff;--c3:#d73222">
+          <div class="kicker"><span>02</span><span>not agent hype</span></div>
+          <h3>入口决定 Agent 命运</h3>
+          <p class="thesis">Agent 的竞争不是“谁会推理”，而是谁能拿到默认入口、权限和协作场景。</p>
+          <code>changed_variable = distribution
+watch_next = workflow lock-in
+noise = benchmark demo</code>
+        </article>
+        <article class="poster" style="--c1:#0d8f6a;--c2:#e8b637;--c3:#1f5eff">
+          <div class="kicker"><span>03</span><span>not chip story</span></div>
+          <h3>约束迁移，利润迁移</h3>
+          <p class="thesis">算力周期里，最重要的问题不是“谁最热”，而是最紧的约束在哪里。</p>
+          <code>changed_variable = supply
+watch_next = bottleneck shift
+noise = capex headline</code>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      建议选择方向：A 适合完整研究版日报；B 适合强作者风格的每日封面；C 适合长期知识库和运营复盘；D 适合分发传播。下一步可以把你喜欢的 1-2 个方向合并成日报趋势模块的正式视觉规范。
+    </footer>
+  </div>
+</body>
+</html>

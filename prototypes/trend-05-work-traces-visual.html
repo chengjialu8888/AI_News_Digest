@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI weekly visual note: the next training-data dividend comes from real work traces.">
+  <title>THE WORK TRACE · Trend 05</title>
+  <style>
+    :root {
+      --black: #0e0f0d;
+      --paper: #e8e5dc;
+      --white: #f6f4ed;
+      --ink: #171814;
+      --grey: #8d8b82;
+      --line: #b9b6ac;
+      --acid: #d9ff3f;
+      --red: #ff5b3f;
+      --blue: #3159ff;
+      --violet: #a796ff;
+      --orange: #ffb338;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: #1a1b17; color: var(--ink); }
+
+    body {
+      margin: 0;
+      padding: 24px 0 72px;
+      background: #1a1b17;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .masthead {
+      width: min(1400px, calc(100vw - 48px));
+      margin: 0 auto 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #c7c7be;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .masthead strong { color: var(--acid); }
+
+    .frame {
+      position: relative;
+      width: min(1400px, calc(100vw - 48px));
+      aspect-ratio: 16 / 9;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #30312c;
+      background: var(--paper);
+      isolation: isolate;
+    }
+
+    .frame::after {
+      content: "05 / DATA DIVIDEND";
+      position: absolute;
+      right: 26px;
+      bottom: 18px;
+      z-index: 20;
+      color: var(--ink);
+      opacity: .55;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+    }
+
+    .frame-inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 20px;
+      padding: 42px 48px 38px;
+    }
+
+    .eyebrow,
+    .tiny-label {
+      font-size: 10px;
+      line-height: 1.3;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow { opacity: .68; }
+
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      width: fit-content;
+      padding: 4px 8px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .topline {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(230px, .8fr);
+      gap: 26px;
+      align-items: end;
+      min-width: 0;
+    }
+
+    .title {
+      margin: 13px 0 0;
+      max-width: 900px;
+      font-size: clamp(38px, 5.1vw, 78px);
+      font-weight: 900;
+      line-height: .86;
+      letter-spacing: -.045em;
+    }
+
+    .title span { color: var(--blue); }
+
+    .dek {
+      margin: 0 0 2px;
+      max-width: 360px;
+      font-size: clamp(12px, 1.1vw, 16px);
+      font-weight: 700;
+      line-height: 1.42;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(240px, .72fr) minmax(0, 1.28fr);
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .archive,
+    .trace {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .archive {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 13px;
+      padding: 20px 22px;
+      background: var(--black);
+      color: var(--white);
+      border-top: 12px solid var(--red);
+    }
+
+    .archive::after {
+      content: "";
+      position: absolute;
+      right: -66px;
+      top: -65px;
+      width: 170px;
+      height: 170px;
+      border: 1px solid var(--acid);
+      border-radius: 50%;
+      opacity: .7;
+    }
+
+    .archive h2,
+    .trace h2 {
+      margin: 0;
+      font-size: clamp(20px, 2.15vw, 32px);
+      line-height: .92;
+      letter-spacing: -.03em;
+    }
+
+    .archive h2 span { color: var(--red); }
+
+    .archive-caption {
+      max-width: 270px;
+      color: #b7b8ae;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .web-stack {
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      min-height: 0;
+    }
+
+    .web-strip {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) 44px;
+      align-items: center;
+      gap: 8px;
+      height: 30px;
+      padding: 0 8px;
+      background: #2c2d28;
+      color: #c6c8bf;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .web-strip i {
+      display: block;
+      height: 4px;
+      background: #6d6f67;
+      opacity: .7;
+    }
+
+    .web-strip b {
+      color: var(--grey);
+      font-size: 9px;
+      text-align: right;
+      font-weight: 800;
+    }
+
+    .web-strip:nth-child(2) { width: 92%; }
+    .web-strip:nth-child(3) { width: 76%; }
+    .web-strip:nth-child(4) { width: 85%; }
+    .web-strip:nth-child(5) { width: 63%; }
+
+    .archive-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      color: var(--acid);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .archive-foot strong {
+      color: var(--white);
+      font-size: clamp(22px, 2.3vw, 34px);
+      letter-spacing: -.04em;
+    }
+
+    .trace {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 20px 22px 17px;
+      background: var(--white);
+      color: var(--ink);
+      border: 1px solid var(--ink);
+    }
+
+    .trace::before {
+      content: "";
+      position: absolute;
+      right: -42px;
+      top: 24px;
+      width: 116px;
+      height: 116px;
+      border: 18px solid var(--acid);
+      border-radius: 50%;
+      opacity: .9;
+    }
+
+    .trace::after {
+      content: "WORKFLOW RECORD";
+      position: absolute;
+      right: 17px;
+      top: 25px;
+      z-index: 1;
+      color: var(--ink);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      writing-mode: vertical-rl;
+    }
+
+    .trace-head {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-right: 92px;
+    }
+
+    .trace h2 span { color: var(--blue); }
+
+    .trace-note {
+      max-width: 220px;
+      color: #565852;
+      font-size: 11px;
+      line-height: 1.32;
+      text-align: right;
+    }
+
+    .trace-map {
+      position: relative;
+      min-height: 0;
+      margin: 0 5px;
+    }
+
+    .trace-line {
+      position: absolute;
+      left: 3%;
+      right: 3%;
+      top: 52%;
+      height: 5px;
+      background: var(--ink);
+    }
+
+    .trace-line::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -7px;
+      border-left: 14px solid var(--ink);
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+    }
+
+    .trace-node {
+      position: absolute;
+      top: calc(52% - 26px);
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      background: var(--acid);
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      color: var(--ink);
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      letter-spacing: .03em;
+    }
+
+    .trace-node::after {
+      content: attr(data-index);
+      position: absolute;
+      top: -20px;
+      color: var(--grey);
+      font-size: 9px;
+      letter-spacing: .08em;
+    }
+
+    .trace-node:nth-child(2) { left: 1%; background: var(--red); }
+    .trace-node:nth-child(3) { left: 16%; background: var(--acid); }
+    .trace-node:nth-child(4) { left: 31%; background: var(--blue); color: var(--white); }
+    .trace-node:nth-child(5) { left: 46%; background: var(--orange); }
+    .trace-node:nth-child(6) { left: 61%; background: var(--red); }
+    .trace-node:nth-child(7) { left: 76%; background: var(--blue); color: var(--white); }
+    .trace-node:nth-child(8) { right: 0; background: var(--acid); }
+
+    .trace-label {
+      position: absolute;
+      left: 3%;
+      right: 3%;
+      top: calc(52% + 42px);
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      color: #50524d;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .proof {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 14px;
+      align-items: end;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .proof h3 {
+      margin: 0 0 5px;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .proof-bars {
+      display: grid;
+      gap: 5px;
+    }
+
+    .proof-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 55px;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .bar {
+      height: 11px;
+      background: var(--black);
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      background: var(--red);
+    }
+
+    .proof-row:nth-child(2) .bar i { background: var(--blue); }
+    .proof-row b { text-align: right; }
+
+    .proof-quote {
+      padding-left: 12px;
+      border-left: 5px solid var(--acid);
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .evidence-card {
+      min-width: 0;
+      min-height: 76px;
+      padding: 10px 11px;
+      background: var(--white);
+      border: 1px solid var(--ink);
+    }
+
+    .evidence-card:nth-child(1) { background: var(--red); }
+    .evidence-card:nth-child(2) { background: var(--acid); }
+    .evidence-card:nth-child(3) { background: var(--blue); color: var(--white); }
+    .evidence-card:nth-child(4) { background: var(--orange); }
+    .evidence-card:nth-child(5) { background: var(--ink); color: var(--white); }
+
+    .evidence-card strong {
+      display: block;
+      margin: 4px 0 3px;
+      font-size: clamp(15px, 1.5vw, 22px);
+      line-height: .95;
+      letter-spacing: -.03em;
+    }
+
+    .evidence-card p {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.22;
+    }
+
+    .source-index {
+      position: absolute;
+      left: 48px;
+      bottom: 13px;
+      z-index: 21;
+      color: #5b5c55;
+      font-size: 9px;
+      letter-spacing: .08em;
+    }
+
+    .sources {
+      width: min(1400px, calc(100vw - 48px));
+      margin: 18px auto 0;
+      color: #c7c7be;
+      font: 12px/1.6 Arial, Helvetica, sans-serif;
+    }
+
+    .sources summary { cursor: pointer; color: var(--acid); }
+    .sources a { color: #fff; }
+
+    @media (max-width: 780px) {
+      body { padding: 14px 0 40px; }
+      .masthead,
+      .frame,
+      .sources { width: calc(100vw - 28px); }
+      .masthead { font-size: 9px; }
+      .frame {
+        aspect-ratio: auto;
+        min-height: 1120px;
+      }
+      .frame-inner {
+        position: relative;
+        min-height: 1120px;
+        padding: 24px 20px 42px;
+        grid-template-rows: auto auto auto;
+        gap: 16px;
+      }
+      .topline { grid-template-columns: 1fr; gap: 10px; }
+      .title { font-size: clamp(40px, 12vw, 66px); }
+      .dek { max-width: 420px; }
+      .stage { grid-template-columns: 1fr; gap: 10px; }
+      .archive { min-height: 340px; }
+      .trace { min-height: 450px; }
+      .trace-head { padding-right: 74px; }
+      .trace-note { font-size: 10px; }
+      .trace-node { width: 42px; height: 42px; top: calc(52% - 21px); font-size: 8px; }
+      .trace-label { font-size: 7px; }
+      .proof { grid-template-columns: 1fr; gap: 10px; }
+      .proof-quote { padding-left: 9px; }
+      .evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .evidence-card { min-height: 83px; }
+      .source-index { left: 20px; bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="masthead"><span><strong>AI NEWS DIGEST</strong> / WEEKLY FIELD NOTE</span><span>2026.07.21 — 07.27 / TREND 05</span></div>
+
+  <main class="frame" aria-label="Trend five visualization: from web corpus to work traces">
+    <div class="frame-inner">
+      <header class="topline">
+        <div>
+          <span class="stamp">THE DATA DIVIDEND IS MOVING</span>
+          <h1 class="title">THE NEXT TRAINING DATA<br><span>IS A WORK TRACE.</span></h1>
+        </div>
+        <p class="dek">网页文本告诉模型“世界上有什么”。真实轨迹告诉模型“工作是怎么做完的”。</p>
+      </header>
+
+      <section class="stage">
+        <article class="archive">
+          <div class="eyebrow">01 / THE ARCHIVE</div>
+          <h2>MORE WEB<br><span>IS NOT MORE WORK.</span></h2>
+          <p class="archive-caption">静态语料保存对象、观点和结果；它很少保存任务如何被提出、拆解、失败、修正、验证和交付。</p>
+          <div class="web-stack" aria-label="Static web corpus with declining marginal value">
+            <div class="web-strip"><span>ARTICLE</span><i></i><b>WHAT</b></div>
+            <div class="web-strip"><span>CODE</span><i></i><b>OBJECT</b></div>
+            <div class="web-strip"><span>CAPTION</span><i></i><b>ANSWER</b></div>
+            <div class="web-strip"><span>WEB TEXT</span><i></i><b>STATIC</b></div>
+          </div>
+          <div class="archive-foot"><span>marginal value</span><strong>↓</strong></div>
+        </article>
+
+        <article class="trace">
+          <div class="trace-head">
+            <div>
+              <div class="eyebrow">02 / THE WORKFLOW RECORDER</div>
+              <h2>THE HIGH-VALUE UNIT<br>IS A <span>TRAJECTORY.</span></h2>
+            </div>
+            <p class="trace-note">上下文、工具调用、反馈和结果，合在一起才接近 Agent 的训练燃料。</p>
+          </div>
+
+          <div class="trace-map" aria-label="Task trajectory from ask to delivery">
+            <div class="trace-line"></div>
+            <div class="trace-node" data-index="01">ASK</div>
+            <div class="trace-node" data-index="02">PLAN</div>
+            <div class="trace-node" data-index="03">TOOL</div>
+            <div class="trace-node" data-index="04">FAIL</div>
+            <div class="trace-node" data-index="05">REVISE</div>
+            <div class="trace-node" data-index="06">VERIFY</div>
+            <div class="trace-node" data-index="07">DELIVER</div>
+            <div class="trace-label"><span>context</span><span>action</span><span>feedback</span><span>result</span></div>
+          </div>
+
+          <div class="proof">
+            <div>
+              <h3>HILLCLIMBABLE / 可采样、可验证、可改进</h3>
+              <div class="proof-bars">
+                <div class="proof-row"><span>PASS@1</span><div class="bar"><i style="width: 5%"></i></div><b>≈ 0%</b></div>
+                <div class="proof-row"><span>PASS@32</span><div class="bar"><i style="width: 30%"></i></div><b>≈ 30%</b></div>
+              </div>
+            </div>
+            <div class="proof-quote">一次回答是样本。<br>一条轨迹才是训练材料。</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="evidence" aria-label="Evidence signals from this week's sources">
+        <article class="evidence-card"><span class="tiny-label">FOUNDER PARK</span><strong>TYPE 1.5</strong><p>真实工作流开始成为下一代训练数据。</p></article>
+        <article class="evidence-card"><span class="tiny-label">ANTHROPIC</span><strong>CONNECTOR</strong><p>AI 使用与职业影响数据被产品化、可查询。</p></article>
+        <article class="evidence-card"><span class="tiny-label">UNSLOP</span><strong>&gt;30%</strong><p>arXiv 新提交论文显示 AI 写作特征。</p></article>
+        <article class="evidence-card"><span class="tiny-label">GOOGLE</span><strong>22B / MIN</strong><p>规模本身就是数据与分发优势。</p></article>
+        <article class="evidence-card"><span class="tiny-label">BIGMAC</span><strong>1.08×—1.9×</strong><p>依赖安全的嵌套 pipeline 加速多模态训练。</p></article>
+      </section>
+    </div>
+    <div class="source-index">FP · AEI · UNSLOP · GOOGLE · BIGMAC / THE RECORD IS THE RESOURCE</div>
+  </main>
+
+  <details class="sources">
+    <summary>OPEN THE EVIDENCE INDEX / 打开证据索引</summary>
+    <ul>
+      <li><a href="https://mp.weixin.qq.com/s/z_-c6a4lpRBWcMnPjFmckg">Founder Park / 真实工作流是下一代训练数据</a></li>
+      <li><a href="https://www.anthropic.com/news/anthropic-economic-index-connector">Anthropic Economic Index connector</a></li>
+      <li><a href="https://unslop.run/blog/measuring-ai-writing-on-arxiv">Unslop / Measuring AI Writing on arXiv</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/pqFZreEZj8kB4KDirl4MSQ">随机数行为可作为模型身份指纹</a></li>
+      <li><a href="https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q2-2026/">Alphabet Q2 / Gemini scale and tokens per minute</a></li>
+      <li><a href="https://mp.weixin.qq.com/s/tNJARtn1jIayL5URg87Row">小红书 BigMac / dependency-safe nested pipeline</a></li>
+    </ul>
+  </details>
+</body>
+</html>

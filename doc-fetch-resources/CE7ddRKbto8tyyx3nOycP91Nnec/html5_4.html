@@ -1,0 +1,103 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="use-iframe" content="true"><meta name="html-box-height-mode" content="auto"><title>AI 周报 / 迁移矩阵</title><style>
+  :root { --paper:#FBFAF6; --ink:#070707; --soft:#F0EEE7; --muted:#63615A; --line:#D8D2C7; --orange:#FF6B2C; --lime:#D7FF3F; --blue:#2F54FF; --pink:#FF8BCB; --mint:#18D68A; --violet:#B69CFF; --sans:system-ui,-apple-system,"Noto Sans SC",sans-serif; --serif:"et-book", "Songti SC", "Noto Serif CJK SC", Georgia, serif; --mono:Menlo,Consolas,"SF Mono",monospace; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; min-height:100%; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); }
+  .frame { position:relative; width:100%; aspect-ratio:16 / 9; overflow:hidden; background:var(--paper); border:1px solid var(--ink); padding:24px 28px; display:flex; flex-direction:column; }
+  .frame-meta { color:var(--blue); font:700 11px var(--mono); letter-spacing:0; }
+  .frame h1 { margin:14px 0 8px; font:700 clamp(28px,4.5vw,64px)/1.06 var(--serif); letter-spacing:0; }
+  .frame h2 { margin:0; font:700 clamp(15px,2vw,25px)/1.2 var(--serif); }
+  .lede { margin:0; max-width:720px; color:var(--muted); font-size:clamp(12px,1.35vw,18px); line-height:1.55; }
+  .rule { height:1px; margin:14px 0; background:var(--line); flex:0 0 auto; }
+  .tag { display:inline-flex; align-items:center; padding:5px 8px; border:1px solid var(--ink); border-radius:4px; font:700 10px var(--mono); }
+  .chip { display:inline-flex; align-items:center; min-height:24px; padding:4px 8px; border:1px solid currentColor; border-radius:4px; font:700 10px var(--sans); white-space:nowrap; }
+  .cover-grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr); gap:28px; align-items:center; flex:1; min-height:0; }
+  .cover-copy { min-width:0; }
+  .cover-copy h1 { max-width:720px; }
+  .cover-copy .lede { max-width:620px; }
+  .cover-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .cover-mark { height:100%; max-height:330px; min-height:190px; border:2px solid var(--ink); background:var(--soft); padding:18px; display:grid; grid-template-columns:1fr 1fr; gap:10px; align-content:center; }
+  .cover-mark .mark-title { grid-column:1 / -1; font:700 clamp(20px,3vw,42px)/1 var(--sans); }
+  .swatches { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .swatches i { display:block; aspect-ratio:1; background:var(--c); border:1px solid var(--ink); }
+  .formula { align-self:end; padding:12px; border:1px solid var(--ink); background:var(--ink); color:var(--paper); font:700 clamp(10px,1.2vw,15px) var(--mono); }
+  .frame-foot { display:flex; justify-content:space-between; gap:16px; color:var(--muted); font:10px var(--mono); }
+  .section-head { flex:0 0 auto; }
+  .section-head h1 { font-size:clamp(24px,3.4vw,48px); margin-top:10px; }
+  .section-head .lede { max-width:720px; }
+  .variable-grid, .trend-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; flex:1; min-height:0; margin-top:16px; }
+  .variable-card { min-width:0; border:1px solid var(--ink); border-top:5px solid var(--accent); background:var(--card); padding:14px; display:flex; flex-direction:column; justify-content:space-between; }
+  .variable-card .card-top { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
+  .variable-card .num { color:var(--muted); font:700 10px var(--mono); }
+  .variable-card .score { color:var(--accent); font:700 clamp(24px,3vw,46px)/1 var(--sans); }
+  .variable-card h2 { margin-top:8px; font-size:clamp(16px,2vw,27px); }
+  .variable-card p { margin:8px 0 0; color:var(--muted); font-size:clamp(11px,1.15vw,15px); line-height:1.45; }
+  .meter { height:7px; margin-top:12px; background:var(--line); }
+  .meter i { display:block; height:100%; width:var(--score); background:var(--accent); }
+  .trends-frame { background:var(--soft); }
+  .trend-grid { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); }
+  .trend-card { min-width:0; border:1px solid var(--ink); border-left:7px solid var(--accent); background:var(--card); padding:12px 14px; display:grid; grid-template-rows:auto auto 1fr auto; gap:5px; }
+  .trend-card .card-top { display:flex; justify-content:space-between; gap:8px; color:var(--muted); font:700 10px var(--mono); }
+  .trend-card .score { color:var(--ink); font:700 24px/1 var(--sans); }
+  .trend-card h2 { font-size:clamp(13px,1.45vw,19px); }
+  .trend-card p { margin:0; color:var(--muted); font-size:clamp(10px,1.05vw,14px); line-height:1.4; }
+  .evidence { display:flex; flex-wrap:wrap; gap:6px; }
+  .matrix-frame { padding-bottom:18px; }
+  .matrix-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); gap:12px; flex:1; min-height:0; margin-top:16px; }
+  .matrix-card { min-width:0; border:1px solid var(--ink); border-top:6px solid var(--accent); padding:13px; display:grid; grid-template-columns:44px minmax(0,1fr); gap:10px; background:var(--card); }
+  .matrix-card .num { color:var(--accent); font:700 25px/1 var(--mono); }
+  .matrix-card .from, .matrix-card .to { font:700 clamp(12px,1.35vw,17px)/1.2 var(--sans); }
+  .matrix-card .to { color:var(--accent); }
+  .matrix-card p { grid-column:2; margin:3px 0 0; color:var(--muted); font-size:clamp(10px,1vw,13px); line-height:1.35; }
+  .matrix-card small { grid-column:2; color:var(--ink); font:700 9px var(--mono); }
+  .header-frame { background:var(--ink); color:var(--paper); }
+  .header-frame .frame-meta, .header-frame .lede { color:var(--paper); }
+  .header-frame h1 { max-width:780px; }
+  .header-mark { height:100%; max-height:300px; border:1px solid var(--paper); background:var(--soft); padding:16px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; align-content:center; }
+  .header-mark i { display:block; aspect-ratio:1; background:var(--c); border:1px solid var(--ink); }
+  @media (max-width:720px) { .frame { padding:14px 16px; } .cover-grid { grid-template-columns:minmax(0,1fr) minmax(120px,.6fr); gap:12px; } .cover-mark { padding:10px; gap:6px; } .cover-mark .mark-title { font-size:18px; } .variable-grid { gap:6px; margin-top:8px; } .variable-card { padding:8px; border-top-width:3px; } .variable-card p { font-size:9px; } .trend-grid { gap:6px; margin-top:8px; } .trend-card { padding:7px 8px; border-left-width:4px; } .trend-card h2 { font-size:11px; } .trend-card p { font-size:8px; } .chip { min-height:18px; padding:2px 5px; font-size:8px; } .matrix-grid { gap:6px; margin-top:8px; } .matrix-card { padding:7px; grid-template-columns:22px minmax(0,1fr); gap:5px; border-top-width:3px; } .matrix-card .num { font-size:14px; } .matrix-card .from, .matrix-card .to { font-size:9px; } .matrix-card p { font-size:7px; } .matrix-card small { font-size:6px; } .frame-foot { font-size:7px; } }
+
+    .migration-frame { padding-bottom:18px; }
+    .migration-tools { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; flex:0 0 auto; }
+    .migration-tools button { border:1px solid var(--ink); background:var(--paper); color:var(--ink); border-radius:4px; padding:5px 9px; font:700 10px var(--mono); cursor:pointer; }
+    .migration-tools button.active, .migration-tools button:hover { background:var(--ink); color:var(--paper); }
+    #chart { width:100%; min-height:0; flex:1 1 auto; margin-top:8px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .detail { display:grid; grid-template-columns:50px minmax(0,1fr) 230px; gap:12px; align-items:start; padding-top:9px; flex:0 0 auto; }
+    .detail-no { color:var(--blue); font:700 22px/1 var(--mono); }
+    .detail h2 { margin:0; font:700 clamp(12px,1.5vw,18px)/1.25 var(--serif); }
+    .detail p { margin:3px 0 0; color:var(--muted); font-size:clamp(9px,1vw,12px); line-height:1.35; }
+    .detail-side { border-left:1px solid var(--ink); padding-left:10px; }
+    .detail-side b { display:block; color:var(--blue); font:700 9px var(--mono); }
+    .detail-side span { display:block; color:var(--muted); font-size:clamp(8px,1vw,11px); line-height:1.3; margin-top:3px; }
+    @media (max-width:720px) { .migration-tools button { padding:4px 6px; font-size:8px; } .detail { grid-template-columns:28px minmax(0,1fr) 92px; gap:6px; } .detail-no { font-size:14px; } .detail h2 { font-size:9px; } .detail p, .detail-side span { font-size:7px; } .detail-side { padding-left:5px; } .detail-side b { font-size:7px; } }
+  </style></head><body><main class="frame migration-frame"><div class="section-head"><div class="frame-meta">04 / MIGRATION MATRIX / HTMLBOX ONLY</div><h1>从“更强”到“更会判断”。</h1><p class="lede">每条线不是替换关系，而是 AI 产品、采购和组织的判断单位正在迁移。</p></div><nav class="migration-tools" aria-label="过滤变量"><button class="active" data-filter="all">ALL</button><button data-filter="能力">能力</button><button data-filter="成本">成本</button><button data-filter="分发">分发</button><button data-filter="供给">供给</button><button data-filter="监管">监管</button><button data-filter="采用">采用</button></nav><div id="chart" aria-label="AI 周报迁移矩阵动态关系图"></div><section class="detail" aria-live="polite"><div class="detail-no" id="detail-no">01</div><div><h2 id="detail-title">Prompt scaffolding → Mature agent management</h2><p id="detail-why">给成熟模型目标、边界、参考物和复盘机制</p></div><div class="detail-side"><b>TEST / 反问</b><span id="detail-proof">常驻上下文是否变短</span></div></section></main><script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" onerror="window.__echartsFailed=true"></script><script>
+      const DATA = [{"id": 1, "source": "Prompt scaffolding", "target": "Mature agent management", "why": "给成熟模型目标、边界、参考物和复盘机制", "variables": "能力 / 成本 / 采用", "proof": "常驻上下文是否变短", "score": 92, "color": "#FF6B2C"}, {"id": 2, "source": "Pre-release eval", "target": "Runtime boundary", "why": "把安全治理搬到身份、权限、日志、审批和回滚", "variables": "监管 / 采用", "proof": "是否记录工具调用轨迹", "score": 94, "color": "#D7FF3F"}, {"id": 3, "source": "Model ranking", "target": "Model-system pair", "why": "比较模型和 harness、验证器、memory 的组合能力", "variables": "能力 / 采用 / 成本", "proof": "采购对象是否变成系统包", "score": 90, "color": "#2F54FF"}, {"id": 4, "source": "Chat interface", "target": "Artifact surface", "why": "让 AI 进入 Excel、Outlook、画布、图片和设计台", "variables": "分发 / 采用", "proof": "交付物是否成为入口", "score": 92, "color": "#18D68A"}, {"id": 5, "source": "Web corpus", "target": "Workflow trajectory", "why": "从内容学习转向过程学习和验收轨迹", "variables": "供给 / 采用", "proof": "是否沉淀可验证任务轨迹", "score": 88, "color": "#B69CFF"}, {"id": 6, "source": "Token price", "target": "Industrial ledger", "why": "从 API 价格表迁移到电力、租赁和债务结构", "variables": "成本 / 供给", "proof": "单位任务成本是否全栈计量", "score": 96, "color": "#FF8BCB"}];
+      const chartEl = document.getElementById('chart');
+      const detail = { no:document.getElementById('detail-no'), title:document.getElementById('detail-title'), why:document.getElementById('detail-why'), proof:document.getElementById('detail-proof') };
+      let activeFilter = 'all';
+      let chartInstance = null;
+      function setDetail(item) { detail.no.textContent=String(item.id).padStart(2,'0'); detail.title.textContent=item.source+' → '+item.target; detail.why.textContent=item.why; detail.proof.textContent=item.proof+' / '+item.variables; }
+      function renderChart() {
+        if (typeof echarts === 'undefined' || window.__echartsFailed) return;
+        const selected = DATA.filter(item => activeFilter === 'all' || item.variables.includes(activeFilter));
+        const width = Math.max(320, chartEl.clientWidth || 800);
+        const height = Math.max(60, chartEl.clientHeight || 300);
+        const narrow = width < 640;
+        const oldWidth = narrow ? 92 : 180;
+        const newWidth = narrow ? 104 : 210;
+        const leftX = narrow ? oldWidth / 2 + 10 : width * .23;
+        const rightX = narrow ? width * .56 : width * .77;
+        const startY = Math.max(18, height / (selected.length + 1) / 2);
+        const rowStep = Math.max(narrow ? 22 : 30, (height - startY * 1.4) / Math.max(1, selected.length));
+        const labelSize = narrow ? 8 : 12;
+        const labelFormatter = ({ name }) => { if (!narrow || !name.includes(' ')) return name; const words=name.split(' '); const pivot=Math.ceil(words.length/2); return words.slice(0,pivot).join(' ')+'\n'+words.slice(pivot).join(' '); };
+        const nodes=[]; const links=[];
+        selected.forEach((item,index)=>{ const y=startY+index*rowStep; nodes.push({id:'old-'+item.id,name:item.source,x:leftX,y,item,symbol:'rect',symbolSize:[oldWidth,narrow?20:34],itemStyle:{color:'#070707',borderColor:'#070707',borderWidth:1},label:{formatter:labelFormatter,color:'#FBFAF6',fontFamily:'Georgia, Songti SC, serif',fontSize:labelSize,fontWeight:700}}); nodes.push({id:'new-'+item.id,name:item.target,x:rightX,y,item,symbol:'rect',symbolSize:[newWidth,narrow?20:34],itemStyle:{color:'#F0EEE7',borderColor:item.color,borderWidth:2},label:{formatter:labelFormatter,color:'#070707',fontFamily:'Georgia, Songti SC, serif',fontSize:labelSize,fontWeight:700}}); links.push({source:'old-'+item.id,target:'new-'+item.id,value:item.score,lineStyle:{color:item.color,width:narrow?1.2:1.5+item.score/48,curveness:.16,opacity:.92}}); });
+        chartInstance=echarts.getInstanceByDom(chartEl)||echarts.init(chartEl,null,{renderer:'svg'});
+        chartInstance.setOption({animationDuration:500,tooltip:{trigger:'item',formatter:p=>{const item=p.data&&p.data.item;return item?'<b>'+item.source+' → '+item.target+'</b><br/>score '+item.score+'<br/>'+item.why:''}},series:[{type:'graph',layout:'none',roam:false,data:nodes,links,coordinateSystem:null,edgeSymbol:['none','arrow'],edgeSymbolSize:7,emphasis:{focus:'adjacency',lineStyle:{width:5}},label:{show:true,position:'inside'},lineStyle:{opacity:.92}}]},true);
+        chartInstance.off('click'); chartInstance.on('click',p=>{if(p.data&&p.data.item)setDetail(p.data.item);}); if(selected.length)setDetail(selected[0]);
+      }
+      window.addEventListener('resize',()=>{if(chartInstance)chartInstance.resize();});
+      document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(node=>node.classList.remove('active'));button.classList.add('active');activeFilter=button.dataset.filter;renderChart();}));
+      let attempts=0;(function boot(){if(typeof echarts!=='undefined'||window.__echartsFailed||attempts++>30)renderChart();else setTimeout(boot,150);})();
+  </script></body></html>

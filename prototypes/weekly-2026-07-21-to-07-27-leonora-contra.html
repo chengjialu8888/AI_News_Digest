@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Weekly | The Living Evidence Lab</title>
+  <style>
+    :root {
+      --canvas: #c9c4ba;
+      --paper: #f1eee5;
+      --bone: #e8e0d1;
+      --ink: #17191a;
+      --deep: #202523;
+      --night: #252a2b;
+      --moss: #687052;
+      --olive: #8b8d65;
+      --orange: #d45d38;
+      --rust: #a9453b;
+      --mauve: #9b7884;
+      --blue: #536d76;
+      --amber: #c79c51;
+      --line: rgba(23, 25, 26, .32);
+      --light-line: rgba(241, 238, 229, .42);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--canvas); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: var(--sans);
+      line-height: 1.45;
+    }
+
+    button { font: inherit; }
+
+    .shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: 20px 24px 70px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.15fr auto 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 9px 0 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 25px;
+      height: 25px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      background: var(--orange);
+    }
+
+    .brand-mark::before { left: 11px; top: 4px; width: 1px; height: 15px; }
+    .brand-mark::after { left: 4px; top: 11px; width: 15px; height: 1px; }
+
+    .top-meta {
+      color: #555650;
+      font: 700 10px/1.2 var(--sans);
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .view-switch {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .view-switch button {
+      padding: 7px 10px;
+      color: #5a5b54;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .view-switch button:hover,
+    .view-switch button.is-active {
+      color: var(--ink);
+      border-color: var(--ink);
+      background: rgba(241, 238, 229, .45);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 26px;
+      align-items: end;
+      padding: 42px 0 30px;
+    }
+
+    .intro h1 {
+      max-width: 830px;
+      margin: 0;
+      font-size: clamp(40px, 6vw, 90px);
+      line-height: .86;
+      letter-spacing: -.035em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .intro h1 em { color: var(--orange); font-style: normal; }
+
+    .intro p {
+      max-width: 390px;
+      margin: 0 0 5px auto;
+      color: #565750;
+      font-size: 13px;
+    }
+
+    .signal-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-bottom: 26px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .signal {
+      min-height: 74px;
+      padding: 13px 15px;
+      background: rgba(241, 238, 229, .78);
+    }
+
+    .signal b {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    .signal span {
+      color: #60605a;
+      font-size: 10px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      margin: 26px 0;
+      isolation: isolate;
+    }
+
+    .frame > * { position: absolute; }
+
+    .frame-label {
+      top: 20px;
+      left: 24px;
+      z-index: 12;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: rgba(241, 238, 229, .8);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .frame-label .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .light-ui { color: rgba(23, 25, 26, .7); }
+    .light-ui .dot { background: var(--rust); }
+
+    .frame-index {
+      top: 20px;
+      right: 24px;
+      z-index: 12;
+      color: rgba(241, 238, 229, .58);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+
+    .frame h2 {
+      z-index: 10;
+      margin: 0;
+      font-size: clamp(38px, 5.2vw, 78px);
+      line-height: .86;
+      letter-spacing: -.035em;
+      font-weight: 900;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .frame h2 em { color: var(--orange); font-style: normal; }
+
+    .caption {
+      z-index: 11;
+      margin: 0;
+      color: rgba(241, 238, 229, .82);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .caption.dark { color: rgba(23, 25, 26, .73); }
+
+    .eyebrow {
+      z-index: 11;
+      margin: 0;
+      color: rgba(241, 238, 229, .66);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .rule {
+      z-index: 3;
+      height: 1px;
+      background: var(--light-line);
+    }
+
+    .panel {
+      z-index: 8;
+      padding: 12px;
+      border: 1px solid currentColor;
+      background: rgba(32, 37, 35, .6);
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 11px;
+      color: currentColor;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .panel-title span:last-child { color: rgba(241, 238, 229, .55); font-size: 9px; }
+
+    .metric-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(241, 238, 229, .22);
+    }
+
+    .metric-line b { font-size: 15px; }
+    .metric-line span { color: rgba(241, 238, 229, .7); font-size: 10px; text-align: right; }
+
+    /* 01 / a private mythology rendered as a research lab */
+    .f01 { color: var(--bone); background: var(--deep); }
+    .f01::before {
+      content: "";
+      left: 51%;
+      top: 16%;
+      width: 37%;
+      height: 66%;
+      border: 1px solid rgba(199, 156, 81, .5);
+      border-radius: 47% 53% 55% 45%;
+      transform: rotate(9deg);
+    }
+    .f01::after {
+      content: "";
+      right: 8%;
+      bottom: 11%;
+      width: 24%;
+      height: 1px;
+      background: var(--orange);
+      transform: rotate(-9deg);
+    }
+    .f01 h2 { left: 6.5%; top: 28%; width: 42%; color: var(--bone); }
+    .f01 h2 em { color: var(--amber); }
+    .f01 .caption { left: 6.5%; bottom: 13%; width: 29%; }
+    .f01 .eyebrow { left: 6.5%; top: 19%; }
+    .f01 .lab-card { right: 7%; top: 20%; width: 29%; color: var(--bone); }
+    .f01 .creature {
+      right: 29%;
+      bottom: 14%;
+      width: 64px;
+      height: 146px;
+      z-index: 6;
+      border: 1px solid var(--mauve);
+      border-radius: 55% 45% 46% 54%;
+      background: rgba(155, 120, 132, .13);
+      transform: rotate(9deg);
+    }
+    .f01 .creature::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: -31px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--mauve);
+      border-radius: 50%;
+      background: var(--deep);
+    }
+    .f01 .creature::after {
+      content: "";
+      position: absolute;
+      left: 21px;
+      top: -55px;
+      width: 22px;
+      height: 26px;
+      border-top: 1px solid var(--amber);
+      border-left: 1px solid var(--amber);
+      border-radius: 55% 0 0 0;
+      transform: rotate(-21deg);
+    }
+    .f01 .eye { left: 24px; top: -15px; }
+    .eye {
+      position: absolute;
+      width: 18px;
+      height: 10px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      transform: rotate(-8deg);
+    }
+    .eye::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* 02 / thick context, thin prompt */
+    .f02 { color: var(--ink); background: var(--bone); }
+    .f02 .gate {
+      left: 47%;
+      top: 18%;
+      width: 21%;
+      height: 61%;
+      border: 1px solid var(--moss);
+      border-bottom: 0;
+      border-radius: 50% 50% 0 0;
+      background: rgba(104, 112, 82, .12);
+    }
+    .f02 .gate::before {
+      content: "";
+      position: absolute;
+      left: 17%;
+      top: 13%;
+      width: 66%;
+      height: 87%;
+      border: 1px solid var(--olive);
+      border-bottom: 0;
+      border-radius: 50% 50% 0 0;
+    }
+    .f02 .gate::after {
+      content: "";
+      position: absolute;
+      left: 33%;
+      bottom: 0;
+      width: 34%;
+      height: 42%;
+      background: var(--rust);
+      border: 1px solid var(--rust);
+    }
+    .f02 h2 { left: 6.5%; top: 23%; width: 34%; }
+    .f02 h2 em { color: var(--rust); }
+    .f02 .caption { right: 6.5%; bottom: 12%; width: 27%; }
+    .f02 .stat { left: 6.5%; bottom: 11%; color: var(--rust); font-size: clamp(54px, 7vw, 104px); font-weight: 900; line-height: .82; }
+    .f02 .stat span { display: block; margin-top: 11px; color: #5f6258; font-size: 10px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    .f02 .leaf { z-index: 9; width: 84px; padding: 7px 9px; border: 1px solid currentColor; background: rgba(241, 238, 229, .45); font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .f02 .leaf.a { left: 26%; top: 26%; color: var(--moss); transform: rotate(-8deg); }
+    .f02 .leaf.b { left: 27%; top: 48%; color: var(--rust); transform: rotate(7deg); }
+    .f02 .leaf.c { right: 23%; top: 27%; color: var(--moss); transform: rotate(8deg); }
+    .f02 .leaf.d { right: 20%; top: 49%; color: var(--amber); transform: rotate(-9deg); }
+    .f02 .rule { left: 7%; right: 7%; top: 70%; background: rgba(23, 25, 26, .28); transform: rotate(2deg); }
+
+    /* 03 / runtime body */
+    .f03 { color: var(--bone); background: var(--moss); }
+    .f03 .body {
+      left: 42%;
+      top: 16%;
+      width: 23%;
+      height: 68%;
+      border: 1px solid var(--amber);
+      border-radius: 49% 51% 44% 56%;
+      background: rgba(241, 238, 229, .04);
+      transform: rotate(-4deg);
+    }
+    .f03 .body::before {
+      content: "";
+      position: absolute;
+      left: 23%;
+      top: -10%;
+      width: 53%;
+      height: 23%;
+      border: 1px solid var(--amber);
+      border-radius: 50%;
+      background: var(--moss);
+    }
+    .f03 .body::after {
+      content: "";
+      position: absolute;
+      left: 49%;
+      top: 0;
+      width: 1px;
+      height: 93%;
+      background: rgba(199, 156, 81, .7);
+    }
+    .f03 h2 { left: 6.5%; top: 26%; width: 31%; color: var(--bone); }
+    .f03 h2 em { color: var(--amber); }
+    .f03 .caption { right: 6.5%; top: 23%; width: 25%; }
+    .f03 .organ { z-index: 9; left: 9%; width: 82%; height: 19%; padding: 8px 9px; border: 1px solid currentColor; background: rgba(32, 37, 35, .15); font-size: 10px; font-weight: 800; letter-spacing: .05em; }
+    .f03 .organ span { display: block; margin-top: 5px; color: rgba(241, 238, 229, .72); font-size: 9px; font-weight: 400; letter-spacing: 0; }
+    .f03 .organ.a { top: 14%; color: var(--mauve); }
+    .f03 .organ.b { top: 34%; color: var(--amber); }
+    .f03 .organ.c { top: 54%; color: var(--orange); }
+    .f03 .organ.d { top: 74%; color: var(--bone); }
+    .f03 .body .organ { left: 11%; width: 78%; }
+    .f03 .body .organ.a { top: 15%; }
+    .f03 .body .organ.b { top: 35%; }
+    .f03 .body .organ.c { top: 55%; }
+    .f03 .body .organ.d { top: 75%; }
+    .f03 .seal { right: 7%; bottom: 12%; width: 46px; height: 46px; border: 1px solid var(--mauve); border-radius: 50%; }
+    .f03 .seal::after { content: "✦"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--mauve); font-size: 15px; }
+    .f03 .rule { left: 7%; right: 7%; bottom: 15%; }
+
+    /* 04 / judgment table */
+    .f04 { color: var(--bone); background: #30363a; }
+    .f04 h2 { left: 6.5%; top: 26%; width: 28%; }
+    .f04 h2 em { color: var(--amber); }
+    .f04 .caption { left: 6.5%; bottom: 12%; width: 28%; }
+    .f04 .scoreboard { right: 6.5%; top: 19%; width: 48%; height: 59%; padding: 14px; color: var(--bone); border: 1px solid rgba(241, 238, 229, .52); background: rgba(32, 37, 35, .36); }
+    .f04 .scoreboard::before { content: ""; position: absolute; left: 50%; top: 15%; bottom: 10%; width: 1px; background: rgba(241, 238, 229, .23); }
+    .f04 .score-head { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgba(241, 238, 229, .32); color: rgba(241, 238, 229, .66); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .f04 .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin-top: 14px; }
+    .f04 .score-card { min-height: 70px; padding-top: 9px; border-top: 1px solid rgba(241, 238, 229, .33); }
+    .f04 .score-card b { display: block; margin-bottom: 6px; color: var(--amber); font-size: 12px; text-transform: uppercase; }
+    .f04 .score-card span { display: block; color: rgba(241, 238, 229, .72); font-size: 10px; line-height: 1.3; }
+    .f04 .verdict { position: absolute; left: 39%; bottom: 11%; color: var(--orange); font-size: 32px; font-weight: 900; letter-spacing: -.02em; }
+    .f04 .verdict small { display: block; margin-top: 3px; color: rgba(241, 238, 229, .68); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
+    .f04 .eyebrow { right: 6.5%; bottom: 12%; color: var(--amber); }
+
+    /* 05 / output habitat */
+    .f05 { color: var(--ink); background: var(--paper); }
+    .f05 .frame-label { color: rgba(23, 25, 26, .68); }
+    .f05 h2 { left: 6.5%; top: 24%; width: 34%; }
+    .f05 h2 em { color: var(--rust); }
+    .f05 .caption { left: 6.5%; bottom: 12%; width: 29%; }
+    .f05 .habitat { right: 6.5%; top: 17%; width: 48%; height: 63%; padding: 14px; overflow: hidden; border: 1px solid var(--ink); background: var(--bone); }
+    .f05 .habitat::before { content: ""; position: absolute; left: -13%; top: 20%; width: 126%; height: 1px; background: rgba(23, 25, 26, .28); transform: rotate(-7deg); }
+    .f05 .habitat-head { position: relative; display: flex; justify-content: space-between; margin-bottom: 10px; color: #66665f; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .f05 .surface-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .f05 .surface { min-height: 90px; padding: 11px; border: 1px solid var(--ink); }
+    .f05 .surface b { display: block; margin-bottom: 7px; font-size: 13px; }
+    .f05 .surface span { display: block; color: rgba(23, 25, 26, .68); font-size: 10px; line-height: 1.3; }
+    .f05 .surface.a { background: var(--orange); }
+    .f05 .surface.b { background: var(--mauve); }
+    .f05 .surface.c { background: var(--moss); color: var(--bone); }
+    .f05 .surface.c span { color: rgba(241, 238, 229, .78); }
+    .f05 .surface.d { background: var(--night); color: var(--bone); }
+    .f05 .surface.d span { color: rgba(241, 238, 229, .72); }
+    .f05 .micro { right: 6.5%; bottom: 11%; color: #6a6a61; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* 06 / trajectories */
+    .f06 { color: var(--bone); background: var(--blue); }
+    .f06 h2 { left: 6.5%; top: 23%; width: 31%; }
+    .f06 h2 em { color: var(--amber); }
+    .f06 .caption { left: 6.5%; bottom: 12%; width: 29%; }
+    .f06 .trajectory-board { right: 6.5%; top: 18%; width: 50%; height: 61%; padding: 13px 16px; border: 1px solid rgba(241, 238, 229, .47); background: rgba(32, 37, 35, .22); }
+    .f06 .trajectory-board .board-title { display: flex; justify-content: space-between; margin-bottom: 14px; color: rgba(241, 238, 229, .66); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .f06 .trace { position: relative; display: grid; grid-template-columns: 92px 1fr 48px; gap: 12px; align-items: center; min-height: 66px; border-top: 1px solid rgba(241, 238, 229, .28); }
+    .f06 .trace:last-child { border-bottom: 1px solid rgba(241, 238, 229, .28); }
+    .f06 .trace b { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+    .f06 .trace-path { position: relative; height: 1px; background: rgba(241, 238, 229, .52); }
+    .f06 .trace-path::before,
+    .f06 .trace-path::after { content: ""; position: absolute; top: -4px; width: 9px; height: 9px; border: 1px solid var(--amber); border-radius: 50%; background: var(--blue); }
+    .f06 .trace-path::before { left: 18%; }
+    .f06 .trace-path::after { right: 14%; border-color: var(--orange); }
+    .f06 .trace span { color: rgba(241, 238, 229, .75); font-size: 10px; line-height: 1.2; text-align: right; }
+    .f06 .metric { right: 7%; bottom: 11%; color: var(--amber); font-size: 20px; font-weight: 900; letter-spacing: .02em; text-transform: uppercase; }
+    .f06 .metric small { display: block; margin-top: 5px; color: rgba(241, 238, 229, .62); font-size: 9px; letter-spacing: .08em; text-align: right; }
+
+    /* 07 / industrial cost */
+    .f07 { color: var(--bone); background: var(--night); }
+    .f07 h2 { left: 6.5%; top: 24%; width: 32%; }
+    .f07 h2 em { color: var(--orange); }
+    .f07 .caption { left: 6.5%; bottom: 12%; width: 28%; }
+    .f07 .cost-board { right: 6.5%; top: 18%; width: 49%; height: 59%; padding: 15px; border: 1px solid rgba(241, 238, 229, .47); background: rgba(32, 37, 35, .34); }
+    .f07 .cost-head { display: flex; justify-content: space-between; margin-bottom: 18px; color: rgba(241, 238, 229, .62); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .f07 .cost-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .f07 .cost-card { min-width: 0; padding-top: 10px; border-top: 1px solid rgba(241, 238, 229, .33); }
+    .f07 .cost-card b { display: block; margin-bottom: 7px; color: var(--amber); font-size: clamp(20px, 2.7vw, 38px); line-height: .9; }
+    .f07 .cost-card:nth-child(2) b { color: var(--orange); }
+    .f07 .cost-card:nth-child(3) b { color: var(--mauve); }
+    .f07 .cost-card span { display: block; color: rgba(241, 238, 229, .72); font-size: 10px; line-height: 1.25; }
+    .f07 .loadbar { position: absolute; left: 15px; right: 15px; bottom: 18px; height: 11px; border: 1px solid rgba(241, 238, 229, .42); }
+    .f07 .loadbar span { display: block; width: 76%; height: 100%; background: var(--orange); }
+    .f07 .loadbar::after { content: "POWER / CHIP / DEBT / THROUGHPUT"; position: absolute; right: 0; bottom: 17px; color: rgba(241, 238, 229, .58); font-size: 9px; font-weight: 800; letter-spacing: .08em; }
+
+    /* 08 / the management decision */
+    .f08 { color: var(--bone); background: #3a3036; }
+    .f08 h2 { left: 6.5%; top: 24%; width: 35%; }
+    .f08 h2 em { color: var(--amber); }
+    .f08 .caption { left: 6.5%; bottom: 12%; width: 28%; }
+    .f08 .decision { right: 6.5%; top: 18%; width: 48%; height: 62%; padding: 14px; overflow: hidden; border: 1px solid rgba(241, 238, 229, .52); background: rgba(32, 37, 35, .22); }
+    .f08 .decision-head { display: flex; justify-content: space-between; margin-bottom: 14px; color: rgba(241, 238, 229, .62); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .f08 .decision-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: end; height: 68%; }
+    .f08 .decision-step { position: relative; min-width: 0; padding-top: 10px; border-top: 1px solid currentColor; }
+    .f08 .decision-step::after { content: "→"; position: absolute; right: -10px; top: -12px; color: var(--amber); font-size: 16px; }
+    .f08 .decision-step:last-child::after { content: ""; }
+    .f08 .decision-step b { display: block; margin-bottom: 7px; color: var(--amber); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+    .f08 .decision-step span { display: block; color: rgba(241, 238, 229, .72); font-size: 10px; line-height: 1.25; }
+    .f08 .decision-note { position: absolute; left: 14px; right: 14px; bottom: 13px; padding-top: 10px; border-top: 1px solid rgba(241, 238, 229, .27); color: var(--orange); font-size: 12px; font-weight: 800; }
+    .f08 .micro { right: 6.5%; bottom: 12%; color: var(--mauve); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+
+    .sources {
+      padding: 18px 20px;
+      color: #555650;
+      background: rgba(241, 238, 229, .68);
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .sources summary { cursor: pointer; color: var(--ink); font-weight: 800; }
+    .sources ul { columns: 2; margin: 13px 0 0; padding-left: 18px; }
+    .sources li { margin: 4px 0; overflow-wrap: anywhere; }
+    .sources a { color: var(--rust); }
+
+    .frame.is-muted { filter: saturate(.4); opacity: .52; }
+
+    @media (max-width: 800px) {
+      .shell { padding: 15px 12px 42px; }
+      .topbar { grid-template-columns: 1fr; gap: 12px; }
+      .top-meta { text-align: left; }
+      .view-switch { justify-content: flex-start; }
+      .intro { display: block; padding: 30px 0 22px; }
+      .intro h1 { font-size: 48px; }
+      .intro p { margin: 18px 0 0; }
+      .signal-strip { grid-template-columns: 1fr; }
+      .frame { aspect-ratio: auto; min-height: 720px; margin: 18px 0; }
+      .frame-label { top: 17px; left: 18px; }
+      .frame-index { top: 17px; right: 18px; }
+      .frame h2 { left: 18px !important; right: 18px; top: 84px !important; width: auto !important; font-size: 48px; }
+      .caption { left: 18px !important; right: 18px !important; bottom: 21px !important; top: auto !important; width: auto !important; max-width: none; }
+      .eyebrow { left: 18px !important; right: 18px; top: 55px !important; }
+      .f01 h2 { font-size: 38px; }
+      .f01 .lab-card { right: 18px; top: 345px; width: 58%; }
+      .f01 .creature { right: 66%; bottom: 27%; transform: scale(.74) rotate(9deg); transform-origin: bottom center; }
+      .f01 .caption { bottom: 21px !important; }
+      .f02 .gate { left: 35%; top: 38%; width: 31%; height: 32%; }
+      .f02 .leaf.a { left: 7%; top: 41%; }
+      .f02 .leaf.b { left: 6%; top: 60%; }
+      .f02 .leaf.c { right: 4%; top: 42%; }
+      .f02 .leaf.d { right: 4%; top: 61%; }
+      .f02 .stat { left: 18px; bottom: 124px; font-size: 72px; }
+      .f02 .caption { bottom: 21px !important; }
+      .f03 .body { left: 28%; top: 36%; width: 44%; height: 35%; }
+      .f03 .body .organ { padding: 6px; font-size: 8px; }
+      .f03 .body .organ span { font-size: 7px; }
+      .f03 .caption { bottom: 21px !important; }
+      .f03 .seal { right: 18px; bottom: 102px; }
+      .f04 .scoreboard { left: 18px; right: 18px; top: 305px; width: auto; height: 320px; }
+      .f04 .score-grid { gap: 8px 15px; }
+      .f04 .score-card { min-height: 64px; }
+      .f04 .verdict { left: auto; right: 22px; bottom: 78px; font-size: 24px; }
+      .f04 .eyebrow { left: auto !important; top: auto !important; bottom: 24px; text-align: right; }
+      .f05 .habitat { left: 18px; right: 18px; top: 318px; width: auto; height: 310px; }
+      .f05 .surface { min-height: 78px; padding: 9px; }
+      .f05 .surface b { font-size: 11px; }
+      .f05 .surface span { font-size: 9px; }
+      .f05 .micro { right: 18px; bottom: 21px; }
+      .f06 .trajectory-board { left: 18px; right: 18px; top: 305px; width: auto; height: 298px; }
+      .f06 .trace { grid-template-columns: 78px 1fr 41px; gap: 8px; min-height: 60px; }
+      .f06 .trace b, .f06 .trace span { font-size: 9px; }
+      .f06 .metric { right: 18px; bottom: 82px; font-size: 16px; }
+      .f07 .cost-board { left: 18px; right: 18px; top: 305px; width: auto; height: 290px; }
+      .f07 .cost-card b { font-size: 24px; }
+      .f07 .loadbar { bottom: 18px; }
+      .f08 .decision { left: 18px; right: 18px; top: 310px; width: auto; height: 300px; }
+      .f08 .decision-flow { gap: 8px; }
+      .f08 .decision-step b { font-size: 9px; }
+      .f08 .decision-step span { font-size: 8px; }
+      .f08 .decision-note { font-size: 10px; }
+      .f08 .micro { right: 18px; bottom: 21px; }
+      .sources ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span>AI Weekly / Living Evidence Lab</div>
+      <div class="top-meta">2026.07.21—07.27 · 08 modules · 13 source trails</div>
+      <nav class="view-switch" aria-label="Filter modules">
+        <button class="is-active" data-filter="all">ALL</button>
+        <button data-filter="evidence">EVIDENCE</button>
+        <button data-filter="judgment">JUDGMENT</button>
+      </nav>
+    </header>
+
+    <section class="intro">
+      <h1>THE LIVING<br><em>EVIDENCE</em> LAB</h1>
+      <p>本周不是新闻的堆叠，而是一间会自行变形的研究室：模型、harness、成本、轨迹和人的判断，共同决定 Agent 能否长程工作。</p>
+    </section>
+
+    <section class="signal-strip" aria-label="Weekly summary">
+      <div class="signal"><b>06</b><span>底层变量 / underlying shifts</span></div>
+      <div class="signal"><b>08</b><span>研究模块 / visual modules</span></div>
+      <div class="signal"><b>01</b><span>操作命题 / operating thesis</span></div>
+    </section>
+
+    <section class="frame f01" data-kind="judgment" data-frame="01">
+      <div class="frame-label"><span class="dot"></span>01 / THE HOUSE RULE</div>
+      <div class="frame-index">JUDGMENT / 01</div>
+      <p class="eyebrow">A private mythology for long-running AI</p>
+      <h2>THE HOUSE<br>OF <em>TRANSFORMING</em><br>AGENTS</h2>
+      <p class="caption">本周真正的主角不是一个模型，而是一座会工作、会记忆、会被审计的屋子。模型、上下文、harness、验证器与人，在里面共同改写任务的形状。</p>
+      <div class="lab-card panel">
+        <div class="panel-title"><span>Living system</span><span>status / open</span></div>
+        <div class="metric-line"><b>MODEL</b><span>候选行动</span></div>
+        <div class="metric-line"><b>HARNESS</b><span>环境与边界</span></div>
+        <div class="metric-line"><b>EVIDENCE</b><span>可复盘结果</span></div>
+      </div>
+      <div class="creature"><span class="eye"></span></div>
+    </section>
+
+    <section class="frame f02" data-kind="evidence" data-frame="02">
+      <div class="frame-label light-ui"><span class="dot"></span>02 / THE GATE OF CONTEXT</div>
+      <div class="frame-index light-ui">EVIDENCE / 02</div>
+      <div class="gate"></div>
+      <div class="leaf a">preference</div>
+      <div class="leaf b">reference</div>
+      <div class="leaf c">test</div>
+      <div class="leaf d">boundary</div>
+      <div class="rule"></div>
+      <h2>少写命令。<br>把门交给<br><em>成熟模型。</em></h2>
+      <div class="stat">80%<span>常驻提示词被移走</span></div>
+      <p class="caption dark">删掉不是失忆。被移走的是模型读文件、看工具、跑测试就能推断的废说明；真正留下的，是偏好、参考、验证流程和判断边界。</p>
+    </section>
+
+    <section class="frame f03" data-kind="judgment" data-frame="03">
+      <div class="frame-label"><span class="dot"></span>03 / THE AGENT GETS A BODY</div>
+      <div class="frame-index">JUDGMENT / 03</div>
+      <h2>AGENT<br><em>不是</em><br>裸模型。</h2>
+      <div class="body">
+        <div class="organ a">IDENTITY<span>谁在执行？用哪个账号？</span></div>
+        <div class="organ b">PERMISSION<span>读什么、写什么、改什么？</span></div>
+        <div class="organ c">NETWORK<span>出口、依赖与外部系统</span></div>
+        <div class="organ d">CHECKPOINT<span>验证、审批、日志与回滚</span></div>
+      </div>
+      <div class="seal"></div>
+      <div class="rule"></div>
+      <p class="caption">当 Agent 变成长程执行者，安全就从发布前的一次考试，搬到运行时的身体边界：身份、权限、网络出口、可写范围和检查点。</p>
+    </section>
+
+    <section class="frame f04" data-kind="evidence" data-frame="04">
+      <div class="frame-label"><span class="dot"></span>04 / THE JUDGMENT TABLE</div>
+      <div class="frame-index">EVIDENCE / 04</div>
+      <h2>生成不是<br><em>完成。</em><br>证据才是。</h2>
+      <div class="scoreboard">
+        <div class="score-head"><span>Agent evaluation / ritual table</span><span>4 checks</span></div>
+        <div class="score-grid">
+          <div class="score-card"><b>MODEL</b><span>提出候选行动，不直接宣布成功。</span></div>
+          <div class="score-card"><b>HARNESS</b><span>给动作一个可控的现实环境。</span></div>
+          <div class="score-card"><b>VERIFIER</b><span>用外部标准判定结果是否成立。</span></div>
+          <div class="score-card"><b>TRACE</b><span>把失败与修正留给下一轮。</span></div>
+        </div>
+        <div class="verdict">TRACEABLE<small>the only completion signal</small></div>
+      </div>
+      <p class="caption">Hyra、Agent Swarm、Tunix、MagenticLite 共同指向一张桌子：模型生成候选动作，harness 约束环境，验证器打分，轨迹把失败变成下一次行动的材料。</p>
+      <p class="eyebrow">A good agent leaves a trace</p>
+    </section>
+
+    <section class="frame f05" data-kind="judgment" data-frame="05">
+      <div class="frame-label light-ui"><span class="dot"></span>05 / THE HOUSE OPENS OUTWARD</div>
+      <div class="frame-index light-ui">JUDGMENT / 05</div>
+      <h2>聊天框<br>不是终点。<br><em>交付物才是。</em></h2>
+      <div class="habitat">
+        <div class="habitat-head"><span>Output habitat / where work lands</span><span>04 surfaces</span></div>
+        <div class="surface-grid">
+          <div class="surface a"><b>OFFICE</b><span>Excel / Outlook<br>公式与邮件</span></div>
+          <div class="surface b"><b>CANVAS</b><span>计划 / 看板<br>checklist</span></div>
+          <div class="surface c"><b>KNOWLEDGE</b><span>知识库 / 报告<br>长期记忆</span></div>
+          <div class="surface d"><b>DESIGN</b><span>图表 / UI<br>审稿与交付</span></div>
+        </div>
+      </div>
+      <p class="caption dark">AI 产品正在争夺最后一扇门：Excel、Outlook、GitHub 画布、图片编辑器、设计台、知识库。谁离真实交付物最近，谁就更容易拿到上下文、反馈和付费。</p>
+      <p class="micro">THE OUTPUT SURFACE IS THE MARKET</p>
+    </section>
+
+    <section class="frame f06" data-kind="evidence" data-frame="06">
+      <div class="frame-label"><span class="dot"></span>06 / THE HERD OF REAL WORK</div>
+      <div class="frame-index">EVIDENCE / 06</div>
+      <h2>真实轨迹<br>是下一轮<br><em>矿石。</em></h2>
+      <div class="trajectory-board">
+        <div class="board-title"><span>Long-horizon workflow capture</span><span>three specimens</span></div>
+        <div class="trace"><b>Browser</b><div class="trace-path"></div><span>卡住 → 修正<br>→ 交付</span></div>
+        <div class="trace"><b>Code</b><div class="trace-path"></div><span>测试 → 失败<br>→ 回滚</span></div>
+        <div class="trace"><b>Tool</b><div class="trace-path"></div><span>调用 → 审批<br>→ 结果</span></div>
+      </div>
+      <p class="caption">网页文本告诉模型“人们说过什么”；真实工作轨迹告诉模型“任务如何被完成、卡住、修正和交付”。下一轮训练数据红利，更可能来自后者。</p>
+      <div class="metric">REAL WORK &gt; WEB TEXT<small>trajectory / correction / delivery</small></div>
+    </section>
+
+    <section class="frame f07" data-kind="evidence" data-frame="07">
+      <div class="frame-label"><span class="dot"></span>07 / FEEDING THE HOUSE</div>
+      <div class="frame-index">EVIDENCE / 07</div>
+      <h2>Token<br>不是全部<br><em>账单。</em></h2>
+      <div class="cost-board">
+        <div class="cost-head"><span>Industrial load / the hidden ledger</span><span>unit task cost</span></div>
+        <div class="cost-grid">
+          <div class="cost-card"><b>$1.65T</b><span>隐性债务<br>Nikkei estimate</span></div>
+          <div class="cost-card"><b>3.2GW</b><span>数据中心规划<br>OpenAI</span></div>
+          <div class="cost-card"><b>2GW</b><span>芯片产能绑定<br>AMD × Anthropic</span></div>
+        </div>
+        <div class="loadbar"><span></span></div>
+      </div>
+      <p class="caption">AI 的账本已经显出工业系统的轮廓：电力、土地、水、芯片、租赁、债务和吞吐。能不能长期运行，取决于这座屋子每天要吃掉什么。</p>
+    </section>
+
+    <section class="frame f08" data-kind="judgment" data-frame="08">
+      <div class="frame-label"><span class="dot"></span>08 / THE EMPLOYEE WHO REMEMBERS</div>
+      <div class="frame-index">JUDGMENT / 08</div>
+      <h2>把 AI 当作<br><em>成熟员工</em><br>管理。</h2>
+      <div class="decision">
+        <div class="decision-head"><span>Management protocol / next action</span><span>ready / 04</span></div>
+        <div class="decision-flow">
+          <div class="decision-step"><b>AUTHORIZE</b><span>目标<br>资源<br>边界</span></div>
+          <div class="decision-step"><b>EXECUTE</b><span>模型<br>工具<br>环境</span></div>
+          <div class="decision-step"><b>REVIEW</b><span>轨迹<br>失败<br>验证</span></div>
+          <div class="decision-step"><b>OWN</b><span>成本<br>权限<br>结果</span></div>
+        </div>
+        <div class="decision-note">少一点噪音，多一点结构。</div>
+      </div>
+      <p class="caption">不是买一个更聪明的聊天框，而是引入一个会消耗预算、使用权限、留下轨迹、影响组织流程的新执行层。给它目标、资源、边界、验证器和复盘机制。</p>
+      <p class="micro">THE HOUSE IS READY FOR ANOTHER DAY</p>
+    </section>
+
+    <details class="sources">
+      <summary>来源与事实索引 / evidence index</summary>
+      <ul>
+        <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models">Anthropic context engineering</a></li>
+        <li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI / Hugging Face security incident</a></li>
+        <li><a href="https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations">AISI frontier evaluation cheating</a></li>
+        <li><a href="https://unu.edu/publication/engineering-and-governing-agent-harness-technology-and-policy-framework-runtime-layer">UNU Agent Harness framework</a></li>
+        <li><a href="https://cursor.com/blog/agent-swarm-model-economics">Cursor Agent Swarm</a></li>
+        <li><a href="https://developers.googleblog.com/scaling-agentic-rl-high-throughput-agentic-training-with-tunix/">Google Tunix</a></li>
+        <li><a href="https://www.microsoft.com/en-us/research/blog/magenticlite-magenticbrain-fara1-5-an-agentic-experience-optimized-for-small-models/?lang=ja">Microsoft MagenticLite</a></li>
+        <li><a href="https://github.blog/ai-and-ml/github-copilot/how-to-build-interactive-experiences-with-canvases/">GitHub Copilot Canvases</a></li>
+        <li><a href="https://x.ai/news/introducing-excel-addin">xAI Grok for Excel</a></li>
+        <li><a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community/">OpenAI Project Camellia</a></li>
+        <li><a href="https://www.theverge.com/ai-artificial-intelligence/969285/amd-anthropic-ai-infrastructure-deal">AMD × Anthropic infrastructure deal</a></li>
+        <li><a href="https://asia.nikkei.com/business/technology/five-us-tech-giants-hidden-debts-soar-to-1.65tn-on-opaque-ai-funding">Nikkei AI hidden debt report</a></li>
+      </ul>
+    </details>
+  </main>
+  <script>
+    const buttons = [...document.querySelectorAll('[data-filter]')];
+    const frames = [...document.querySelectorAll('.frame[data-kind]')];
+    buttons.forEach((button) => button.addEventListener('click', () => {
+      buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+      const filter = button.dataset.filter;
+      frames.forEach((frame) => frame.classList.toggle('is-muted', filter !== 'all' && frame.dataset.kind !== filter));
+    }));
+  </script>
+</body>
+</html>

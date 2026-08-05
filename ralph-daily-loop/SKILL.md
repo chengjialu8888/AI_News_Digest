@@ -43,6 +43,7 @@ description: |
 │                                   output/structured-archive.md │
 │                                   output/daily-report.csv      │
 │                                   output/daily-report.html     │
+│                                   output/daily-trends.json     │
 │                                                                │
 │  每个 Goal 独立上下文窗口 (~20-40k tokens)                      │
 │  总计 token 分布在多个干净窗口里，避免单轮上下文爆炸              │
@@ -574,13 +575,27 @@ fi
 - 🟡 值得关注：有技术深度或行业影响的更新
 - ⚪ 常规：日常发布、小更新
 
+## 初创动向专项筛选
+
+初创动向不能退化成“融资榜”，也不等于泛行业 startup 榜。合并时每天至少检查 3 个 **AI 产品上下游方向**，优先寻找 AI 是核心产品/技术、已经嵌入高价值重复工作流、拥有付费方和经营证据的 AI-native startup，或有清晰产品/分发/数据壁垒的成长线索。普通垂类公司只有在 AI 已经构成核心交付能力时才纳入。先回答：**它处在上游供给瓶颈还是下游付费场景、AI 是否是核心能力、谁付钱、是否重复付钱、交付后形成什么壁垒**。
+
+上游优先覆盖数据、训练/推理优化、芯片/云/网络/存储、评测/可观测性、安全与供应链安全、部署与开发工具；下游优先覆盖网络安全 AI、医疗/临床 AI、法律/合规 AI、财务/会计 AI、工业/机器人 AI、物流/供应链 AI、生物科技/研发 AI、专业内容生产 AI、AI-native SaaS 和 AI 硬件。为初创条目增加以下字段：`ai_core_value`、`value_chain_position`、`vertical`、`buyer_pain`、`operating_evidence`、`cash_flow_status`、`evidence_status`、`moat_or_distribution`、`risk_or_gap`。
+
+`cash_flow_status` 只能从以下标签中选择：
+- `现金流优质`：有 ARR/经常性收入、付费客户、续费扩张、毛利/回本周期或现金流转正等可核验证据。
+- `经营信号强`：有生产部署、重复采购、稳定留存、明确预算方或高质量客户案例，但完整现金流未披露。
+- `成长线索`：产品和需求匹配，使用、客户、合作伙伴或分发信号较强，但关键经营数据待核验。
+- `仅融资信息`：只有融资、估值或投资方信息，默认不收录；融资额不能证明现金流质量。
+
+每天最多新增 2 条垂类初创，允许为空；不得把公司自报数据写成独立验证结论。
+
 ## 约束
 - 🔴 条目 ≤ 3
 - 🟡 条目 ≤ 10
 - 必须覆盖 ≥ 4 个 board
 
 ## 输出
-写入 `data/07-merged.json`，每条增加 `signal_level` 和 `cross_validated` 字段。
+写入 `data/07-merged.json`，每条增加 `signal_level` 和 `cross_validated` 字段；初创条目按专项筛选规则补充垂类、买方、经营证据、现金流状态、证据状态、壁垒和风险字段。
 
 ## 完成条件
 - [ ] 文件存在且 JSON 合法
@@ -588,6 +603,8 @@ fi
 - [ ] 每条含 signal_level 字段
 - [ ] 覆盖 ≥ 4 个 board
 - [ ] 🔴 ≤ 3, 🟡 ≤ 10
+- [ ] 至少扫描 3 个垂类初创方向，并将现金流证据与成长线索分开
+- [ ] 未把融资/估值单独当作现金流或商业化证明
 ```
 
 #### prompts/QA_GATES.md
@@ -621,7 +638,7 @@ echo "✅ 前置依赖验证通过: data/07-merged.json"
 | Gate 2 去重验证 | 无重复条目 | 合并重复项 |
 | Gate 3 信号分级复核 | 🔴🟡⚪ 分布合理 | 调整分级 |
 | Gate 4 事实核验 | 公司名、数据、时间线准确 | 标记 unverified |
-| Gate 5 完整性自检 | 所有 board 都有覆盖 | 标记缺失 board |
+| Gate 5 完整性自检 | 所有 board 都有覆盖；初创垂类扫描完成 | 标记缺失 board 或扫描项 |
 
 ## 输出
 写入 `data/08-qa-report.json`：
@@ -735,7 +752,11 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 ### 🏢 大厂动向
 1. 🔴 **标题** — 摘要...[[来源名]](url)
 
-### 🚀 初创 / 融资
+### 🚀 初创动向
+
+初创条目优先采用以下结构：
+`公司｜垂类/工作流｜买方与痛点｜经营证据｜现金流状态（现金流优质/经营信号强/成长线索/仅融资信息）｜壁垒或分发｜风险/待核验｜原始来源`
+
 ### 🌐 生态 / 政策
 
 ## 💬 偏观点类
@@ -771,7 +792,7 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 结构：
 - 顶部保留日期、条目数、高信号数、QA 状态等 metadata。
 - 主体按板块、公司、赛道和信号等级沉淀条目。
-- 每条保留标题、摘要、来源、URL、事实核验状态和是否推送。
+- 每条只保留标题、事实性简要摘要、来源、URL、事实核验状态和是否推送；不把详细版的批判性判断、风险推演或趋势解读带入结构化沉淀。
 - 用途是长期知识库、选题池、复盘趋势命中率和团队运营素材库。
 
 ## 产物四：CSV 格式（12 列）
@@ -786,12 +807,27 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 - 自包含基础样式，无需构建即可浏览器打开。
 - 用于历史归档、内部静态站点、周报回看和跨团队分享。
 
+## 产物六：每日趋势可视化输入与 Mck PPT 后端
+
+Goal 9 同步写出 `output/daily-trends.json`，只保存最终三条趋势及其佐证、结构判断和下周观察。这样可视化阶段不需要重新读取全量新闻，也不会在新的上下文里重写趋势。
+
+需要咨询式高信息密度视觉时，在最终 Markdown 通过 QA 后执行：
+
+```bash
+python visualization/mck-ppt-design/render_daily_trends.py \
+  --trends-json output/daily-trends.json \
+  --out-dir output/mck-ppt-design
+```
+
+渲染器使用 `likaku/Mck-ppt-design-skill` 的 MckEngine 和 S3/S4 机器门禁，输出三页 16:9 PPT 及三张 PNG。PNG 可插入飞书详细版或公众号 HTML；艺术化模板仍可读取同一个 JSON，按场景选择视觉语言。
+
 ## 输出路径
 - `output/feishu-card.md`
 - `output/daily-report.md`
 - `output/structured-archive.md`
 - `output/daily-report.csv`
 - `output/daily-report.html`
+- `output/daily-trends.json`
 
 ## 完成条件
 - [ ] 首次使用时已确认并保存 `data/output-preferences.json`
@@ -800,6 +836,7 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 - [ ] 结构化沉淀文档存在，且可进入知识库/运营复盘
 - [ ] CSV 文件存在且包含 12 列
 - [ ] HTML 文件存在且可直接打开阅读
+- [ ] `daily-trends.json` 存在且恰好包含 3 条最终趋势
 - [ ] MD 包含所有 6 个板块标题
 - [ ] 每条新闻都有可点击的原文链接 `[[来源]](url)` 格式
 - [ ] MD 末尾包含「📌 三大关键趋势」章节，每个趋势含核心观点/关键数据/批判性判断/下周观察/原文链接

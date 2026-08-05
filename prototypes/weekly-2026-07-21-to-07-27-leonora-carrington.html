@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 周报｜The House of Transforming Agents</title>
+  <style>
+    :root {
+      --paper: #d9cfb7;
+      --chalk: #eee9d8;
+      --ink: #1c2531;
+      --night: #121b29;
+      --night-2: #1a2533;
+      --moss: #506747;
+      --moss-dark: #35483d;
+      --ochre: #bb8144;
+      --saffron: #e1b65e;
+      --rose: #a95750;
+      --coral: #c87763;
+      --lilac: #b4a4c3;
+      --line: rgba(28, 37, 49, .38);
+      --light-line: rgba(238, 233, 216, .47);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: #b3aa99; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #b3aa99;
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.4;
+    }
+
+    .exhibition {
+      width: min(100%, 1540px);
+      margin: 0 auto;
+      padding: 28px 28px 72px;
+    }
+
+    .masthead {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 4px 0 22px;
+      border-bottom: 1px solid rgba(28, 37, 49, .36);
+    }
+
+    .masthead h1 {
+      margin: 0;
+      max-width: 720px;
+      color: var(--ink);
+      font-size: clamp(26px, 3vw, 49px);
+      line-height: .94;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .masthead h1 em { color: var(--rose); font-style: normal; }
+    .masthead p { max-width: 510px; margin: 0; color: #514e49; font-size: 13px; text-align: right; }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: clip;
+      margin: 28px 0;
+      isolation: isolate;
+    }
+
+    .frame::before,
+    .frame::after { content: ""; position: absolute; pointer-events: none; }
+    .frame-label {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      z-index: 12;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(238, 233, 216, .82);
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .frame-label .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--saffron); }
+    .light-label { color: rgba(28, 37, 49, .72); }
+    .caption {
+      position: absolute;
+      z-index: 12;
+      margin: 0;
+      max-width: 420px;
+      color: rgba(238, 233, 216, .83);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .caption.dark { color: rgba(28, 37, 49, .76); }
+    .micro {
+      position: absolute;
+      z-index: 12;
+      margin: 0;
+      color: rgba(238, 233, 216, .68);
+      font: 700 10px/1.2 Arial, sans-serif;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .frame h2,
+    .frame h3,
+    .frame p { z-index: 12; }
+    .frame h2 { position: absolute; margin: 0; font-weight: 800; letter-spacing: 0; }
+    .frame h2 em { font-style: normal; color: var(--saffron); }
+    .tiny-label {
+      position: absolute;
+      z-index: 10;
+      color: rgba(238, 233, 216, .78);
+      font: 700 10px/1.25 Arial, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* Shared mythic objects: every shape has a role in the weekly argument. */
+    .eye { position: absolute; width: 20px; height: 12px; border: 1px solid currentColor; border-radius: 50%; transform: rotate(-8deg); }
+    .eye::after { content: ""; position: absolute; left: 7px; top: 3px; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .thread { position: absolute; height: 1px; transform-origin: left center; background: currentColor; opacity: .6; }
+    .seal { position: absolute; width: 50px; height: 50px; border: 1px solid currentColor; border-radius: 50%; }
+    .seal::before { content: ""; position: absolute; inset: 8px; border: 1px solid currentColor; border-radius: 50%; }
+    .seal::after { content: "✦"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; }
+
+    /* 01: The house is the private mythology. */
+    .f01 { min-height: 0; color: var(--chalk); background: var(--night); }
+    .f01::before { left: 6%; top: 16%; width: 88%; height: 1px; background: rgba(238, 233, 216, .24); transform: rotate(-4deg); }
+    .f01::after { right: 8%; bottom: 11%; width: 25%; height: 34%; border: 1px solid rgba(180, 164, 195, .45); border-radius: 50% 48% 45% 52%; transform: rotate(12deg); }
+    .f01 .moon { position: absolute; right: 12%; top: 15%; width: 18%; aspect-ratio: 1; border: 1px solid var(--lilac); border-radius: 50%; opacity: .78; }
+    .f01 .moon::after { content: ""; position: absolute; left: 15%; top: 25%; width: 60%; height: 45%; border-radius: 50%; background: var(--night); }
+    .house { position: absolute; left: 34%; bottom: 16%; width: 43%; height: 47%; border: 1px solid var(--saffron); background: var(--ochre); clip-path: polygon(10% 100%, 10% 35%, 50% 0, 90% 35%, 90% 100%); }
+    .house .window { position: absolute; left: 22%; top: 38%; width: 16%; aspect-ratio: 1; border: 1px solid var(--night); background: var(--lilac); }
+    .house .window:nth-child(2) { left: 62%; background: var(--moss); }
+    .house .door { position: absolute; left: 43%; bottom: 0; width: 17%; height: 38%; border: 1px solid var(--night); background: var(--night); }
+    .house .door::before { content: ""; position: absolute; left: 40%; top: 52%; width: 5px; height: 5px; border: 1px solid var(--saffron); border-radius: 50%; }
+    .figure { position: absolute; width: 76px; height: 136px; border: 1px solid currentColor; border-radius: 47% 53% 45% 55%; }
+    .figure::before { content: ""; position: absolute; left: 13px; top: -29px; width: 47px; height: 47px; border: 1px solid currentColor; border-radius: 50%; background: inherit; }
+    .figure::after { content: ""; position: absolute; left: 27px; top: -12px; width: 20px; height: 11px; border-bottom: 1px solid currentColor; border-radius: 50%; }
+    .figure .eye { left: 23px; top: -9px; }
+    .figure-a { left: 20%; bottom: 17%; color: var(--lilac); background: rgba(180, 164, 195, .12); transform: rotate(-8deg); }
+    .figure-b { right: 18%; bottom: 20%; color: var(--moss); background: rgba(80, 103, 71, .34); transform: scale(.8) rotate(8deg); }
+    .f01 h2 { left: 7%; top: 25%; width: 37%; color: var(--chalk); font-size: clamp(38px, 5.2vw, 80px); line-height: .88; text-transform: uppercase; }
+    .f01 .caption { left: 7%; bottom: 11%; width: 27%; }
+    .f01 .micro { right: 8%; bottom: 9%; }
+
+    /* 02: Context is a gate, not a wall of instructions. */
+    .f02 { color: var(--ink); background: var(--paper); }
+    .f02::before { left: 7%; top: 71%; width: 86%; height: 1px; background: var(--line); transform: rotate(2deg); }
+    .f02 .frame-label { color: rgba(28, 37, 49, .7); }
+    .f02 .frame-label .dot { background: var(--rose); }
+    .arch { position: absolute; left: 42%; top: 19%; width: 28%; height: 61%; border: 1px solid var(--moss-dark); border-bottom: 0; border-radius: 50% 50% 0 0; background: rgba(80, 103, 71, .12); }
+    .arch::before { content: ""; position: absolute; left: 16%; top: 14%; width: 68%; height: 76%; border: 1px solid var(--moss); border-bottom: 0; border-radius: 50% 50% 0 0; }
+    .arch .gate { position: absolute; left: 31%; bottom: 0; width: 38%; height: 53%; border: 1px solid var(--rose); background: var(--rose); }
+    .arch .gate::after { content: ""; position: absolute; left: 20%; right: 20%; top: 19%; bottom: 19%; border: 1px solid rgba(238, 233, 216, .76); }
+    .context-leaf { position: absolute; width: 82px; height: 30px; padding: 7px 9px; border: 1px solid currentColor; font-size: 10px; line-height: 1; text-transform: uppercase; }
+    .context-leaf.a { left: 19%; top: 29%; color: var(--moss-dark); transform: rotate(-9deg); }
+    .context-leaf.b { left: 25%; top: 51%; color: var(--rose); transform: rotate(8deg); }
+    .context-leaf.c { right: 13%; top: 32%; color: var(--moss-dark); transform: rotate(7deg); }
+    .context-leaf.d { right: 16%; top: 55%; color: var(--ochre); transform: rotate(-11deg); }
+    .f02 h2 { left: 7%; top: 20%; width: 29%; color: var(--ink); font-size: clamp(38px, 4.8vw, 73px); line-height: .88; text-transform: uppercase; }
+    .f02 h2 em { color: var(--rose); }
+    .f02 .stat { position: absolute; left: 7%; bottom: 13%; color: var(--rose); font-size: clamp(60px, 8vw, 126px); font-weight: 800; line-height: .8; }
+    .f02 .stat small { display: block; margin-top: 18px; color: var(--ink); font: 700 10px/1.2 Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; }
+    .f02 .caption { right: 7%; bottom: 13%; width: 25%; }
+    .f02 .micro { right: 7%; top: 9%; color: var(--rose); }
+
+    /* 03: A runtime gives the agent a body with four organs. */
+    .f03 { color: var(--chalk); background: var(--moss-dark); }
+    .f03::before { left: 8%; right: 8%; bottom: 16%; height: 1px; background: rgba(238, 233, 216, .4); }
+    .body-shell { position: absolute; left: 40%; top: 18%; width: 23%; height: 64%; border: 1px solid var(--saffron); border-radius: 48% 52% 42% 58%; background: rgba(225, 182, 94, .08); transform: rotate(-4deg); }
+    .body-shell::before { content: ""; position: absolute; left: 23%; top: -10%; width: 50%; height: 24%; border: 1px solid var(--saffron); border-radius: 50%; background: var(--moss-dark); }
+    .body-shell::after { content: ""; position: absolute; left: 45%; top: -2%; width: 2px; height: 87%; background: rgba(225, 182, 94, .64); }
+    .organ { position: absolute; left: 11%; width: 78%; height: 19%; padding: 10px 10px; border: 1px solid currentColor; font: 700 11px/1.1 Arial, sans-serif; letter-spacing: .06em; }
+    .organ span { display: block; margin-top: 6px; color: rgba(238, 233, 216, .72); font: 400 9px/1.2 Arial, sans-serif; letter-spacing: 0; text-transform: none; }
+    .organ.a { top: 14%; color: var(--lilac); }
+    .organ.b { top: 34%; color: var(--saffron); }
+    .organ.c { top: 54%; color: var(--coral); }
+    .organ.d { top: 74%; color: var(--chalk); }
+    .f03 h2 { left: 7%; top: 25%; width: 27%; color: var(--chalk); font-size: clamp(39px, 5vw, 75px); line-height: .86; text-transform: uppercase; }
+    .f03 h2 em { color: var(--saffron); }
+    .f03 .caption { right: 7%; top: 20%; width: 24%; }
+    .f03 .micro { left: 7%; bottom: 10%; }
+    .f03 .seal { right: 8%; bottom: 12%; color: var(--lilac); }
+
+    /* 04: The verification loop becomes a ritual table. */
+    .f04 { color: var(--chalk); background: #31283a; }
+    .f04::before { left: 8%; top: 68%; width: 84%; height: 1px; background: rgba(238, 233, 216, .32); transform: rotate(-3deg); }
+    .ritual-table { position: absolute; left: 33%; top: 30%; width: 38%; height: 36%; border: 1px solid var(--saffron); border-radius: 50%; background: rgba(225, 182, 94, .16); }
+    .ritual-table::before { content: ""; position: absolute; left: 16%; right: 16%; top: 16%; bottom: 16%; border: 1px solid rgba(238, 233, 216, .5); border-radius: 50%; }
+    .ritual-table::after { content: "✓"; position: absolute; left: 45%; top: 35%; color: var(--saffron); font-size: 48px; font-weight: 800; }
+    .ritual-node { position: absolute; width: 90px; min-height: 53px; padding: 8px; border: 1px solid currentColor; background: #31283a; font: 700 10px/1.15 Arial, sans-serif; text-align: center; text-transform: uppercase; }
+    .ritual-node span { display: block; margin-top: 5px; color: rgba(238, 233, 216, .72); font: 400 9px/1.15 Arial, sans-serif; text-transform: none; }
+    .ritual-node.a { left: 24%; top: 18%; color: var(--coral); }
+    .ritual-node.b { right: 22%; top: 20%; color: var(--lilac); }
+    .ritual-node.c { left: 23%; bottom: 15%; color: var(--saffron); }
+    .ritual-node.d { right: 10%; bottom: 27%; color: var(--chalk); }
+    .f04 h2 { left: 7%; top: 24%; width: 24%; color: var(--chalk); font-size: clamp(38px, 4.8vw, 72px); line-height: .88; text-transform: uppercase; }
+    .f04 .caption { right: 7%; bottom: 13%; width: 25%; }
+    .f04 .micro { left: 7%; bottom: 10%; color: var(--saffron); }
+
+    /* 05: Delivery surfaces are doors to real work. */
+    .f05 { color: var(--ink); background: var(--saffron); }
+    .f05::before { right: 9%; top: 13%; width: 31%; height: 70%; border: 1px solid rgba(28, 37, 49, .48); border-radius: 50%; transform: rotate(12deg); }
+    .f05 .frame-label { color: rgba(28, 37, 49, .7); }
+    .f05 .frame-label .dot { background: var(--moss-dark); }
+    .doorhouse { position: absolute; right: 18%; top: 18%; width: 43%; height: 61%; border: 1px solid var(--ink); background: var(--paper); clip-path: polygon(5% 100%, 5% 24%, 50% 0, 95% 24%, 95% 100%); }
+    .door-panel { position: absolute; width: 31%; height: 27%; padding: 10px; border: 1px solid var(--ink); font: 700 11px/1.05 Arial, sans-serif; text-transform: uppercase; }
+    .door-panel span { display: block; margin-top: 7px; font: 400 9px/1.25 Arial, sans-serif; text-transform: none; }
+    .door-panel.a { left: 14%; top: 29%; background: var(--rose); }
+    .door-panel.b { right: 14%; top: 29%; background: var(--lilac); }
+    .door-panel.c { left: 14%; bottom: 15%; background: var(--moss); color: var(--chalk); }
+    .door-panel.d { right: 14%; bottom: 15%; background: var(--night); color: var(--chalk); }
+    .f05 h2 { left: 7%; top: 24%; width: 34%; color: var(--ink); font-size: clamp(39px, 5vw, 76px); line-height: .87; text-transform: uppercase; }
+    .f05 h2 em { color: var(--rose); }
+    .f05 .caption { left: 7%; bottom: 13%; width: 28%; color: rgba(28, 37, 49, .78); }
+    .f05 .micro { right: 7%; bottom: 9%; color: var(--ink); }
+
+    /* 06: Real work trajectories are the ore. */
+    .f06 { color: var(--chalk); background: #243743; }
+    .f06::before { left: 6%; top: 27%; width: 88%; height: 1px; background: rgba(238, 233, 216, .36); transform: rotate(5deg); }
+    .trace-ribbon { position: absolute; left: 18%; top: 56%; width: 66%; height: 11%; border-top: 1px solid var(--saffron); border-bottom: 1px solid var(--saffron); transform: rotate(-5deg); opacity: .8; }
+    .trace-ribbon::after { content: ""; position: absolute; left: 12%; top: 49%; width: 76%; height: 1px; background: var(--coral); }
+    .beast { position: absolute; width: 104px; height: 52px; border: 1px solid var(--lilac); border-radius: 64% 42% 48% 34%; background: rgba(180, 164, 195, .12); }
+    .beast::before { content: ""; position: absolute; left: -19px; top: 8px; width: 33px; height: 33px; border: 1px solid currentColor; border-radius: 50%; background: #243743; }
+    .beast::after { content: ""; position: absolute; right: 14px; top: -16px; width: 20px; height: 20px; border-left: 1px solid currentColor; border-radius: 50% 0 0 0; transform: rotate(20deg); }
+    .beast .eye { left: -7px; top: 18px; width: 13px; height: 8px; }
+    .beast-a { left: 17%; top: 37%; color: var(--saffron); transform: rotate(-6deg); }
+    .beast-b { left: 40%; top: 45%; color: var(--rose); transform: scale(.8) rotate(7deg); }
+    .beast-c { right: 16%; top: 33%; color: var(--lilac); transform: scale(.92) rotate(-4deg); }
+    .beast-name { position: absolute; top: 59px; left: -12px; width: 130px; color: currentColor; font: 700 9px/1.2 Arial, sans-serif; letter-spacing: .05em; text-align: center; text-transform: uppercase; }
+    .f06 h2 { left: 7%; top: 20%; width: 31%; color: var(--chalk); font-size: clamp(38px, 4.8vw, 73px); line-height: .87; text-transform: uppercase; }
+    .f06 h2 em { color: var(--saffron); }
+    .f06 .caption { left: 7%; bottom: 12%; width: 29%; }
+    .f06 .metric { position: absolute; right: 8%; bottom: 13%; color: var(--saffron); font-size: clamp(27px, 3.4vw, 52px); font-weight: 800; line-height: .88; }
+    .f06 .metric small { display: block; margin-top: 10px; color: rgba(238, 233, 216, .72); font: 700 10px/1.2 Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; }
+
+    /* 07: Infrastructure appears as a kitchen that must be fed. */
+    .f07 { color: var(--chalk); background: var(--night); }
+    .f07::before { left: 7%; right: 7%; top: 75%; height: 1px; background: rgba(238, 233, 216, .3); }
+    .bowl { position: absolute; bottom: 16%; width: 21%; height: 22%; border: 1px solid var(--saffron); border-radius: 0 0 48% 48%; background: rgba(225, 182, 94, .15); }
+    .bowl::before { content: ""; position: absolute; left: -3%; top: -16%; width: 106%; height: 28%; border: 1px solid var(--saffron); border-radius: 50%; background: var(--night-2); }
+    .bowl::after { content: ""; position: absolute; left: 50%; bottom: 100%; width: 1px; height: 58px; background: var(--coral); opacity: .8; }
+    .bowl.a { left: 38%; color: var(--saffron); }
+    .bowl.b { left: 63%; color: var(--lilac); transform: scale(.84); transform-origin: bottom center; }
+    .bowl.c { left: 14%; color: var(--rose); transform: scale(.7); transform-origin: bottom center; }
+    .bowl-text { position: absolute; left: 0; right: 0; top: 17%; color: currentColor; font-size: clamp(23px, 2.9vw, 45px); font-weight: 800; line-height: .88; text-align: center; }
+    .bowl-text small { display: block; margin-top: 7px; font: 700 9px/1.2 Arial, sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+    .f07 h2 { left: 7%; top: 20%; width: 28%; color: var(--chalk); font-size: clamp(39px, 5vw, 76px); line-height: .86; text-transform: uppercase; }
+    .f07 h2 em { color: var(--coral); }
+    .f07 .caption { left: 7%; bottom: 10%; width: 29%; }
+    .f07 .micro { right: 7%; top: 9%; color: var(--saffron); }
+
+    /* 08: The final figure carries authorization, review, responsibility. */
+    .f08 { color: var(--chalk); background: #3d3139; }
+    .f08::before { left: 7%; top: 17%; width: 86%; height: 1px; background: rgba(238, 233, 216, .4); transform: rotate(-3deg); }
+    .f08 .final-door { position: absolute; right: 16%; top: 17%; width: 31%; height: 64%; border: 1px solid var(--saffron); border-bottom: 0; border-radius: 50% 50% 0 0; background: rgba(225, 182, 94, .08); }
+    .f08 .final-door::after { content: ""; position: absolute; left: 26%; top: 22%; width: 48%; height: 78%; border: 1px solid var(--lilac); background: rgba(180, 164, 195, .16); }
+    .keeper { position: absolute; right: 39%; bottom: 16%; width: 118px; height: 208px; border: 1px solid var(--lilac); border-radius: 52% 45% 45% 55%; background: rgba(180, 164, 195, .12); transform: rotate(5deg); }
+    .keeper::before { content: ""; position: absolute; left: 25px; top: -50px; width: 67px; height: 67px; border: 1px solid var(--lilac); border-radius: 54% 46% 48% 52%; background: #3d3139; }
+    .keeper::after { content: ""; position: absolute; left: 42px; top: -27px; width: 33px; height: 13px; border-bottom: 1px solid var(--saffron); border-radius: 50%; }
+    .keeper .eye { left: 41px; top: -24px; color: var(--saffron); }
+    .badge { position: absolute; z-index: 9; width: 94px; min-height: 42px; padding: 8px; border: 1px solid currentColor; background: #3d3139; font: 700 10px/1.1 Arial, sans-serif; letter-spacing: .05em; text-align: center; text-transform: uppercase; }
+    .badge span { display: block; margin-top: 5px; font: 400 9px/1.2 Arial, sans-serif; letter-spacing: 0; text-transform: none; }
+    .badge.a { left: 35%; top: 29%; color: var(--saffron); transform: rotate(-8deg); }
+    .badge.b { left: 45%; top: 57%; color: var(--coral); transform: rotate(5deg); }
+    .badge.c { right: 7%; bottom: 15%; color: var(--chalk); transform: rotate(-6deg); }
+    .f08 h2 { left: 7%; top: 24%; width: 35%; color: var(--chalk); font-size: clamp(39px, 4.9vw, 74px); line-height: .86; text-transform: uppercase; }
+    .f08 h2 em { color: var(--saffron); }
+    .f08 .caption { left: 7%; bottom: 11%; width: 27%; }
+    .f08 .micro { right: 7%; top: 9%; color: var(--lilac); }
+
+    .sources {
+      margin-top: 38px;
+      padding: 18px 20px;
+      color: #514e49;
+      background: rgba(217, 207, 183, .76);
+      border-top: 1px solid rgba(28, 37, 49, .3);
+      font-size: 12px;
+    }
+    .sources summary { cursor: pointer; color: var(--ink); font-weight: 800; }
+    .sources ul { columns: 2; margin: 14px 0 0; padding-left: 18px; }
+    .sources li { margin: 4px 0; overflow-wrap: anywhere; }
+    .sources a { color: var(--moss-dark); }
+
+    @media (max-width: 800px) {
+      .exhibition { padding: 18px 12px 42px; }
+      .masthead { display: block; }
+      .masthead p { margin-top: 14px; text-align: left; }
+      .frame { aspect-ratio: auto; min-height: 720px; margin: 18px 0; }
+      .frame-label { top: 17px; left: 18px; }
+      .frame h2 { left: 18px; right: 18px; top: 88px; width: auto; font-size: 48px; }
+      .caption { left: 18px !important; right: 18px !important; width: auto !important; max-width: none; }
+      .f01 .house { left: 24%; bottom: 14%; width: 56%; height: 32%; }
+      .f01 .figure-a { left: 11%; bottom: 12%; transform: scale(.68) rotate(-8deg); }
+      .f01 .figure-b { right: 7%; bottom: 14%; transform: scale(.58) rotate(8deg); }
+      .f01 h2 { top: 88px; font-size: 42px; }
+      .f01 .caption { top: 262px; bottom: auto; }
+      .f01 .micro { right: 18px; bottom: 19px; }
+      .f02 .arch { left: 33%; top: 37%; width: 40%; height: 37%; }
+      .f02 .context-leaf.a { left: 8%; top: 41%; }
+      .f02 .context-leaf.b { left: 6%; top: 61%; }
+      .f02 .context-leaf.c { right: 4%; top: 42%; }
+      .f02 .context-leaf.d { right: 4%; top: 63%; }
+      .f02 h2 { top: 88px; }
+      .f02 .stat { left: 18px; bottom: 21px; font-size: 72px; }
+      .f02 .caption { bottom: 20px; left: 162px !important; right: 18px !important; width: auto !important; }
+      .f02 .micro { right: 18px; top: 48px; }
+      .f03 .body-shell { left: 32%; top: 35%; width: 36%; height: 39%; }
+      .f03 .organ { font-size: 9px; padding: 7px; }
+      .f03 .organ span { font-size: 8px; }
+      .f03 h2 { top: 88px; }
+      .f03 .caption { top: 250px; bottom: auto; }
+      .f03 .micro { left: 18px; bottom: 19px; }
+      .f03 .seal { right: 18px; bottom: 18px; }
+      .f04 .ritual-table { left: 27%; top: 36%; width: 46%; height: 26%; }
+      .f04 .ritual-node { width: 77px; min-height: 44px; padding: 6px; font-size: 9px; }
+      .f04 .ritual-node.a { left: 7%; top: 39%; }
+      .f04 .ritual-node.b { right: 7%; top: 39%; }
+      .f04 .ritual-node.c { left: 8%; bottom: 16%; }
+      .f04 .ritual-node.d { right: 8%; bottom: 16%; }
+      .f04 h2 { top: 88px; }
+      .f04 .caption { bottom: 18px; }
+      .f04 .micro { left: 18px; bottom: 88px; }
+      .f05::before { right: 6%; top: 31%; width: 28%; height: 35%; transform: none; }
+      .f05 .doorhouse { right: 12%; top: 36%; width: 76%; height: 42%; }
+      .f05 h2 { top: 88px; font-size: 45px; }
+      .f05 .caption { top: 264px; bottom: auto; }
+      .f05 .micro { right: 18px; bottom: 19px; }
+      .f06 .trace-ribbon { left: 10%; top: 58%; width: 80%; }
+      .f06 .beast { transform: scale(.66) !important; }
+      .f06 .beast-a { left: 11%; top: 42%; }
+      .f06 .beast-b { left: 38%; top: 50%; }
+      .f06 .beast-c { right: 7%; top: 39%; }
+      .f06 h2 { top: 88px; }
+      .f06 .caption { bottom: 18px; }
+      .f06 .metric { right: 18px; bottom: 96px; font-size: 30px; }
+      .f07 .bowl { bottom: 17%; width: 25%; height: 17%; }
+      .f07 .bowl.a { left: 38%; }
+      .f07 .bowl.b { left: 67%; }
+      .f07 .bowl.c { left: 8%; }
+      .f07 h2 { top: 88px; }
+      .f07 .caption { bottom: 19px; }
+      .f07 .micro { right: 18px; top: 48px; }
+      .f08 .final-door { right: 15%; top: 39%; width: 42%; height: 39%; }
+      .f08 .keeper { right: 39%; bottom: 15%; transform: scale(.62) rotate(5deg); transform-origin: bottom center; }
+      .f08 .badge.a { left: 7%; top: 45%; }
+      .f08 .badge.b { left: 7%; bottom: 16%; top: auto; }
+      .f08 .badge.c { right: 7%; bottom: 15%; }
+      .f08 h2 { top: 88px; }
+      .f08 .caption { top: 264px; bottom: auto; }
+      .f08 .micro { right: 18px; top: 48px; }
+      .sources ul { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="exhibition">
+    <header class="masthead">
+      <h1>AI WEEKLY / <em>THE HOUSE</em><br>OF TRANSFORMING AGENTS</h1>
+      <p>2026.07.21—07.27 · 一座会变形的工作屋。<br>每个 Agent 都带着一只守门兽；只有留下证据，任务才算完成。</p>
+    </header>
+
+    <section class="frame f01" data-frame="01">
+      <div class="frame-label"><span class="dot"></span>01 / THE HOUSE RULE</div>
+      <div class="moon"></div>
+      <div class="house"><span class="window"></span><span class="window"></span><span class="door"></span></div>
+      <div class="figure figure-a"><span class="eye"></span></div>
+      <div class="figure figure-b"><span class="eye"></span></div>
+      <h2>THE HOUSE<br>OF <em>TRANSFORMING</em><br>AGENTS</h2>
+      <p class="caption">本周真正的主角不是一个模型，而是一座会工作、会记忆、会被审计的屋子。模型、上下文、harness、验证器与人，在里面共同改写任务的形状。</p>
+      <p class="micro">A PRIVATE MYTHOLOGY FOR LONG-RUNNING AI</p>
+    </section>
+
+    <section class="frame f02" data-frame="02">
+      <div class="frame-label"><span class="dot"></span>02 / THE GATE OF CONTEXT</div>
+      <div class="arch"><span class="gate"></span></div>
+      <div class="context-leaf a">preference</div>
+      <div class="context-leaf b">reference</div>
+      <div class="context-leaf c">test</div>
+      <div class="context-leaf d">boundary</div>
+      <h2>少写命令。<br>把门交给<br><em>成熟模型。</em></h2>
+      <div class="stat">80%<small>常驻提示词被删掉</small></div>
+      <p class="caption dark">删掉不是失忆。被移走的是模型读文件、看工具、跑测试就能推断的废说明；真正留下的，是偏好、参考、验证流程和判断边界。</p>
+      <p class="micro">THICK CONTEXT / THIN PROMPT</p>
+    </section>
+
+    <section class="frame f03" data-frame="03">
+      <div class="frame-label"><span class="dot"></span>03 / THE AGENT GETS A BODY</div>
+      <div class="body-shell">
+        <div class="organ a">IDENTITY<span>谁在执行？用哪个账号？</span></div>
+        <div class="organ b">PERMISSION<span>读什么、写什么、改什么？</span></div>
+        <div class="organ c">NETWORK<span>出口、依赖与外部系统</span></div>
+        <div class="organ d">CHECKPOINT<span>验证、审批、日志与回滚</span></div>
+      </div>
+      <div class="seal"></div>
+      <h2>Agent<br><em>不是</em><br>裸模型。</h2>
+      <p class="caption">当 Agent 变成长程执行者，安全就从发布前的一次考试，搬到运行时的身体边界：身份、权限、网络出口、可写范围和检查点。</p>
+      <p class="micro">THE RUNTIME IS THE COSTUME / AND THE CAGE</p>
+    </section>
+
+    <section class="frame f04" data-frame="04">
+      <div class="frame-label"><span class="dot"></span>04 / THE RITUAL TABLE</div>
+      <div class="ritual-table"></div>
+      <div class="ritual-node a">MODEL<span>候选行动</span></div>
+      <div class="ritual-node b">HARNESS<span>环境约束</span></div>
+      <div class="ritual-node c">VERIFIER<span>外部评分</span></div>
+      <div class="ritual-node d">TRACE<span>失败与修正</span></div>
+      <h2>生成不是<br><em>完成。</em><br>证据才是。</h2>
+      <p class="caption">Hyra、Agent Swarm、Tunix、MagenticLite 共同指向一张桌子：模型生成候选动作，harness 约束环境，验证器打分，轨迹把失败变成下一次行动的材料。</p>
+      <p class="micro">A GOOD AGENT LEAVES A TRACE</p>
+    </section>
+
+    <section class="frame f05" data-frame="05">
+      <div class="frame-label light-label"><span class="dot"></span>05 / THE HOUSE OPENS OUTWARD</div>
+      <div class="doorhouse">
+        <div class="door-panel a">OFFICE<span>Excel / Outlook / 公式 / 邮件</span></div>
+        <div class="door-panel b">CANVAS<span>计划 / 看板 / checklist</span></div>
+        <div class="door-panel c">IMAGE<span>图表 / UI / 知识视觉</span></div>
+        <div class="door-panel d">DESIGN<span>规范 / 素材 / 审稿</span></div>
+      </div>
+      <h2>聊天框<br>不是终点。<br><em>交付物才是。</em></h2>
+      <p class="caption dark">AI 产品正在争夺最后一扇门：Excel、Outlook、GitHub 画布、图片编辑器、设计台、知识库。谁离真实交付物最近，谁就更容易拿到上下文、反馈和付费。</p>
+      <p class="micro" style="color: var(--ink);">THE OUTPUT SURFACE IS THE MARKET</p>
+    </section>
+
+    <section class="frame f06" data-frame="06">
+      <div class="frame-label"><span class="dot"></span>06 / THE HERD OF REAL WORK</div>
+      <div class="trace-ribbon"></div>
+      <div class="beast beast-a"><span class="eye"></span><span class="beast-name">browser trajectory</span></div>
+      <div class="beast beast-b"><span class="eye"></span><span class="beast-name">code trajectory</span></div>
+      <div class="beast beast-c"><span class="eye"></span><span class="beast-name">tool trajectory</span></div>
+      <h2>真实轨迹<br>是下一轮<br><em>矿石。</em></h2>
+      <p class="caption">网页文本告诉模型“人们说过什么”；真实工作轨迹告诉模型“任务如何被完成、卡住、修正和交付”。下一轮训练数据红利，更可能来自后者。</p>
+      <div class="metric">REAL WORK &gt; WEB TEXT<small>trajectory / correction / delivery</small></div>
+    </section>
+
+    <section class="frame f07" data-frame="07">
+      <div class="frame-label"><span class="dot"></span>07 / FEEDING THE HOUSE</div>
+      <div class="bowl c"><div class="bowl-text">$1.65T<small>隐性债务</small></div></div>
+      <div class="bowl a"><div class="bowl-text">3.2GW<small>数据中心规划</small></div></div>
+      <div class="bowl b"><div class="bowl-text">2GW<small>芯片产能绑定</small></div></div>
+      <h2>Token<br>不是全部<br><em>账单。</em></h2>
+      <p class="caption">AI 的账本已经显出工业系统的轮廓：电力、土地、水、芯片、租赁、债务和吞吐。能不能长期运行，取决于这座屋子每天要吃掉什么。</p>
+      <p class="micro">POWER / CHIP / DEBT / THROUGHPUT</p>
+    </section>
+
+    <section class="frame f08" data-frame="08">
+      <div class="frame-label"><span class="dot"></span>08 / THE EMPLOYEE WHO REMEMBERS</div>
+      <div class="final-door"></div>
+      <div class="keeper"><span class="eye"></span></div>
+      <div class="badge a">AUTHORIZATION<span>目标 / 资源 / 边界</span></div>
+      <div class="badge b">REVIEW<span>轨迹 / 失败 / 验证</span></div>
+      <div class="badge c">RESPONSIBILITY<span>成本 / 权限 / 结果</span></div>
+      <h2>把 AI 当作<br><em>成熟员工</em><br>管理。</h2>
+      <p class="caption">不是买一个更聪明的聊天框，而是引入一个会消耗预算、使用权限、留下轨迹、影响组织流程的新执行层。少一点噪音，多一点结构。</p>
+      <p class="micro">THE HOUSE IS READY FOR ANOTHER DAY</p>
+    </section>
+
+    <details class="sources">
+      <summary>来源与事实索引</summary>
+      <ul>
+        <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models">Anthropic context engineering</a></li>
+        <li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI / Hugging Face security incident</a></li>
+        <li><a href="https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations">AISI frontier evaluation cheating</a></li>
+        <li><a href="https://unu.edu/publication/engineering-and-governing-agent-harness-technology-and-policy-framework-runtime-layer">UNU Agent Harness framework</a></li>
+        <li><a href="https://cursor.com/blog/agent-swarm-model-economics">Cursor Agent Swarm</a></li>
+        <li><a href="https://developers.googleblog.com/scaling-agentic-rl-high-throughput-agentic-training-with-tunix/">Google Tunix</a></li>
+        <li><a href="https://www.microsoft.com/en-us/research/blog/magenticlite-magenticbrain-fara1-5-an-agentic-experience-optimized-for-small-models/?lang=ja">Microsoft MagenticLite</a></li>
+        <li><a href="https://github.blog/ai-and-ml/github-copilot/how-to-build-interactive-experiences-with-canvases/">GitHub Copilot Canvases</a></li>
+        <li><a href="https://x.ai/news/introducing-excel-addin">xAI Grok for Excel</a></li>
+        <li><a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community/">OpenAI Project Camellia</a></li>
+        <li><a href="https://www.theverge.com/ai-artificial-intelligence/969285/amd-anthropic-ai-infrastructure-deal">AMD × Anthropic infrastructure deal</a></li>
+        <li><a href="https://asia.nikkei.com/business/technology/five-us-tech-giants-hidden-debts-soar-to-1.65tn-on-opaque-ai-funding">Nikkei AI hidden debt report</a></li>
+      </ul>
+    </details>
+  </main>
+</body>
+</html>

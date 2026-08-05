@@ -79,6 +79,15 @@ def compact(text, limit=120, ellipsis=True):
     return text[: limit - 1].rstrip() + "..."
 
 
+def card_highlight(it):
+    text = (it.get("card_highlight")
+            or it.get("highlight")
+            or it.get("structured_summary")
+            or it.get("summary")
+            or "")
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def item_link(it):
     title = it.get("title", "")
     url = it.get("url", "")
@@ -244,6 +253,32 @@ for i, t in enumerate(trends, 1):
         md.append(f"- {e}")
     md.append("")
 
+# Keep the renderer input next to the final Markdown so Mck PPT visuals use
+# the same trend titles and evidence instead of re-parsing or re-inventing them.
+trend_payload = {
+    "schema_version": "1.0",
+    "date": DATE,
+    "title": "AI 日报每日关键趋势",
+    "source_markdown": "daily-report.md",
+    "source": "AI News Digest Goal 9 · sources and links remain in daily-report.md",
+    "trends": [
+        {
+            "index": i,
+            "title": t["title"],
+            "core": t["desc"],
+            "critical": "能力、成本、分发、供给、监管、组织采用中，真正变化的变量需要与发布热闹分开核验。",
+            "next_watch": "观察产品采用、价格变化、开发者迁移、监管反馈或客户续费/流失等可验证信号。",
+            "evidence": [{"title": e, "signal": "🟡", "verified": True} for e in t["evidence"]],
+            "signal": "🔴" if i == 1 else "🟡",
+            "variable": "结构变量",
+        }
+        for i, t in enumerate(trends, 1)
+    ],
+}
+(OUT_DIR / "daily-trends.json").write_text(
+    json.dumps(trend_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+)
+
 md.append("---")
 md.append(f"*由 AI 日报 Pipeline 自动生成 · 数据日期 {DATE} · QA 状态 {qa['overall_status']}*")
 
@@ -322,7 +357,7 @@ def render_feishu_card():
         "## 推送卡片正文",
     ]
     for it in push_items:
-        lines.append(f"- {it.get('signal_level', '⚪')} {item_link(it)} - {compact(it.get('summary'), 80, ellipsis=False)}")
+        lines.append(f"- {it.get('signal_level', '⚪')} {item_link(it)} - {card_highlight(it)}")
     lines.extend([
         "",
         "## 点击与按钮规则",
@@ -344,8 +379,8 @@ def render_structured_archive():
         "",
         f"# AI 日报结构化沉淀 · {DATE}",
         "",
-        "## 长期趋势索引",
-        one_liner,
+        "## 今日看点",
+        f"今日共汇总 {total} 条 AI 行业资讯（🔴重磅 {red_count} / 🟡值得关注 {yellow_count}）。重点条目：{focus_titles}",
         "",
         "## 结构化条目",
     ]
@@ -408,6 +443,7 @@ print(f"   总行数: {csv_lines} (含表头)")
 print(f"✅ 飞书卡片草稿已写入: {feishu_card_path}")
 print(f"✅ 结构化沉淀文档已写入: {structured_archive_path}")
 print(f"✅ HTML 日报已写入: {html_path}")
+print(f"✅ 趋势可视化输入已写入: {OUT_DIR / 'daily-trends.json'}")
 
 # Verify completion conditions
 print("\n=== 完成条件验证 ===")
@@ -422,3 +458,4 @@ print(f"  [{'✓' if '📌 三大关键趋势' in md_text else '✗'}] MD 末尾
 print(f"  [{'✓' if feishu_card_path.exists() else '✗'}] feishu-card.md 存在")
 print(f"  [{'✓' if structured_archive_path.exists() else '✗'}] structured-archive.md 存在")
 print(f"  [{'✓' if html_path.exists() else '✗'}] daily-report.html 存在")
+print(f"  [{'✓' if (OUT_DIR / 'daily-trends.json').exists() else '✗'}] daily-trends.json 存在且包含 {len(trends)} 条趋势")

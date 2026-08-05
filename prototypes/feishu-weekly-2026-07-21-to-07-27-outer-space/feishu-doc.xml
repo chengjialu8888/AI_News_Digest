@@ -1,0 +1,19 @@
+<title>AI 周报｜2026.07.21—07.27｜Outer Space</title>
+<h1>前沿，不再只是模型。</h1>
+<p>本周六条航线：上下文、运行时、系统、交付物、轨迹、工业成本。</p>
+<whiteboard type="svg" path="@prototypes/feishu-weekly-2026-07-21-to-07-27-outer-space/01-cover.svg"></whiteboard>
+<h2>01 / 本周判断</h2>
+<p>用航线、任务坐标和下一站，把本周 AI 变化读成一场系统级前沿迁移。</p>
+<callout emoji="💡" background-color="light-yellow" border-color="yellow"><p>Agent 价值 = 可完成任务的复杂度 × 成功率 × 可验证性 ÷ 上下文、推理、治理与集成成本。</p></callout>
+<h2>02 / 六个底层变量</h2>
+<p>新闻表面在变，底层变量集中在能力、成本、分发、供给、监管和组织采用。</p>
+<whiteboard type="svg" path="@prototypes/feishu-weekly-2026-07-21-to-07-27-outer-space/02-variable-map.svg"></whiteboard>
+<h2>03 / 六条趋势</h2>
+<p>每条趋势先给出约束变化，再给出证据和可复盘的判断。</p>
+<whiteboard type="svg" path="@prototypes/feishu-weekly-2026-07-21-to-07-27-outer-space/03-trend-cards.svg"></whiteboard>
+<h2>04 / 行业迁移</h2>
+<p>竞争从单个模型向模型系统、交付物表面、真实工作轨迹和工业账本迁移。</p>
+<whiteboard type="svg" path="@prototypes/feishu-weekly-2026-07-21-to-07-27-outer-space/04-migration-matrix.svg"></whiteboard>
+<h2>05 / 结论</h2>
+<p>把 AI 当成熟员工管理：少一点噪音，多一点结构；给目标、资源、边界、验证器和复盘机制。</p>
+<whiteboard type="svg" path="@prototypes/feishu-weekly-2026-07-21-to-07-27-outer-space/05-wechat-header.svg"></whiteboard>

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030" role="img" aria-label="Contra style migration matrix">
+  <rect width="1600" height="1030" fill="#FBFAF6"/>
+  <g opacity=".06">
+    <path d="M0 120 H1600 M0 240 H1600 M0 360 H1600 M0 480 H1600 M0 600 H1600 M0 720 H1600 M0 840 H1600 M0 960 H1600 M0 1080 H1600" stroke="#111111"/>
+    <path d="M160 0 V1030 M320 0 V1030 M480 0 V1030 M640 0 V1030 M800 0 V1030 M960 0 V1030 M1120 0 V1030 M1280 0 V1030 M1440 0 V1030" stroke="#111111"/>
+  </g>
+  <rect x="72" y="64" width="208.2" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="176.1" y="86" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">03 / MIGRATION MATRIX</text>
+<text x="72" y="150.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="920" text-anchor="start" letter-spacing="0">From news intake to judgment i</text>
+<text x="72" y="212.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="920" text-anchor="start" letter-spacing="0">nfrastructure.</text>
+<text x="76" y="268" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="560" text-anchor="start" letter-spacing="0">用更高密度的矩阵替代行业迁移大图，飞书里扫读更快，也更像研究台账。</text>
+<rect x="60" y="320" width="1542" height="598" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="60" y="320" width="72" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="74" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">#</text>
+<rect x="132" y="320" width="246" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="146" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">旧问题</text>
+<rect x="378" y="320" width="272" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="392" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">新判断</text>
+<rect x="650" y="320" width="456" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="664" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">迁移含义</text>
+<rect x="1106" y="320" width="202" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="1120" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">变量</text>
+<rect x="1308" y="320" width="294" height="64" fill="#070707" stroke="#070707" stroke-width="1"/>
+<text x="1322" y="360" fill="#FBFAF6" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="850" text-anchor="start" letter-spacing="0">下周观察</text>
+<rect x="60" y="384" width="1542" height="89" fill="#FBFAF6" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="428" r="22" fill="#FF6B2C" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="435" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">01</text>
+<line x1="132" y1="384" x2="132" y2="473" stroke="#111111" stroke-width="1"/>
+<text x="146" y="418.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Prompt scaffolding</text>
+<line x1="378" y1="384" x2="378" y2="473" stroke="#111111" stroke-width="1"/>
+<text x="392" y="418.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Mature agent management</text>
+<line x1="650" y1="384" x2="650" y2="473" stroke="#111111" stroke-width="1"/>
+<text x="664" y="415.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">给成熟模型目标、边界、参考物和复盘机制</text>
+<line x1="1106" y1="384" x2="1106" y2="473" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="415.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">能力/成本/采用</text>
+<line x1="1308" y1="384" x2="1308" y2="473" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="415.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">常驻上下文是否变短</text>
+<rect x="60" y="473" width="1542" height="89" fill="#F0EEE7" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="517" r="22" fill="#B69CFF" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="524" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">02</text>
+<line x1="132" y1="473" x2="132" y2="562" stroke="#111111" stroke-width="1"/>
+<text x="146" y="507.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Pre-release eval</text>
+<line x1="378" y1="473" x2="378" y2="562" stroke="#111111" stroke-width="1"/>
+<text x="392" y="507.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Runtime boundary</text>
+<line x1="650" y1="473" x2="650" y2="562" stroke="#111111" stroke-width="1"/>
+<text x="664" y="504.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">把安全治理搬到身份、权限、日志、审批和回滚</text>
+<line x1="1106" y1="473" x2="1106" y2="562" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="504.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">监管/采用</text>
+<line x1="1308" y1="473" x2="1308" y2="562" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="504.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">是否记录工具调用轨迹</text>
+<rect x="60" y="562" width="1542" height="89" fill="#FBFAF6" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="606" r="22" fill="#18D68A" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="613" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">03</text>
+<line x1="132" y1="562" x2="132" y2="651" stroke="#111111" stroke-width="1"/>
+<text x="146" y="596.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Model ranking</text>
+<line x1="378" y1="562" x2="378" y2="651" stroke="#111111" stroke-width="1"/>
+<text x="392" y="596.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Model-system pair</text>
+<line x1="650" y1="562" x2="650" y2="651" stroke="#111111" stroke-width="1"/>
+<text x="664" y="593.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">比较模型和 harness、验证器、memory 的组合能力</text>
+<line x1="1106" y1="562" x2="1106" y2="651" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="593.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">能力/采用/成本</text>
+<line x1="1308" y1="562" x2="1308" y2="651" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="593.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">采购对象是否变成系统包</text>
+<rect x="60" y="651" width="1542" height="89" fill="#F0EEE7" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="695" r="22" fill="#2F54FF" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="702" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">04</text>
+<line x1="132" y1="651" x2="132" y2="740" stroke="#111111" stroke-width="1"/>
+<text x="146" y="685.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Chat interface</text>
+<line x1="378" y1="651" x2="378" y2="740" stroke="#111111" stroke-width="1"/>
+<text x="392" y="685.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Artifact surface</text>
+<line x1="650" y1="651" x2="650" y2="740" stroke="#111111" stroke-width="1"/>
+<text x="664" y="682.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">让 AI 进入 Excel、Outlook、画布、图片和设计台</text>
+<line x1="1106" y1="651" x2="1106" y2="740" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="682.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">分发/采用</text>
+<line x1="1308" y1="651" x2="1308" y2="740" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="682.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">交付物是否成为入口</text>
+<rect x="60" y="740" width="1542" height="89" fill="#FBFAF6" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="784" r="22" fill="#FF8BCB" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="791" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">05</text>
+<line x1="132" y1="740" x2="132" y2="829" stroke="#111111" stroke-width="1"/>
+<text x="146" y="774.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Web corpus</text>
+<line x1="378" y1="740" x2="378" y2="829" stroke="#111111" stroke-width="1"/>
+<text x="392" y="774.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Workflow trajectory</text>
+<line x1="650" y1="740" x2="650" y2="829" stroke="#111111" stroke-width="1"/>
+<text x="664" y="771.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">从内容学习转向过程学习和验收轨迹</text>
+<line x1="1106" y1="740" x2="1106" y2="829" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="771.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">供给/采用</text>
+<line x1="1308" y1="740" x2="1308" y2="829" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="771.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">是否沉淀可验证任务轨迹</text>
+<rect x="60" y="829" width="1542" height="89" fill="#F0EEE7" stroke="#111111" stroke-width="1"/>
+<circle cx="96" cy="873" r="22" fill="#D7FF3F" stroke="#111111" stroke-width="1.5"/>
+<text x="96" y="880" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="middle" letter-spacing="0">06</text>
+<line x1="132" y1="829" x2="132" y2="918" stroke="#111111" stroke-width="1"/>
+<text x="146" y="863.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Token price</text>
+<line x1="378" y1="829" x2="378" y2="918" stroke="#111111" stroke-width="1"/>
+<text x="392" y="863.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="start" letter-spacing="0">Industrial ledger</text>
+<line x1="650" y1="829" x2="650" y2="918" stroke="#111111" stroke-width="1"/>
+<text x="664" y="860.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">从 API 价格表迁移到电力、租赁和债务结构</text>
+<line x1="1106" y1="829" x2="1106" y2="918" stroke="#111111" stroke-width="1"/>
+<text x="1120" y="860.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">成本/供给</text>
+<line x1="1308" y1="829" x2="1308" y2="918" stroke="#111111" stroke-width="1"/>
+<text x="1322" y="860.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="560" text-anchor="start" letter-spacing="0">单位任务成本是否全栈计量</text>
+</svg>

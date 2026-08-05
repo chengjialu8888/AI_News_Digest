@@ -1,0 +1,59 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="use-iframe" content="true"><meta name="html-box-height-mode" content="auto"><title>AI 周报 / 六变量</title><style>
+  :root { --paper:#FBFAF6; --ink:#070707; --soft:#F0EEE7; --muted:#63615A; --line:#D8D2C7; --orange:#FF6B2C; --lime:#D7FF3F; --blue:#2F54FF; --pink:#FF8BCB; --mint:#18D68A; --violet:#B69CFF; --sans:system-ui,-apple-system,"Noto Sans SC",sans-serif; --serif:"et-book", "Songti SC", "Noto Serif CJK SC", Georgia, serif; --mono:Menlo,Consolas,"SF Mono",monospace; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; min-height:100%; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); }
+  .frame { position:relative; width:100%; aspect-ratio:16 / 9; overflow:hidden; background:var(--paper); border:1px solid var(--ink); padding:24px 28px; display:flex; flex-direction:column; }
+  .frame-meta { color:var(--blue); font:700 11px var(--mono); letter-spacing:0; }
+  .frame h1 { margin:14px 0 8px; font:700 clamp(28px,4.5vw,64px)/1.06 var(--serif); letter-spacing:0; }
+  .frame h2 { margin:0; font:700 clamp(15px,2vw,25px)/1.2 var(--serif); }
+  .lede { margin:0; max-width:720px; color:var(--muted); font-size:clamp(12px,1.35vw,18px); line-height:1.55; }
+  .rule { height:1px; margin:14px 0; background:var(--line); flex:0 0 auto; }
+  .tag { display:inline-flex; align-items:center; padding:5px 8px; border:1px solid var(--ink); border-radius:4px; font:700 10px var(--mono); }
+  .chip { display:inline-flex; align-items:center; min-height:24px; padding:4px 8px; border:1px solid currentColor; border-radius:4px; font:700 10px var(--sans); white-space:nowrap; }
+  .cover-grid { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr); gap:28px; align-items:center; flex:1; min-height:0; }
+  .cover-copy { min-width:0; }
+  .cover-copy h1 { max-width:720px; }
+  .cover-copy .lede { max-width:620px; }
+  .cover-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .cover-mark { height:100%; max-height:330px; min-height:190px; border:2px solid var(--ink); background:var(--soft); padding:18px; display:grid; grid-template-columns:1fr 1fr; gap:10px; align-content:center; }
+  .cover-mark .mark-title { grid-column:1 / -1; font:700 clamp(20px,3vw,42px)/1 var(--sans); }
+  .swatches { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .swatches i { display:block; aspect-ratio:1; background:var(--c); border:1px solid var(--ink); }
+  .formula { align-self:end; padding:12px; border:1px solid var(--ink); background:var(--ink); color:var(--paper); font:700 clamp(10px,1.2vw,15px) var(--mono); }
+  .frame-foot { display:flex; justify-content:space-between; gap:16px; color:var(--muted); font:10px var(--mono); }
+  .section-head { flex:0 0 auto; }
+  .section-head h1 { font-size:clamp(24px,3.4vw,48px); margin-top:10px; }
+  .section-head .lede { max-width:720px; }
+  .variable-grid, .trend-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; flex:1; min-height:0; margin-top:16px; }
+  .variable-card { min-width:0; border:1px solid var(--ink); border-top:5px solid var(--accent); background:var(--card); padding:14px; display:flex; flex-direction:column; justify-content:space-between; }
+  .variable-card .card-top { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
+  .variable-card .num { color:var(--muted); font:700 10px var(--mono); }
+  .variable-card .score { color:var(--accent); font:700 clamp(24px,3vw,46px)/1 var(--sans); }
+  .variable-card h2 { margin-top:8px; font-size:clamp(16px,2vw,27px); }
+  .variable-card p { margin:8px 0 0; color:var(--muted); font-size:clamp(11px,1.15vw,15px); line-height:1.45; }
+  .meter { height:7px; margin-top:12px; background:var(--line); }
+  .meter i { display:block; height:100%; width:var(--score); background:var(--accent); }
+  .trends-frame { background:var(--soft); }
+  .trend-grid { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(3,minmax(0,1fr)); }
+  .trend-card { min-width:0; border:1px solid var(--ink); border-left:7px solid var(--accent); background:var(--card); padding:12px 14px; display:grid; grid-template-rows:auto auto 1fr auto; gap:5px; }
+  .trend-card .card-top { display:flex; justify-content:space-between; gap:8px; color:var(--muted); font:700 10px var(--mono); }
+  .trend-card .score { color:var(--ink); font:700 24px/1 var(--sans); }
+  .trend-card h2 { font-size:clamp(13px,1.45vw,19px); }
+  .trend-card p { margin:0; color:var(--muted); font-size:clamp(10px,1.05vw,14px); line-height:1.4; }
+  .evidence { display:flex; flex-wrap:wrap; gap:6px; }
+  .matrix-frame { padding-bottom:18px; }
+  .matrix-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); gap:12px; flex:1; min-height:0; margin-top:16px; }
+  .matrix-card { min-width:0; border:1px solid var(--ink); border-top:6px solid var(--accent); padding:13px; display:grid; grid-template-columns:44px minmax(0,1fr); gap:10px; background:var(--card); }
+  .matrix-card .num { color:var(--accent); font:700 25px/1 var(--mono); }
+  .matrix-card .from, .matrix-card .to { font:700 clamp(12px,1.35vw,17px)/1.2 var(--sans); }
+  .matrix-card .to { color:var(--accent); }
+  .matrix-card p { grid-column:2; margin:3px 0 0; color:var(--muted); font-size:clamp(10px,1vw,13px); line-height:1.35; }
+  .matrix-card small { grid-column:2; color:var(--ink); font:700 9px var(--mono); }
+  .header-frame { background:var(--ink); color:var(--paper); }
+  .header-frame .frame-meta, .header-frame .lede { color:var(--paper); }
+  .header-frame h1 { max-width:780px; }
+  .header-mark { height:100%; max-height:300px; border:1px solid var(--paper); background:var(--soft); padding:16px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; align-content:center; }
+  .header-mark i { display:block; aspect-ratio:1; background:var(--c); border:1px solid var(--ink); }
+  @media (max-width:720px) { .frame { padding:14px 16px; } .cover-grid { grid-template-columns:minmax(0,1fr) minmax(120px,.6fr); gap:12px; } .cover-mark { padding:10px; gap:6px; } .cover-mark .mark-title { font-size:18px; } .variable-grid { gap:6px; margin-top:8px; } .variable-card { padding:8px; border-top-width:3px; } .variable-card p { font-size:9px; } .trend-grid { gap:6px; margin-top:8px; } .trend-card { padding:7px 8px; border-left-width:4px; } .trend-card h2 { font-size:11px; } .trend-card p { font-size:8px; } .chip { min-height:18px; padding:2px 5px; font-size:8px; } .matrix-grid { gap:6px; margin-top:8px; } .matrix-card { padding:7px; grid-template-columns:22px minmax(0,1fr); gap:5px; border-top-width:3px; } .matrix-card .num { font-size:14px; } .matrix-card .from, .matrix-card .to { font-size:9px; } .matrix-card p { font-size:7px; } .matrix-card small { font-size:6px; } .frame-foot { font-size:7px; } }
+</style></head><body><main class="frame"><div class="section-head"><div class="frame-meta">01 / VARIABLE SCOREBOARD</div><h1>六个变量，决定新闻的重量。</h1><p class="lede">先看哪个约束变了，再看哪一家发布了什么。</p></div><div class="variable-grid"><article class="variable-card" style="--accent:#FF6B2C;--card:#FBFAF6;--score:86%"><div class="card-top"><span class="num">01 / VARIABLE</span><span class="score">86</span></div><h2>能力</h2><p>模型成熟后，prompt 噪音开始被削掉。</p><div class="meter"><i></i></div></article><article class="variable-card" style="--accent:#D7FF3F;--card:#F0EEE7;--score:82%"><div class="card-top"><span class="num">02 / VARIABLE</span><span class="score">82</span></div><h2>成本</h2><p>成本从 token 扩展到吞吐、电力、债务。</p><div class="meter"><i></i></div></article><article class="variable-card" style="--accent:#2F54FF;--card:#FBFAF6;--score:78%"><div class="card-top"><span class="num">03 / VARIABLE</span><span class="score">78</span></div><h2>分发</h2><p>Office、画布、设计台成为交付表面。</p><div class="meter"><i></i></div></article><article class="variable-card" style="--accent:#18D68A;--card:#F0EEE7;--score:88%"><div class="card-top"><span class="num">04 / VARIABLE</span><span class="score">88</span></div><h2>供给</h2><p>芯片、电力、园区协议决定 AI 速度。</p><div class="meter"><i></i></div></article><article class="variable-card" style="--accent:#B69CFF;--card:#FBFAF6;--score:91%"><div class="card-top"><span class="num">05 / VARIABLE</span><span class="score">91</span></div><h2>监管</h2><p>安全与版权边界进入运行时。</p><div class="meter"><i></i></div></article><article class="variable-card" style="--accent:#FF8BCB;--card:#F0EEE7;--score:84%"><div class="card-top"><span class="num">06 / VARIABLE</span><span class="score">84</span></div><h2>组织采用</h2><p>Agent 需要任务、权限、检查点和复盘。</p><div class="meter"><i></i></div></article></div><div class="rule"></div><div class="frame-foot"><span>CONSTRAINTS FIRST</span><span>SCORE / 100</span></div></main></body></html>

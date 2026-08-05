@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810" role="img" aria-label="开放权重 还要跑通生产">
+  <rect width="1440" height="810" fill="#E8E5DC"/>
+  <rect x="0" y="0" width="1440" height="6" fill="#0E0F0D"/>
+  <text x="48" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#171814" text-anchor="start" letter-spacing="0">第 02 室 / 人工智能周报</text>
+  <text x="1392" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#3159FF" text-anchor="end" letter-spacing="0">开源与部署</text>
+  <text x="48" y="108" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="56" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0"><tspan x="48" dy="0">开放权重</tspan><tspan x="48" dy="58">还要跑通生产</tspan></text>
+  <text x="52" y="228" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="560" fill="#171814" text-anchor="start" letter-spacing="0"><tspan x="52" dy="0">下载会拉低门槛。</tspan><tspan x="52" dy="31">部署、评测、沙箱和合规才是硬活。</tspan></text>
+  <line x1="48" y1="300" x2="1392" y2="300" stroke="#B9B6AC" stroke-width="1"/>
+  
+        <g transform="translate(50 330)">
+          <rect width="360" height="270" fill="#3159FF"/>
+          <text x="34" y="76" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="58" font-weight="950" fill="#F6F4ED" text-anchor="start" letter-spacing="0"><tspan x="34" dy="0">下载</tspan><tspan x="34" dy="60">不等于</tspan><tspan x="34" dy="60">上线</tspan></text>
+          <circle cx="326" cy="235" r="82" fill="#D9FF3F" opacity="0.95"/>
+        </g>
+        <g transform="translate(505 320)">
+          <g transform="translate(0 0)">
+              <rect width="92" height="210" fill="#D9FF3F" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">权重</text>
+            </g><g transform="translate(116 0)">
+              <rect width="92" height="210" fill="#F6F4ED" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">量化</text>
+            </g><g transform="translate(232 0)">
+              <rect width="92" height="210" fill="#F6F4ED" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">服务</text>
+            </g><g transform="translate(348 0)">
+              <rect width="92" height="210" fill="#F6F4ED" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">评测</text>
+            </g><g transform="translate(464 0)">
+              <rect width="92" height="210" fill="#FF5B3F" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">沙箱</text>
+            </g><g transform="translate(580 0)">
+              <rect width="92" height="210" fill="#FF5B3F" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">许可</text>
+            </g><g transform="translate(696 0)">
+              <rect width="92" height="210" fill="#FF5B3F" stroke="#0E0F0D" stroke-width="2"/>
+              <text transform="translate(48 188) rotate(-90)" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="900" fill="#0E0F0D" text-anchor="middle" letter-spacing="0">客户</text>
+            </g>
+          <path d="M45 250 H770" stroke="#0E0F0D" stroke-width="6"/>
+          <path d="M770 250 l-26 -18 v36 z" fill="#0E0F0D"/>
+          <text x="246" y="292" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="34" font-weight="900" fill="#0E0F0D" text-anchor="start" letter-spacing="0"><tspan x="246" dy="0">生产化才是护城河</tspan></text>
+        </g>
+  <g transform="translate(48 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#3159FF" text-anchor="start" letter-spacing="0">开放权重</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">1200亿/200亿</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">免费商用</text>
+      </g><g transform="translate(318 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#D9FF3F" text-anchor="start" letter-spacing="0">月之暗面</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">2.8万亿</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">混合专家</text>
+      </g><g transform="translate(588 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#0E0F0D" text-anchor="start" letter-spacing="0">长上下文</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">100万</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">词元窗口</text>
+      </g><g transform="translate(858 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FFB338" text-anchor="start" letter-spacing="0">多模态</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">第三代</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">计划开放</text>
+      </g><g transform="translate(1128 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FF5B3F" text-anchor="start" letter-spacing="0">政策</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">立法提速</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">开放要治理</text>
+      </g>
+  <text x="48" y="790" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="13" font-weight="700" fill="#171814" text-anchor="start" letter-spacing="0">信号整理自 2026 年 7 月 24 日至 7 月 31 日人工智能周报</text>
+</svg>

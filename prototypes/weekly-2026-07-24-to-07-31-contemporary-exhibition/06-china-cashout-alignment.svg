@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810" role="img" aria-label="中国人工智能 进入兑现期">
+  <rect width="1440" height="810" fill="#E8E5DC"/>
+  <rect x="0" y="0" width="1440" height="6" fill="#0E0F0D"/>
+  <text x="48" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#171814" text-anchor="start" letter-spacing="0">第 06 室 / 人工智能周报</text>
+  <text x="1392" y="44" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="17" font-weight="800" fill="#3159FF" text-anchor="end" letter-spacing="0">兑现期</text>
+  <text x="48" y="108" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="56" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0"><tspan x="48" dy="0">中国人工智能</tspan><tspan x="48" dy="58">进入兑现期</tspan></text>
+  <text x="52" y="228" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="22" font-weight="560" fill="#171814" text-anchor="start" letter-spacing="0"><tspan x="52" dy="0">组织、资本、监管在同一周收紧。</tspan><tspan x="52" dy="31">模型故事开始接受商业化检验。</tspan></text>
+  <line x1="48" y1="300" x2="1392" y2="300" stroke="#B9B6AC" stroke-width="1"/>
+  
+        <g transform="translate(58 326)">
+          <g transform="translate(0 0)">
+            <rect width="365" height="250" fill="#F6F4ED" stroke="#0E0F0D" stroke-width="2"/>
+            <rect width="365" height="20" fill="#3159FF"/>
+            <text x="28" y="88" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="58" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0">组织</text>
+            <text x="28" y="137" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="23" font-weight="800" fill="#0E0F0D" text-anchor="start" letter-spacing="0">飞书并入豆包 / 火山</text>
+            <line x1="28" y1="176" x2="318" y2="176" stroke="#B9B6AC"/>
+            <circle cx="307" cy="206" r="34" fill="#3159FF"/>
+          </g><g transform="translate(418 0)">
+            <rect width="365" height="250" fill="#0E0F0D" stroke="#0E0F0D" stroke-width="2"/>
+            <rect width="365" height="20" fill="#FFB338"/>
+            <text x="28" y="88" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="58" font-weight="950" fill="#F6F4ED" text-anchor="start" letter-spacing="0">资本</text>
+            <text x="28" y="137" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="23" font-weight="800" fill="#F6F4ED" text-anchor="start" letter-spacing="0">月之暗面融资 / 上市前</text>
+            <line x1="28" y1="176" x2="318" y2="176" stroke="#F6F4ED"/>
+            <circle cx="307" cy="206" r="34" fill="#FFB338"/>
+          </g><g transform="translate(836 0)">
+            <rect width="365" height="250" fill="#F6F4ED" stroke="#0E0F0D" stroke-width="2"/>
+            <rect width="365" height="20" fill="#FF5B3F"/>
+            <text x="28" y="88" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="58" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0">监管</text>
+            <text x="28" y="137" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="23" font-weight="800" fill="#0E0F0D" text-anchor="start" letter-spacing="0">人工智能法提速</text>
+            <line x1="28" y1="176" x2="318" y2="176" stroke="#B9B6AC"/>
+            <circle cx="307" cy="206" r="34" fill="#FF5B3F"/>
+          </g>
+          <path d="M85 283 H1188" stroke="#0E0F0D" stroke-width="5"/>
+          <text x="530" y="318" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="34" font-weight="950" fill="#0E0F0D" text-anchor="start" letter-spacing="0">从发布速度转向收入质量</text>
+        </g>
+  <g transform="translate(48 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#3159FF" text-anchor="start" letter-spacing="0">字节</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">重组</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">飞书并入豆包</text>
+      </g><g transform="translate(318 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FFB338" text-anchor="start" letter-spacing="0">月之暗面</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">35亿美元</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">融资口径</text>
+      </g><g transform="translate(588 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#0E0F0D" text-anchor="start" letter-spacing="0">估值</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">500亿美元</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">上市前口径</text>
+      </g><g transform="translate(858 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#FF5B3F" text-anchor="start" letter-spacing="0">发改委</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">30%+</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">行业增速</text>
+      </g><g transform="translate(1128 660)">
+        <rect width="252" height="102" fill="#F6F4ED" stroke="#B9B6AC" stroke-width="1"/>
+        <text x="14" y="25" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="14" font-weight="800" fill="#D9FF3F" text-anchor="start" letter-spacing="0">深度求索</text>
+        <text x="14" y="58" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="25" font-weight="900" fill="#171814" text-anchor="start" letter-spacing="0">82.7</text>
+        <text x="14" y="84" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="15" font-weight="500" fill="#171814" text-anchor="start" letter-spacing="0">终端测评</text>
+      </g>
+  <text x="48" y="790" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', Arial, sans-serif" font-size="13" font-weight="700" fill="#171814" text-anchor="start" letter-spacing="0">信号整理自 2026 年 7 月 24 日至 7 月 31 日人工智能周报</text>
+</svg>

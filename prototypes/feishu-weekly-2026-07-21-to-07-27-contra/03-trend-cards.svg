@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1980" viewBox="0 0 1600 1980" role="img" aria-label="Contra style trend cards">
+  <rect width="1600" height="1980" fill="#FBFAF6"/>
+  <g opacity=".06">
+    <path d="M0 120 H1600 M0 240 H1600 M0 360 H1600 M0 480 H1600 M0 600 H1600 M0 720 H1600 M0 840 H1600 M0 960 H1600 M0 1080 H1600" stroke="#111111"/>
+    <path d="M160 0 V1980 M320 0 V1980 M480 0 V1980 M640 0 V1980 M800 0 V1980 M960 0 V1980 M1120 0 V1980 M1280 0 V1980 M1440 0 V1980" stroke="#111111"/>
+  </g>
+  <rect x="72" y="64" width="232.8" height="34" rx="17" fill="#FBFAF6" stroke="#111111" stroke-width="1.5"/><text x="188.39999999999998" y="86" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="820" text-anchor="middle" letter-spacing="0">02 / CREATIVE EVAL CARDS</text>
+<text x="72" y="150.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="920" text-anchor="start" letter-spacing="0">六条趋势，像评审作品一样被打分。</text>
+<text x="76" y="272" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="560" text-anchor="start" letter-spacing="0">每张卡只保留 thesis、变量条和一个高信号证据，避免新闻堆积。</text>
+<rect x="72" y="366" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="72" y="366" width="458" height="88" fill="#FF6B2C" stroke="#111111" stroke-width="2.5"/>
+<text x="96" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">01</text>
+<text x="187" y="420" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">CONTEXT</text>
+<text x="502" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">92</text>
+<text x="96" y="508.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">上下文工程从写更多规则，变成授</text>
+<text x="96" y="539.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">权成熟模型</text>
+<text x="96" y="634.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">贵的不是上下文长度，而是团队偏好、验证流程和</text>
+<text x="96" y="660.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">真实参考物。</text>
+<text x="96" y="759" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">能力</text>
+<rect x="154" y="749" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="749" width="163.8" height="8" fill="#070707"/>
+<text x="348" y="759" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">92</text>
+<text x="96" y="790" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">成本</text>
+<rect x="154" y="780" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="780" width="128.2" height="8" fill="#070707"/>
+<text x="348" y="790" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">72</text>
+<text x="96" y="821" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">采用</text>
+<rect x="154" y="811" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="811" width="153.1" height="8" fill="#070707"/>
+<text x="348" y="821" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">86</text>
+<rect x="96" y="820" width="150.8" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="171.39999999999998" y="842" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">80% prompt cut</text>
+<rect x="572" y="366" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="572" y="366" width="458" height="88" fill="#B69CFF" stroke="#111111" stroke-width="2.5"/>
+<text x="596" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">02</text>
+<text x="687" y="420" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">RUNTIME</text>
+<text x="1002" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">94</text>
+<text x="596" y="508.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">Agent 安全从发布前评测，变成</text>
+<text x="596" y="539.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">运行时边界</text>
+<text x="596" y="634.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">治理单位不再只是模型，而是身份、权限、网络、</text>
+<text x="596" y="660.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">日志和回滚。</text>
+<text x="596" y="759" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">监管</text>
+<rect x="654" y="749" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="749" width="167.3" height="8" fill="#070707"/>
+<text x="848" y="759" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">94</text>
+<text x="596" y="790" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">采用</text>
+<rect x="654" y="780" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="780" width="135.3" height="8" fill="#070707"/>
+<text x="848" y="790" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">76</text>
+<text x="596" y="821" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">成本</text>
+<rect x="654" y="811" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="811" width="113.9" height="8" fill="#070707"/>
+<text x="848" y="821" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">64</text>
+<rect x="596" y="820" width="167.2" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="679.6" y="842" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">runtime boundary</text>
+<rect x="1072" y="366" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="1072" y="366" width="458" height="88" fill="#18D68A" stroke="#111111" stroke-width="2.5"/>
+<text x="1096" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">03</text>
+<text x="1187" y="420" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">SYSTEM</text>
+<text x="1502" y="424" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">90</text>
+<text x="1096" y="508.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">竞争单位变成模型、Harness、验</text>
+<text x="1096" y="539.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">证器和轨迹</text>
+<text x="1096" y="634.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">可复盘的工作流水线，才会改写团队规模和代码产</text>
+<text x="1096" y="660.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">出关系。</text>
+<text x="1096" y="759" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">能力</text>
+<rect x="1154" y="749" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="749" width="149.5" height="8" fill="#070707"/>
+<text x="1348" y="759" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">84</text>
+<text x="1096" y="790" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">采用</text>
+<rect x="1154" y="780" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="780" width="160.2" height="8" fill="#070707"/>
+<text x="1348" y="790" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">90</text>
+<text x="1096" y="821" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">成本</text>
+<rect x="1154" y="811" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="811" width="121.0" height="8" fill="#070707"/>
+<text x="1348" y="821" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">68</text>
+<rect x="1096" y="820" width="175.4" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="1183.7" y="842" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">model-system pair</text>
+<rect x="72" y="936" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="72" y="936" width="458" height="88" fill="#2F54FF" stroke="#111111" stroke-width="2.5"/>
+<text x="96" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">04</text>
+<text x="187" y="990" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">SURFACE</text>
+<text x="502" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">92</text>
+<text x="96" y="1078.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">入口从聊天框转向 Office、画布</text>
+<text x="96" y="1109.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">和设计台</text>
+<text x="96" y="1204.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">谁离最终交付物最近，谁就更容易拿到上下文、反</text>
+<text x="96" y="1230.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">馈和付费。</text>
+<text x="96" y="1329" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">分发</text>
+<rect x="154" y="1319" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="1319" width="163.8" height="8" fill="#070707"/>
+<text x="348" y="1329" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">92</text>
+<text x="96" y="1360" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">采用</text>
+<rect x="154" y="1350" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="1350" width="142.4" height="8" fill="#070707"/>
+<text x="348" y="1360" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">80</text>
+<text x="96" y="1391" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">能力</text>
+<rect x="154" y="1381" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="154" y="1381" width="124.6" height="8" fill="#070707"/>
+<text x="348" y="1391" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">70</text>
+<rect x="96" y="1390" width="167.2" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="179.6" y="1412" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">artifact surface</text>
+<rect x="572" y="936" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="572" y="936" width="458" height="88" fill="#FF8BCB" stroke="#111111" stroke-width="2.5"/>
+<text x="596" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">05</text>
+<text x="687" y="990" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">DATA</text>
+<text x="1002" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">88</text>
+<text x="596" y="1078.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">下一轮训练数据红利来自真实工作</text>
+<text x="596" y="1109.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">轨迹</text>
+<text x="596" y="1204.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">网页文本告诉模型世界有什么，轨迹数据告诉模型</text>
+<text x="596" y="1230.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">工作怎么做完。</text>
+<text x="596" y="1329" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">供给</text>
+<rect x="654" y="1319" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="1319" width="138.8" height="8" fill="#070707"/>
+<text x="848" y="1329" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">78</text>
+<text x="596" y="1360" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">采用</text>
+<rect x="654" y="1350" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="1350" width="149.5" height="8" fill="#070707"/>
+<text x="848" y="1360" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">84</text>
+<text x="596" y="1391" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">监管</text>
+<rect x="654" y="1381" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="654" y="1381" width="103.2" height="8" fill="#070707"/>
+<text x="848" y="1391" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">58</text>
+<rect x="596" y="1390" width="142.6" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="667.3" y="1412" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">workflow data</text>
+<rect x="1072" y="936" width="458" height="510" fill="#FBFAF6" stroke="#111111" stroke-width="2.5"/>
+<rect x="1072" y="936" width="458" height="88" fill="#D7FF3F" stroke="#111111" stroke-width="2.5"/>
+<text x="1096" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="start" letter-spacing="0">06</text>
+<text x="1187" y="990" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="900" text-anchor="start" letter-spacing="0">INFRA</text>
+<text x="1502" y="994" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="920" text-anchor="end" letter-spacing="0">96</text>
+<text x="1096" y="1078.0" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">成本竞争从 token 单价扩展到工</text>
+<text x="1096" y="1109.72" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" text-anchor="start" letter-spacing="0">业账本</text>
+<text x="1096" y="1204.0" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">AI 越来越像工业系统，胜负取决于全栈单位任务</text>
+<text x="1096" y="1230.1" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="560" text-anchor="start" letter-spacing="0">成本。</text>
+<text x="1096" y="1329" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">成本</text>
+<rect x="1154" y="1319" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="1319" width="167.3" height="8" fill="#070707"/>
+<text x="1348" y="1329" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">94</text>
+<text x="1096" y="1360" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">供给</text>
+<rect x="1154" y="1350" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="1350" width="170.9" height="8" fill="#070707"/>
+<text x="1348" y="1360" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">96</text>
+<text x="1096" y="1391" fill="#63615A" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" text-anchor="start" letter-spacing="0">监管</text>
+<rect x="1154" y="1381" width="178" height="8" fill="#F0EEE7" stroke="#111111" stroke-width=".8"/>
+<rect x="1154" y="1381" width="124.6" height="8" fill="#070707"/>
+<text x="1348" y="1391" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="start" letter-spacing="0">70</text>
+<rect x="1096" y="1390" width="142.6" height="34" rx="17" fill="#F0EEE7" stroke="#111111" stroke-width="1.5"/><text x="1167.3" y="1412" fill="#070707" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="820" text-anchor="middle" letter-spacing="0">3.2GW + chips</text>
+</svg>

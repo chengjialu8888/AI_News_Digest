@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI News Digest weekly visual field note, 2026-07-21 to 2026-07-27.">
+  <title>THE SCAFFOLD AFTER THE MODEL · AI Weekly Field Note</title>
+  <style>
+    :root {
+      --black: #0e0f0d;
+      --paper: #e8e5dc;
+      --white: #f6f4ed;
+      --ink: #171814;
+      --grey: #8d8b82;
+      --line: #b9b6ac;
+      --acid: #d9ff3f;
+      --red: #ff5b3f;
+      --blue: #3159ff;
+      --violet: #a796ff;
+      --orange: #ffb338;
+      --green: #1fd28a;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: #1a1b17;
+      color: var(--ink);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px 0 80px;
+      background: #1a1b17;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; }
+
+    .masthead {
+      width: min(1400px, calc(100vw - 48px));
+      margin: 0 auto 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      color: #c7c7be;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .masthead strong { color: var(--acid); }
+
+    .frame {
+      position: relative;
+      width: min(1400px, calc(100vw - 48px));
+      aspect-ratio: 16 / 9;
+      margin: 0 auto 54px;
+      overflow: hidden;
+      border: 1px solid #30312c;
+      isolation: isolate;
+    }
+
+    .frame--paper { background: var(--paper); color: var(--ink); }
+    .frame--dark { background: var(--black); color: var(--white); }
+    .frame--acid { background: var(--acid); color: var(--ink); }
+    .frame--blue { background: var(--blue); color: var(--white); }
+
+    .frame::after {
+      content: attr(data-frame);
+      position: absolute;
+      right: 24px;
+      bottom: 18px;
+      z-index: 20;
+      color: currentColor;
+      opacity: .56;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+    }
+
+    .frame-inner {
+      position: absolute;
+      inset: 0;
+      padding: clamp(22px, 3.5vw, 56px);
+    }
+
+    .eyebrow,
+    .tiny-label {
+      font-size: clamp(9px, .75vw, 12px);
+      line-height: 1.3;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow { opacity: .72; }
+
+    .rule { height: 1px; background: currentColor; opacity: .34; }
+
+    .small-copy {
+      max-width: 420px;
+      font-size: clamp(12px, 1.15vw, 17px);
+      line-height: 1.46;
+    }
+
+    .micro-copy {
+      font-size: clamp(10px, .8vw, 12px);
+      line-height: 1.45;
+      color: var(--grey);
+    }
+
+    .display {
+      margin: 0;
+      font-weight: 900;
+      line-height: .84;
+      letter-spacing: -.04em;
+    }
+
+    .display--hero { font-size: clamp(46px, 8.2vw, 130px); }
+    .display--large { font-size: clamp(42px, 7.8vw, 118px); }
+    .display--medium { font-size: clamp(34px, 5.6vw, 84px); }
+
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .stamp--red { background: var(--red); color: var(--ink); }
+    .stamp--acid { background: var(--acid); color: var(--ink); }
+    .stamp--blue { background: var(--blue); color: var(--white); }
+
+    .corner-mark {
+      position: absolute;
+      width: clamp(120px, 16vw, 260px);
+      height: clamp(120px, 16vw, 260px);
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      opacity: .52;
+    }
+
+    .corner-mark::before,
+    .corner-mark::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 145%;
+      height: 1px;
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .corner-mark::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+    .corner-mark--tl { top: -7%; left: -4%; }
+    .corner-mark--br { right: -5%; bottom: -12%; transform: rotate(18deg); }
+
+    .cover .frame-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(240px, .72fr);
+      gap: 4vw;
+      align-items: end;
+    }
+
+    .cover-copy { align-self: end; position: relative; z-index: 2; }
+
+    .cover h1 { max-width: 860px; }
+
+    .cover h1 span { display: block; }
+    .cover h1 span:last-child { color: var(--blue); }
+
+    .cover-subtitle {
+      max-width: 620px;
+      margin: 24px 0 0;
+      font-size: clamp(15px, 1.65vw, 24px);
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .cover-meta {
+      display: grid;
+      gap: 8px;
+      margin-top: 38px;
+      max-width: 480px;
+      color: #5d5d56;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .cover-art {
+      position: relative;
+      min-height: 100%;
+      overflow: hidden;
+      background: var(--black);
+      color: var(--white);
+      border-left: 1px solid var(--ink);
+    }
+
+    .cover-art::before {
+      content: "";
+      position: absolute;
+      top: 11%;
+      left: 14%;
+      width: 53%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .cover-art::after {
+      content: "";
+      position: absolute;
+      right: 9%;
+      bottom: 12%;
+      width: 62%;
+      height: 33%;
+      background: var(--acid);
+      transform: rotate(-18deg);
+    }
+
+    .cover-art .blue-cut {
+      position: absolute;
+      z-index: 1;
+      left: -8%;
+      bottom: 26%;
+      width: 120%;
+      height: 17%;
+      background: var(--blue);
+      transform: rotate(44deg);
+    }
+
+    .cover-art .art-type {
+      position: absolute;
+      z-index: 3;
+      left: 9%;
+      bottom: 7%;
+      width: fit-content;
+      max-width: 88%;
+      padding: 8px 10px;
+      background: var(--black);
+      color: var(--white);
+      font-size: clamp(19px, 2.6vw, 38px);
+      font-weight: 900;
+      line-height: .86;
+      letter-spacing: -.04em;
+    }
+
+    .cover-art .art-type em {
+      display: block;
+      color: var(--acid);
+      font-style: normal;
+    }
+
+    .cover-art .art-index {
+      position: absolute;
+      z-index: 4;
+      top: 6%;
+      right: 7%;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      letter-spacing: .18em;
+    }
+
+    .equation .frame-inner {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .equation-head,
+    .equation-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .equation-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(190px, .34fr);
+      gap: 5vw;
+      align-items: center;
+    }
+
+    .equation-formula {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: .08em .16em;
+      max-width: 900px;
+      font-size: clamp(38px, 6.6vw, 100px);
+      font-weight: 900;
+      line-height: .86;
+      letter-spacing: -.07em;
+    }
+
+    .equation-formula .operator { color: var(--red); }
+    .equation-formula .divisor { color: var(--blue); }
+    .equation-formula .soft { color: #74736b; }
+
+    .equation-annotation {
+      align-self: end;
+      border-left: 1px solid currentColor;
+      padding-left: 18px;
+      font-size: clamp(12px, 1.15vw, 17px);
+      line-height: 1.45;
+    }
+
+    .equation-annotation strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: clamp(22px, 2.5vw, 38px);
+      line-height: .95;
+    }
+
+    .equation-foot { align-items: end; }
+    .equation-foot .small-copy { max-width: 680px; }
+
+    .disappear .frame-inner {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(260px, .7fr);
+      gap: 5vw;
+      align-items: stretch;
+    }
+
+    .disappear-copy {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .disappear h2 { max-width: 700px; }
+
+    .disappear h2 span {
+      display: block;
+      color: var(--acid);
+    }
+
+    .disappear-note {
+      max-width: 430px;
+      color: #b8b9ae;
+      font-size: clamp(14px, 1.4vw, 20px);
+      line-height: 1.38;
+    }
+
+    .disappear-note strong { color: var(--white); }
+
+    .reduction {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 22px;
+      border: 1px solid #676961;
+      background: #161814;
+    }
+
+    .reduction-top,
+    .reduction-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: #aaa99d;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .reduction-body {
+      align-self: center;
+      padding: 18px 0;
+    }
+
+    .reduction-number {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(74px, 12vw, 180px);
+      font-weight: 900;
+      line-height: .76;
+      letter-spacing: -.08em;
+      color: var(--red);
+    }
+
+    .reduction-bar {
+      position: relative;
+      height: 21px;
+      margin: 22px 0 14px;
+      border: 1px solid #63655c;
+      background: repeating-linear-gradient(90deg, #34362f 0 2px, transparent 2px 16px);
+    }
+
+    .reduction-bar::after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 20%;
+      height: 21px;
+      background: var(--acid);
+      border: 1px solid var(--acid);
+    }
+
+    .reduction-caption {
+      max-width: 350px;
+      color: #dad9d0;
+      font-size: clamp(12px, 1.15vw, 16px);
+      line-height: 1.36;
+    }
+
+    .boundary .frame-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(260px, .74fr);
+      gap: 5vw;
+      align-items: center;
+    }
+
+    .boundary h2 { max-width: 740px; }
+
+    .boundary h2 span { display: block; color: var(--red); }
+
+    .boundary-copy {
+      max-width: 580px;
+      margin-top: 24px;
+      font-size: clamp(14px, 1.4vw, 20px);
+      line-height: 1.4;
+    }
+
+    .boundary-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 30px;
+      max-width: 630px;
+    }
+
+    .boundary-list span {
+      padding: 10px 12px;
+      border: 1px solid var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+
+    .boundary-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 72%;
+      border-left: 1px solid var(--line);
+    }
+
+    .boundary-art::before,
+    .boundary-art::after {
+      content: "";
+      position: absolute;
+      width: min(26vw, 350px);
+      aspect-ratio: 1;
+      border: 1px solid var(--ink);
+    }
+
+    .boundary-art::before { transform: rotate(45deg); }
+    .boundary-art::after { width: min(18vw, 240px); transform: rotate(45deg); border-color: var(--red); }
+
+    .boundary-core {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 8px;
+      place-items: center;
+      width: 132px;
+      aspect-ratio: 1;
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+    }
+
+    .boundary-core strong { font-size: 31px; line-height: .85; }
+    .boundary-core span { color: var(--acid); font-size: 10px; font-weight: 800; letter-spacing: .12em; }
+
+    .boundary-cross {
+      position: absolute;
+      width: min(31vw, 420px);
+      height: 1px;
+      background: var(--ink);
+      transform: rotate(-31deg);
+    }
+
+    .boundary-caption {
+      position: absolute;
+      right: 10%;
+      bottom: 5%;
+      width: 140px;
+      font-size: 10px;
+      line-height: 1.35;
+      color: #66655e;
+    }
+
+    .stack .frame-inner {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .stack-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+    }
+
+    .stack-head h2 { max-width: 760px; }
+
+    .stack-head h2 span { color: var(--acid); }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .stack-cell {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid #555850;
+      background: #161814;
+      overflow: hidden;
+    }
+
+    .stack-cell:nth-child(1) { border-top: 12px solid var(--red); }
+    .stack-cell:nth-child(2) { border-top: 12px solid var(--blue); }
+    .stack-cell:nth-child(3) { border-top: 12px solid var(--acid); color: var(--white); }
+    .stack-cell:nth-child(4) { border-top: 12px solid var(--violet); }
+
+    .stack-cell h3 {
+      margin: 0;
+      font-size: clamp(17px, 2vw, 28px);
+      line-height: .96;
+    }
+
+    .stack-cell .cell-number {
+      align-self: center;
+      max-width: 100%;
+      font-size: clamp(22px, 3.1vw, 46px);
+      font-weight: 900;
+      line-height: .84;
+      letter-spacing: -.05em;
+      overflow-wrap: anywhere;
+    }
+
+    .stack-cell p {
+      margin: 0;
+      color: #b4b5a9;
+      font-size: clamp(10px, .9vw, 13px);
+      line-height: 1.4;
+    }
+
+    .stack-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #b4b5a9;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .surface .frame-inner {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .surface h2 { max-width: 760px; }
+
+    .surface h2 span { color: var(--blue); }
+
+    .surface-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .9fr .9fr .9fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .surface-object {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid var(--ink);
+      background: var(--white);
+    }
+
+    .surface-object:nth-child(1) { grid-row: span 2; background: var(--red); }
+    .surface-object:nth-child(2) { background: var(--acid); }
+    .surface-object:nth-child(3) { background: var(--blue); color: var(--white); }
+    .surface-object:nth-child(4) { background: var(--ink); color: var(--white); }
+    .surface-object:nth-child(5) { grid-column: span 2; background: var(--orange); }
+
+    .surface-object h3 {
+      margin: 0;
+      max-width: 220px;
+      font-size: clamp(20px, 2.6vw, 38px);
+      line-height: .86;
+      letter-spacing: -.04em;
+    }
+
+    .surface-object p {
+      margin: 0;
+      max-width: 260px;
+      font-size: clamp(10px, .9vw, 13px);
+      line-height: 1.35;
+    }
+
+    .surface-object .object-mark {
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: clamp(28px, 3.4vw, 52px);
+      aspect-ratio: 1;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+    }
+
+    .surface-object .object-mark::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -20%;
+      width: 1px;
+      height: 140%;
+      background: currentColor;
+      transform: rotate(45deg);
+    }
+
+    .surface-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .surface-foot strong { font-size: clamp(15px, 1.6vw, 23px); }
+
+    .ledger .frame-inner {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 5vw;
+      align-items: stretch;
+    }
+
+    .ledger-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ledger h2 { max-width: 560px; }
+    .ledger h2 span { display: block; color: var(--acid); }
+
+    .ledger-copy p {
+      max-width: 520px;
+      color: #c4c5bc;
+      font-size: clamp(14px, 1.35vw, 20px);
+      line-height: 1.38;
+    }
+
+    .ledger-copy .stamp { align-self: start; }
+
+    .ledger-art {
+      position: relative;
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 10px;
+      align-content: center;
+      padding-left: 16px;
+      border-left: 1px solid #555850;
+    }
+
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      align-items: end;
+      border-bottom: 1px solid #52554c;
+      padding-bottom: 9px;
+    }
+
+    .ledger-row:last-child { border-bottom: 0; }
+
+    .ledger-row .metric {
+      font-size: clamp(42px, 7vw, 104px);
+      font-weight: 900;
+      line-height: .75;
+      letter-spacing: -.08em;
+    }
+
+    .ledger-row:nth-child(1) .metric { color: var(--red); }
+    .ledger-row:nth-child(2) .metric { color: var(--blue); }
+    .ledger-row:nth-child(3) .metric { color: var(--acid); }
+
+    .ledger-row .label {
+      color: #c4c5bc;
+      font-size: clamp(10px, .9vw, 13px);
+      line-height: 1.35;
+    }
+
+    .ledger-row .label strong { display: block; color: var(--white); font-size: 14px; }
+
+    .closing .frame-inner {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    .closing h2 { max-width: 900px; }
+    .closing h2 span { color: var(--red); }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .closing-cell {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid var(--ink);
+      background: #d7d3c8;
+    }
+
+    .closing-cell:nth-child(2) { background: var(--blue); color: var(--white); }
+    .closing-cell:nth-child(3) { background: var(--acid); }
+
+    .closing-cell h3 {
+      margin: 0;
+      font-size: clamp(19px, 2.2vw, 31px);
+      line-height: .9;
+      text-transform: uppercase;
+    }
+
+    .closing-cell p {
+      margin: 0;
+      max-width: 270px;
+      font-size: clamp(12px, 1.1vw, 16px);
+      line-height: 1.38;
+    }
+
+    .closing-cell .cell-mark {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .closing-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+    }
+
+    .closing-foot strong {
+      display: block;
+      font-size: clamp(25px, 4vw, 58px);
+      line-height: .8;
+      letter-spacing: -.05em;
+    }
+
+    .sources {
+      width: min(1400px, calc(100vw - 48px));
+      margin: -10px auto 0;
+      padding: 24px 0 0;
+      color: #c7c7be;
+      border-top: 1px solid #4d4e47;
+    }
+
+    .sources summary {
+      cursor: pointer;
+      color: var(--acid);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .sources p {
+      max-width: 820px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .sources a { color: #d6d6cc; }
+
+    @media (max-width: 780px) {
+      body { padding-top: 14px; }
+      .masthead,
+      .frame,
+      .sources { width: calc(100vw - 24px); }
+      .frame {
+        aspect-ratio: auto;
+        min-height: 720px;
+        margin-bottom: 28px;
+      }
+      .frame-inner { padding: 17px; }
+      .cover .frame-inner,
+      .disappear .frame-inner,
+      .boundary .frame-inner,
+      .ledger .frame-inner { grid-template-columns: 1fr; gap: 18px; }
+      .cover .frame-inner { align-items: start; }
+      .cover-art { min-height: 260px; border-left: 0; border-top: 1px solid var(--ink); }
+      .cover-art .art-type { bottom: 8%; }
+      .equation-body { grid-template-columns: 1fr; gap: 18px; }
+      .equation-annotation { max-width: 360px; }
+      .boundary-art { min-height: 36%; border-left: 0; border-top: 1px solid var(--line); }
+      .boundary-art::before { width: 26vw; }
+      .boundary-art::after { width: 18vw; }
+      .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 7px; }
+      .stack-cell { padding: 10px; }
+      .stack-cell p { line-height: 1.18; }
+      .surface-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 7px; }
+      .surface-object { padding: 10px; }
+      .surface-object p { line-height: 1.16; }
+      .ledger-art { min-height: 42%; padding-left: 0; border-left: 0; border-top: 1px solid #555850; padding-top: 12px; }
+      .closing-grid { grid-template-columns: 1fr; gap: 7px; }
+      .closing-cell { padding: 10px; gap: 8px; }
+      .closing-cell p { line-height: 1.2; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <span><strong>AI NEWS DIGEST</strong> / FIELD NOTE 07.21—07.27</span>
+    <span>CONTEXT · RUNTIME · DELIVERY · COST</span>
+  </header>
+
+  <main>
+    <section class="frame frame--paper cover" data-frame="01 / 08">
+      <div class="frame-inner">
+        <div class="cover-copy">
+          <div class="eyebrow">A weekly visual field note on AI industry structure</div>
+          <h1 class="display display--hero"><span>THE SCAFFOLD</span><span>AFTER THE MODEL</span></h1>
+          <p class="cover-subtitle">模型变强之后，Agent 开始重新定义“管理”——少一点常驻指令，多一点授权、边界、验证和真实交付。</p>
+          <div class="cover-meta">
+            <span>2026.07.21 — 07.27 / BEIJING TIME</span>
+            <span>OPUS 5 · RUNTIME SECURITY · AGENT HARNESSES · INDUSTRIAL LEDGER</span>
+          </div>
+        </div>
+        <div class="cover-art" aria-label="Abstract study of a disappearing scaffold">
+          <div class="blue-cut"></div>
+          <div class="art-index">FIELD OBJECT / 001</div>
+          <div class="art-type">PROMPT<br><em>→ AUTHORITY</em></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame frame--acid equation" data-frame="02 / 08">
+      <div class="frame-inner">
+        <div class="equation-head">
+          <span class="eyebrow">01 / FIRST PRINCIPLES</span>
+          <span class="stamp">THE WEEK IN ONE EQUATION</span>
+        </div>
+        <div class="equation-body">
+          <div>
+            <div class="equation-formula" aria-label="Agent value equation">
+              <span>task</span><span class="operator">×</span><span>success</span><span class="operator">×</span><span>proof</span>
+              <span class="soft">÷</span><span class="divisor">context</span><span class="soft">÷</span><span class="divisor">compute</span><span class="soft">÷</span><span class="divisor">governance</span>
+            </div>
+            <p class="small-copy">本周的新闻并非在争夺同一个 benchmark 分数。它们分别改写这个式子里的某一项：提示词变薄，边界变硬，轨迹变贵，交付物变近，成本变成工业账。</p>
+          </div>
+          <div class="equation-annotation"><strong>NOT A CHATBOT</strong>Agent 是一条可完成、可验证、可追责的工作链。真正的竞争单位，是系统是否能把行动变成结果。</div>
+        </div>
+        <div class="equation-foot">
+          <span class="tiny-label">VALUE IS A SYSTEM PROPERTY</span>
+          <span class="micro-copy">判断框架 / 不是口号</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame frame--dark disappear" data-frame="03 / 08">
+      <div class="frame-inner">
+        <div class="disappear-copy">
+          <div>
+            <div class="eyebrow">02 / CONTEXT ENGINEERING</div>
+            <h2 class="display display--large">THE<br><span>DISAPPEARING</span><br>SCAFFOLD</h2>
+          </div>
+          <p class="disappear-note"><strong>Opus 5 删掉 80% 以上系统提示词，能力没有可测量下降。</strong><br>这不是上下文消失，而是“模型自己能推断的废规则”被撤走。厚上下文，薄提示。</p>
+        </div>
+        <div class="reduction">
+          <div class="reduction-top"><span>Permanent prompt surface</span><span>100 → 20</span></div>
+          <div class="reduction-body">
+            <div class="reduction-number">80%</div>
+            <div class="reduction-bar" aria-label="80 percent of prompt surface removed"></div>
+            <div class="reduction-caption">删除的不是经验，而是模型读文件、用工具、跑测试就能自行获得的说明。留下团队偏好、真实参考、验证流程和判断边界。</div>
+          </div>
+          <div class="reduction-bottom"><span>THICK CONTEXT / THIN PROMPT</span><span>01</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame frame--paper boundary" data-frame="04 / 08">
+      <div class="frame-inner">
+        <div>
+          <div class="eyebrow">03 / RUNTIME GOVERNANCE</div>
+          <h2 class="display display--large">AGENT<br><span>≠ MODEL</span></h2>
+          <p class="boundary-copy">发布前的安全评测正在退到幕后。真正的边界发生在运行时：身份、权限、网络出口、可写范围、日志、审批、回滚和人类 checkpoint。</p>
+          <div class="boundary-list">
+            <span>IDENTITY</span><span>PERMISSION</span><span>NETWORK</span><span>TRAJECTORY</span><span>CHECKPOINT</span>
+          </div>
+        </div>
+        <div class="boundary-art" aria-label="Nested runtime boundary diagram">
+          <div class="boundary-cross"></div>
+          <div class="boundary-core"><strong>RUN<br>TIME</strong><span>BOUNDARY</span></div>
+          <div class="boundary-caption">OPENAI / HF INCIDENT<br>AISI EVALUATION<br>AGENT ESCAPE</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame frame--dark stack" data-frame="05 / 08">
+      <div class="frame-inner">
+        <div class="stack-head">
+          <div>
+            <div class="eyebrow">04 / THE COMPETITION UNIT</div>
+            <h2 class="display display--medium">MODEL <span>+</span> HARNESS <span>+</span> VERIFIER <span>+</span> TRACE</h2>
+          </div>
+          <span class="stamp stamp--acid">NOT ONE BRAIN</span>
+        </div>
+        <div class="stack-grid">
+          <article class="stack-cell"><h3>MODEL</h3><div class="cell-number">CANDIDATE</div><p>生成下一步行动：推理、代码、视觉、成本各有分工。</p></article>
+          <article class="stack-cell"><h3>HARNESS</h3><div class="cell-number">BOUNDARY</div><p>切分任务、调用工具、设置 sandbox、决定什么可以写入环境。</p></article>
+          <article class="stack-cell"><h3>VERIFIER</h3><div class="cell-number">RUBRIC</div><p>测试、静态检查、人工验收和另一个 Agent 的审查，把“看起来对”变成可判断。</p></article>
+          <article class="stack-cell"><h3>TRACE</h3><div class="cell-number">MEMORY</div><p>留下轨迹、失败、修正和结果。下一轮训练燃料来自真实工作如何完成。</p></article>
+        </div>
+        <div class="stack-foot"><span>HYRA / CURSOR SWARM / TUNIX / MAGENTICLITE</span><span>任务完成 ≠ 一次回答正确</span></div>
+      </div>
+    </section>
+
+    <section class="frame frame--paper surface" data-frame="06 / 08">
+      <div class="frame-inner">
+        <div>
+          <div class="eyebrow">05 / DELIVERY SURFACES</div>
+          <h2 class="display display--medium">IF IT ONLY CHATS,<br><span>IT HASN'T SHIPPED.</span></h2>
+        </div>
+        <div class="surface-grid">
+          <article class="surface-object"><span class="tiny-label">OFFICE</span><h3>EXCEL<br>OUTLOOK</h3><p>任务发生在哪里，Agent 就应该在哪里留下可交付结果。</p><i class="object-mark"></i></article>
+          <article class="surface-object"><span class="tiny-label">CANVAS</span><h3>SHARED<br>WORKSPACE</h3><p>从侧栏建议进入可编辑的协作面。</p><i class="object-mark"></i></article>
+          <article class="surface-object"><span class="tiny-label">IMAGE</span><h3>QWEN<br>IMAGE 3.0</h3><p>知识视觉从好看走向可读、可改。</p><i class="object-mark"></i></article>
+          <article class="surface-object"><span class="tiny-label">VOICE</span><h3>CONTEXT<br>CAPSULE</h3><p>语音成为低摩擦的上下文入口。</p><i class="object-mark"></i></article>
+          <article class="surface-object"><span class="tiny-label">DESIGN</span><h3>MIORA / AI FILM / DESIGN AGENT</h3><p>交付物表面越近，反馈、授权和付费越连续。</p><i class="object-mark"></i></article>
+        </div>
+        <div class="surface-foot"><strong>聊天框是入口，不是终点。</strong><span class="micro-copy">THE WORK SURFACE BECOMES THE PRODUCT</span></div>
+      </div>
+    </section>
+
+    <section class="frame frame--dark ledger" data-frame="07 / 08">
+      <div class="frame-inner">
+        <div class="ledger-copy">
+          <div>
+            <div class="eyebrow">06 / THE INDUSTRIAL LEDGER</div>
+            <h2 class="display display--large">TOKEN<br><span>IS NOT</span><br>THE BILL.</h2>
+          </div>
+          <p>成本竞争已经从 API 单价扩展到吞吐、电力、土地、芯片、租赁、债务和供应链协议。Agent 的毛利，要在“完成一次任务”的全栈账本里重新计算。</p>
+          <span class="stamp stamp--red">SOFTWARE WITH A POWER DRAW</span>
+        </div>
+        <div class="ledger-art">
+          <div class="ledger-row"><div class="metric">3.2GW</div><div class="label"><strong>OPENAI / CAMELLIA</strong>Georgia 数据中心规划电力，AI 基建变成地方经济和公共资源问题。</div></div>
+          <div class="ledger-row"><div class="metric">2GW</div><div class="label"><strong>AMD × ANTHROPIC</strong>Instinct MI450 产能绑定，前沿模型公司与芯片厂深度共振。</div></div>
+          <div class="ledger-row"><div class="metric">$1.65T</div><div class="label"><strong>HIDDEN DEBT</strong>Nikkei 披露的五家科技巨头 AI 隐性债务估计，capex 质量成为估值问题。</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="frame frame--acid closing" data-frame="08 / 08">
+      <div class="frame-inner">
+        <div>
+          <div class="eyebrow">07 / MANAGEMENT NOTE</div>
+          <h2 class="display display--large">MANAGE THE<br><span>MATURE EMPLOYEE.</span></h2>
+        </div>
+        <div class="closing-grid">
+          <article class="closing-cell"><h3>BUILD</h3><p>把常驻上下文清掉。把规则改成判断框架，把流程拆进按需 skills，把交付变成 HTML、测试、rubric 和真实参考。</p><span class="cell-mark">01 / CONTEXT</span></article>
+          <article class="closing-cell"><h3>MARKET</h3><p>别只盯模型能力。看谁能用更低的全栈成本完成更多可计费任务，看数据轨迹、算力债务和治理能力。</p><span class="cell-mark">02 / COST</span></article>
+          <article class="closing-cell"><h3>OPERATE</h3><p>你不是在买一个更聪明的聊天框，而是在引入一个会消耗预算、使用权限、留下轨迹的新执行层。</p><span class="cell-mark">03 / AUTHORITY</span></article>
+        </div>
+        <div class="closing-foot"><strong>LESS NOISE / MORE STRUCTURE</strong><span class="tiny-label">AI NEWS DIGEST / END NOTE</span></div>
+      </div>
+    </section>
+  </main>
+
+  <details class="sources">
+    <summary>OPEN THE EVIDENCE INDEX / 打开证据索引</summary>
+    <p>本视觉版从《AI 周报｜Opus 5 删掉 80% 提示词后，Agent 行业开始重估“脚手架”》的 6 个趋势中提炼，数字与事件以周报原文为准。关键来源包括：<a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models">Anthropic context engineering</a>、<a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/">OpenAI / Hugging Face incident</a>、<a href="https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations">AISI evaluation research</a>、<a href="https://cursor.com/blog/agent-swarm-model-economics">Cursor Agent Swarm</a>、<a href="https://qwen.ai/blog?id=qwen-image-3.0">Qwen-Image-3.0</a>、<a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community/">OpenAI Project Camellia</a>。</p>
+  </details>
+</body>
+</html>

@@ -33,6 +33,8 @@ AI News Digest 是一个面向 **AI 从业者、投资研究者、产品经理�
 - 带信号等级的内容筛选：重磅 / 值得关注 / 常规
 - 可沉淀到表格、看板或知识库的 **12 列 CSV**
 - 飞书 **Newsrun 卡片**、**详细版文档**、**结构化沉淀文档**、CSV 和 HTML 五类产物
+- 详细版固定配套 Georgia O'Keeffe 方法的三张 16:9 趋势图，并自动做文字遮挡、画布溢出和移动端验收
+- `初创动向` 每日优先扫描 AI 产品上游供给层与下游产品层的 AI-native startup，关注现金流/经营信号和成长线索；普通垂类公司不纳入，不把融资额当作商业成功
 - 适合团队同步、选题会、投研记录和公众号素材库的结构化输出
 - 面向长程运行的 **Codex Goal × Ralph Loop × Kleisli Gate** 工作流
 - 首次使用前先询问你的产物偏好，避免把个人速读、团队同步、投研和内容运营混成同一种交付
@@ -88,8 +90,10 @@ flowchart LR
     E --> G["12 列 CSV"]
     F --> H["询问用户补充"]
     G --> H
-    H --> I["最终版飞书结构化沉淀"]
-    I --> J["Newsrun 卡片推送"]
+    H --> I["最终版 Markdown 三大趋势"]
+    I --> J["O'Keeffe 三张 16:9 图 + QA"]
+    J --> K["飞书详细版 + 结构化沉淀"]
+    K --> L["Newsrun 卡片推送"]
 ```
 
 ### 产品架构
@@ -131,15 +135,31 @@ AI News Digest 使用 9 层信源系统，把“覆盖面”和“可靠性”�
 
 第一次运行前，工作流会先询问产物偏好：使用场景、产物组合、语言语气、推送位置和沉淀规则。确认后写入 `data/output-preferences.json`，后续运行默认复用；这让同一套日报可以稳定服务个人速读、团队晨会、投研记录、内容运营和知识库沉淀。
 
-五类产物各自承担不同工作：
+各类产物各自承担不同工作：
 
 | 产物 | 用途 | 长期价值 |
 | --- | --- | --- |
 | 飞书 Newsrun 卡片 | 每日高信号速览和团队推送 | 降低分发摩擦，让运营动作每天稳定发生 |
 | Markdown / 飞书详细版文档 | 完整日报、趋势判断、QA 说明 | 保留可阅读叙事，方便周报和复盘引用 |
+| Georgia O'Keeffe 趋势图 | 三大趋势各一张 16:9 图，图中只保留批判性判断 | 让趋势先被看懂，再回到详细正文核验 |
+| Mck PPT 趋势图 | 三页咨询式 16:9 PPT + PNG，行动标题、关键佐证、结构判断、下周观察 | 把每日趋势变成可演示、可插图、可复盘的决策资产 |
 | 结构化沉淀文档 | 按板块、公司、赛道、信号等级归档 | 构建长期知识库、选题池和趋势命中率样本 |
 | 12 列 CSV | 表格、Base、Dashboard、检索和二次分析 | 让新闻从文章变成可查询、可聚合的数据资产 |
 | HTML | 浏览器预览、静态归档、跨团队分享 | 低成本发布和历史日报回看 |
+
+### Mck PPT Design 趋势可视化
+
+仓库已接入 [likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill)（当前远端版本：`e190e083`）。它作为每日趋势的咨询式视觉后端，不替换已有的 O'Keeffe、Pollock 等艺术化模板：同一份 `daily-trends.json` 可以按场景输出飞书插图、HTML 资产或三页 PPT。
+
+Goal 9 会在 `output/daily-trends.json` 中保存最终三条趋势和佐证。确认最终 Markdown 后运行：
+
+```bash
+python visualization/mck-ppt-design/render_daily_trends.py \
+  --trends-json output/daily-trends.json \
+  --out-dir output/mck-ppt-design
+```
+
+渲染器遵循 Mck 的 S3/S4 机器门禁，产出 `content.json`、`gate_s3.json`、`gate_result.json`、三页 `.pptx` 和 `trend-1-mck.png` 至 `trend-3-mck.png`。PNG 固定为 16:9，可直接插入飞书详细版或公众号 HTML；完整来源仍留在日报正文，视觉层只承载判断入口。
 
 ### Markdown / 飞书详细版文档
 
@@ -321,7 +341,7 @@ After installation, ask your assistant: "Generate today's AI daily report" or "C
 
 ## Output Workflow
 
-The workflow produces five artifacts and asks for preferences before the first run:
+The workflow produces a set of operational artifacts and asks for preferences before the first run:
 
 | Output | Purpose | Operational value |
 | --- | --- | --- |
@@ -330,6 +350,20 @@ The workflow produces five artifacts and asks for preferences before the first r
 | Structured archive doc | Board/company/track/signal-level archive | Builds a long-term knowledge base and topic pool |
 | 12-column CSV | Spreadsheet, Base, dashboard, and search workflows | Turns news into queryable operational data |
 | HTML | Browser preview, static archive, internal sharing | Makes historical reports easy to browse and circulate |
+
+### Mck PPT Design trend visuals
+
+The repository now includes [likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill) (remote revision `e190e083`) as an optional consultant-style visual backend. It does not replace the O'Keeffe, Pollock, or other art-derived templates. The same `daily-trends.json` can feed Feishu images, HTML assets, or a three-slide PPT deck.
+
+Goal 9 writes the final three trends and their evidence to `output/daily-trends.json`. After the Markdown is confirmed, run:
+
+```bash
+python visualization/mck-ppt-design/render_daily_trends.py \
+  --trends-json output/daily-trends.json \
+  --out-dir output/mck-ppt-design
+```
+
+The renderer follows Mck's machine-readable S3/S4 gates and produces `content.json`, `gate_s3.json`, `gate_result.json`, a three-slide `.pptx`, and `trend-1-mck.png` through `trend-3-mck.png`. The PNGs are fixed at 16:9 for Feishu or WeChat HTML; full source evidence remains in the detailed report while the visual layer provides the decision entry point.
 
 ## How It Compares
 

@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 周报趋势可视化 · 2026-07-21 to 07-27</title>
+  <style>
+    :root {
+      --ink: #111318;
+      --paper: #f4efe4;
+      --card: rgba(255, 252, 246, .72);
+      --muted: #6e665b;
+      --line: rgba(17, 19, 24, .18);
+      --red: #d64028;
+      --blue: #2459d6;
+      --green: #13865e;
+      --gold: #d6a435;
+      --purple: #765ad8;
+      --cyan: #0f8aa3;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(17,19,24,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,19,24,.055) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 78%);
+      z-index: 0;
+    }
+
+    .page { position: relative; z-index: 1; }
+
+    .hero {
+      min-height: 94vh;
+      padding: clamp(26px, 5vw, 76px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .88fr);
+      gap: clamp(30px, 6vw, 86px);
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kicker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .kicker span {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.36);
+      padding: 7px 9px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 1020px;
+      font-size: clamp(48px, 8.4vw, 128px);
+      line-height: .88;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 26px 0 0;
+      color: #302b25;
+      font-size: clamp(17px, 2vw, 23px);
+      line-height: 1.58;
+    }
+
+    .equation {
+      border: 1px solid var(--ink);
+      min-height: 500px;
+      background: #101116;
+      color: #f7f0e5;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .equation::before {
+      content: "";
+      position: absolute;
+      inset: -18%;
+      background:
+        radial-gradient(circle at 27% 28%, rgba(214,64,40,.86) 0 8%, transparent 8.3%),
+        radial-gradient(circle at 64% 54%, rgba(36,89,214,.76) 0 10%, transparent 10.4%),
+        radial-gradient(circle at 44% 78%, rgba(19,134,94,.55) 0 7%, transparent 7.4%),
+        conic-gradient(from 132deg at 52% 48%, transparent, rgba(214,164,53,.22), transparent, rgba(118,90,216,.28), transparent);
+      animation: rotate 28s linear infinite;
+    }
+
+    .equation::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,.14) 0 1px, transparent 1px 18px);
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .eq-top, .eq-bottom {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px;
+      color: rgba(247,240,229,.72);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eq-core {
+      position: relative;
+      z-index: 1;
+      align-self: center;
+      padding: 26px;
+    }
+
+    .eq-core strong {
+      display: block;
+      max-width: 580px;
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+
+    .eq-core code {
+      display: block;
+      margin-top: 24px;
+      max-width: 560px;
+      white-space: pre-wrap;
+      color: rgba(247,240,229,.78);
+      font: 13px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.16);
+      padding: 14px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 1px;
+      overflow-x: auto;
+      background: rgba(244,239,228,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav a {
+      min-height: 48px;
+      padding: 15px 18px;
+      text-decoration: none;
+      color: var(--ink);
+      border-right: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .section {
+      padding: clamp(28px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) minmax(260px, 440px);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .section-no {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: .96;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .axis-map {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      min-height: 430px;
+      border: 1px solid var(--ink);
+      background: rgba(255,255,255,.38);
+      overflow-x: auto;
+    }
+
+    .axis {
+      position: relative;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    .axis:last-child { border-right: 0; }
+
+    .axis::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 70px;
+      height: var(--h);
+      background: var(--c);
+      opacity: .82;
+      transform-origin: bottom;
+    }
+
+    .axis h3 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.1;
+    }
+
+    .axis .score {
+      position: relative;
+      z-index: 1;
+      align-self: end;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .8;
+      font-weight: 900;
+    }
+
+    .axis p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #3e382f;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .trend {
+      min-height: 430px;
+      border: 1px solid var(--ink);
+      background: var(--card);
+      padding: 20px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trend::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(17,19,24,.12);
+      pointer-events: none;
+    }
+
+    .trend h3 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.02;
+      letter-spacing: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trend p {
+      margin: 0;
+      color: #332e27;
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+    }
+
+    .formula {
+      align-self: end;
+      display: grid;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .var {
+      display: grid;
+      grid-template-columns: 72px 1fr 42px;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      color: #494238;
+      font-weight: 760;
+    }
+
+    .bar {
+      height: 6px;
+      border: 1px solid currentColor;
+      background: linear-gradient(90deg, currentColor var(--w), transparent 0);
+    }
+
+    .evidence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .evidence span {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.46);
+      padding: 6px 8px;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 740;
+    }
+
+    .flow {
+      min-height: 560px;
+      border: 1px solid var(--ink);
+      background: #101116;
+      color: #f7f0e5;
+      padding: clamp(18px, 3vw, 34px);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .shift {
+      border: 1px solid rgba(247,240,229,.22);
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      min-height: 240px;
+      background:
+        radial-gradient(circle at 75% 20%, var(--c), transparent 22%),
+        rgba(255,255,255,.035);
+      overflow: hidden;
+    }
+
+    .shift strong {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .shift p {
+      margin: 0;
+      color: rgba(247,240,229,.72);
+      line-height: 1.55;
+    }
+
+    .arrow {
+      color: rgba(247,240,229,.56);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .wechat-sheet {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, 430px);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .asset {
+      border: 1px solid var(--ink);
+      background: rgba(255,255,255,.45);
+      padding: 20px;
+      min-height: 520px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+
+    .asset.phone {
+      border-radius: 30px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .poster-art {
+      min-height: 260px;
+      background:
+        radial-gradient(circle at 30% 32%, rgba(214,64,40,.90) 0 9%, transparent 9.5%),
+        radial-gradient(circle at 68% 54%, rgba(36,89,214,.75) 0 11%, transparent 11.5%),
+        radial-gradient(circle at 45% 76%, rgba(19,134,94,.62) 0 7%, transparent 7.5%),
+        conic-gradient(from 130deg at 50% 50%, transparent, rgba(214,164,53,.32), transparent, rgba(118,90,216,.36), transparent),
+        #101116;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poster-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 1px, transparent 1px 18px),
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: auto, 100% 26px;
+      mix-blend-mode: overlay;
+    }
+
+    .asset h3 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 54px);
+      line-height: .96;
+      letter-spacing: 0;
+    }
+
+    .asset p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .phone .poster-art {
+      margin: -20px -20px 0;
+      min-height: 230px;
+    }
+
+    .phone h3 { font-size: 30px; }
+
+    .footer-note {
+      padding: 28px clamp(28px, 5vw, 72px) 64px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 1050px) {
+      .hero, .section-head, .wechat-sheet {
+        grid-template-columns: 1fr;
+      }
+
+      .trend-grid, .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero, .section { padding: 22px; }
+      .equation { min-height: 460px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <div class="kicker">
+          <span>AI Weekly</span>
+          <span>2026.07.21-07.27</span>
+          <span>Trend Visualization Prototype</span>
+        </div>
+        <h1>Opus 5 删掉 80% 提示词后，Agent 行业开始重估“脚手架”。</h1>
+        <p class="hero-copy">本周主线不是 benchmark，而是 Agent 的管理范式变化：模型更成熟以后，提示词不再是堆规则，真正重要的是接口、边界、验证器、轨迹和全栈成本。</p>
+      </div>
+      <aside class="equation" aria-label="Agent 价值公式">
+        <div class="eq-top"><span>First-principles equation</span><span>Signal before story</span></div>
+        <div class="eq-core">
+          <strong>把 Agent 当成熟员工管理。</strong>
+          <code>agent_value =
+task_complexity × success_rate × verifiability
+------------------------------------------------
+context_cost + inference_cost + governance_cost + integration_cost</code>
+        </div>
+        <div class="eq-bottom"><span>goal / tool / boundary / review</span><span>trace / cost / delivery</span></div>
+      </aside>
+    </header>
+
+    <nav class="nav" aria-label="页面导航">
+      <a href="#variables">六变量热力</a>
+      <a href="#trends">六趋势证据卡</a>
+      <a href="#shifts">行业范式迁移</a>
+      <a href="#outputs">飞书 / 公众号资产</a>
+    </nav>
+
+    <section class="section" id="variables">
+      <div class="section-head">
+        <div class="section-no">01 / Variable Map</div>
+        <h2>这周真正变化的，是六个底层变量的权重。</h2>
+        <p>我把周报里的判断压成六个变量：能力、成本、分发、供给、监管、组织采用。柱高不是精确数据，而是编辑判断强度，用来服务趋势总结的第一屏可视化。</p>
+      </div>
+      <div class="axis-map">
+        <div class="axis" style="--h:86%;--c:var(--red)">
+          <h3>能力</h3>
+          <div class="score">86</div>
+          <p>Opus 5 / Claude 5 generation 让模型开始要求更少提示词噪音。</p>
+        </div>
+        <div class="axis" style="--h:82%;--c:var(--gold)">
+          <h3>成本</h3>
+          <div class="score">82</div>
+          <p>token 成本外溢成吞吐、电力、债务和数据中心协议。</p>
+        </div>
+        <div class="axis" style="--h:78%;--c:var(--blue)">
+          <h3>分发</h3>
+          <div class="score">78</div>
+          <p>Office、画布、邮件、图片和设计台成为 AI 交付入口。</p>
+        </div>
+        <div class="axis" style="--h:88%;--c:var(--green)">
+          <h3>供给</h3>
+          <div class="score">88</div>
+          <p>3.2GW、2GW 芯片合作和隐性债务把 AI 拉回工业系统。</p>
+        </div>
+        <div class="axis" style="--h:91%;--c:var(--purple)">
+          <h3>监管</h3>
+          <div class="score">91</div>
+          <p>评测作弊、安全事件和版权和解把边界推到运行时。</p>
+        </div>
+        <div class="axis" style="--h:84%;--c:var(--cyan)">
+          <h3>组织采用</h3>
+          <div class="score">84</div>
+          <p>Agent 越像数字员工，越需要任务、权限、检查点和复盘记录。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="trends">
+      <div class="section-head">
+        <div class="section-no">02 / Evidence Atlas</div>
+        <h2>六条趋势，不做新闻复述，做约束变化。</h2>
+        <p>这部分适合放在飞书文档开头，也可以拆成公众号里的趋势总结图。每张卡都有标题、sharp thesis、变量权重和证据标签。</p>
+      </div>
+      <div class="trend-grid">
+        <article class="trend">
+          <div class="kicker"><span>Trend 01</span><span>Context</span></div>
+          <h3>上下文工程从“写更多规则”变成“授权成熟模型”</h3>
+          <p>Opus 5 之后，该删的不是上下文，而是模型能自己推断的废上下文。真正贵的是团队偏好、验证流程和真实参考物。</p>
+          <div class="formula">
+            <div class="var"><span>能力</span><i class="bar" style="--w:92%"></i><b>92</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w:72%"></i><b>72</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w:86%"></i><b>86</b></div>
+          </div>
+          <div class="evidence"><span>Opus 5</span><span>80% prompt cut</span><span>thick context</span></div>
+        </article>
+
+        <article class="trend">
+          <div class="kicker"><span>Trend 02</span><span>Runtime</span></div>
+          <h3>Agent 安全从发布前评测变成运行时边界</h3>
+          <p>长程 Agent 会搜索、写代码、改环境、调工具。治理单位不再只是模型，而是身份、权限、网络、日志和回滚。</p>
+          <div class="formula">
+            <div class="var"><span>监管</span><i class="bar" style="--w:94%"></i><b>94</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w:76%"></i><b>76</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w:64%"></i><b>64</b></div>
+          </div>
+          <div class="evidence"><span>HF incident</span><span>AISI cheating</span><span>Agent Harness</span></div>
+        </article>
+
+        <article class="trend">
+          <div class="kicker"><span>Trend 03</span><span>System</span></div>
+          <h3>竞争单位变成“模型 + Harness + 验证器 + 轨迹”</h3>
+          <p>最强模型不是单点答案。可复盘的工作流水线，才会改写团队规模和代码产出之间的关系。</p>
+          <div class="formula">
+            <div class="var"><span>能力</span><i class="bar" style="--w:84%"></i><b>84</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w:90%"></i><b>90</b></div>
+            <div class="var"><span>成本</span><i class="bar" style="--w:68%"></i><b>68</b></div>
+          </div>
+          <div class="evidence"><span>Hyra</span><span>Cursor Swarm</span><span>Tunix</span><span>MagenticLite</span></div>
+        </article>
+
+        <article class="trend">
+          <div class="kicker"><span>Trend 04</span><span>Surface</span></div>
+          <h3>交付物入口从聊天框转向 Office、画布和设计台</h3>
+          <p>谁离最终交付物最近，谁就更容易拿到上下文、反馈和付费。聊天框只是入口之一，不是终点。</p>
+          <div class="formula">
+            <div class="var"><span>分发</span><i class="bar" style="--w:92%"></i><b>92</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w:80%"></i><b>80</b></div>
+            <div class="var"><span>能力</span><i class="bar" style="--w:70%"></i><b>70</b></div>
+          </div>
+          <div class="evidence"><span>Qwen-Image</span><span>Grok Excel</span><span>Copilot Canvas</span><span>Miora</span></div>
+        </article>
+
+        <article class="trend">
+          <div class="kicker"><span>Trend 05</span><span>Data</span></div>
+          <h3>下一轮训练数据红利来自真实工作轨迹</h3>
+          <p>网页文本告诉模型世界有什么；轨迹数据告诉模型工作怎么做完。Agent 训练燃料开始从内容转向过程。</p>
+          <div class="formula">
+            <div class="var"><span>供给</span><i class="bar" style="--w:78%"></i><b>78</b></div>
+            <div class="var"><span>采用</span><i class="bar" style="--w:84%"></i><b>84</b></div>
+            <div class="var"><span>监管</span><i class="bar" style="--w:58%"></i><b>58</b></div>
+          </div>
+          <div class="evidence"><span>workflow data</span><span>Economic Index</span><span>Unslop</span><span>BigMac</span></div>
+        </article>
+
+        <article class="trend">
+          <div class="kicker"><span>Trend 06</span><span>Infra</span></div>
+          <h3>成本竞争从 token 单价扩展到电力、债务和数据中心协议</h3>
+          <p>AI 不只是软件行业，也越来越像工业系统。谁能用更低全栈成本完成更多可计费任务，谁才跑得久。</p>
+          <div class="formula">
+            <div class="var"><span>成本</span><i class="bar" style="--w:94%"></i><b>94</b></div>
+            <div class="var"><span>供给</span><i class="bar" style="--w:96%"></i><b>96</b></div>
+            <div class="var"><span>监管</span><i class="bar" style="--w:70%"></i><b>70</b></div>
+          </div>
+          <div class="evidence"><span>Gemini Flash</span><span>3.2GW</span><span>AMD + Anthropic</span><span>Nikkei debt</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="shifts">
+      <div class="section-head">
+        <div class="section-no">03 / Paradigm Shifts</div>
+        <h2>这周的行业迁移图。</h2>
+        <p>适合做飞书文档里的一张总结图，也适合公众号开头“先给结论”。它把六个趋势压成六组 from-to。</p>
+      </div>
+      <div class="flow">
+        <article class="shift" style="--c:rgba(214,64,40,.36)">
+          <strong>Prompt scaffolding</strong>
+          <p>从给弱模型写保姆手册，迁移到给成熟模型目标、边界和复盘机制。</p>
+          <div class="arrow">→ Mature agent management</div>
+        </article>
+        <article class="shift" style="--c:rgba(118,90,216,.36)">
+          <strong>Pre-release eval</strong>
+          <p>从发布前安全题，迁移到运行时身份、权限、日志、审批和回滚。</p>
+          <div class="arrow">→ Runtime boundary</div>
+        </article>
+        <article class="shift" style="--c:rgba(19,134,94,.34)">
+          <strong>Model ranking</strong>
+          <p>从谁模型最强，迁移到模型、harness、验证器和轨迹的组合能力。</p>
+          <div class="arrow">→ Model-system pair</div>
+        </article>
+        <article class="shift" style="--c:rgba(36,89,214,.38)">
+          <strong>Chat interface</strong>
+          <p>从聊天框回答，迁移到 Excel、Outlook、画布、图片和设计台交付。</p>
+          <div class="arrow">→ Artifact surface</div>
+        </article>
+        <article class="shift" style="--c:rgba(15,138,163,.34)">
+          <strong>Web corpus</strong>
+          <p>从更多网页文本，迁移到任务提出、拆解、执行、修正和验收轨迹。</p>
+          <div class="arrow">→ Workflow trajectory</div>
+        </article>
+        <article class="shift" style="--c:rgba(214,164,53,.36)">
+          <strong>Token price</strong>
+          <p>从 API 价格表，迁移到吞吐、电力、租赁、债务和数据中心协议。</p>
+          <div class="arrow">→ Industrial ledger</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="outputs">
+      <div class="section-head">
+        <div class="section-no">04 / Output Reuse</div>
+        <h2>同一套视觉资产，同时服务飞书文档和公众号。</h2>
+        <p>这里先按“上一版”的视觉语言落地：不是插图品牌化，而是研究报告式的视觉证据。后面可以把封面、变量矩阵、趋势卡导出成图片。</p>
+      </div>
+      <div class="wechat-sheet">
+        <article class="asset">
+          <div class="poster-art"></div>
+          <h3>飞书文档开头：封面主图 + 六趋势证据卡</h3>
+          <p>用于每日或每周文档第一屏。它先告诉读者本期的结构判断，再进入详细条目和来源链接。</p>
+        </article>
+        <article class="asset phone">
+          <div class="poster-art"></div>
+          <h3>公众号 HTML：头图复用 + 趋势总结图</h3>
+          <p>公众号版可以只保留标题、主线、一张变量热力图和六个 from-to 迁移，用更强的视觉节奏承载长文开头。</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      Source content: `/Users/bytedance/Documents/New project/ai-weekly-2026-07-21-to-07-27.md`. This prototype is standalone and does not change the AI News Digest rendering pipeline.
+    </footer>
+  </main>
+</body>
+</html>
