@@ -1,0 +1,4 @@
+# Local runtime configuration and credentials
+data/art-style-lottery-doc.json
+data/output-preferences.json
+data/*.local.json

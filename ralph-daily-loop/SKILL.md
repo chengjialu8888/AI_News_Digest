@@ -732,9 +732,10 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 
 规则：
 - 卡片只承载可快速消费的主线、指标和高信号条目，不替代详细文档。
-- 所有可点击区域默认跳转到当日飞书详细版文档 URL。
+- 每条新闻 bullet 的超链接跳转到该新闻的第一个推荐/原始来源链接；卡片的模块容器 `open_url` 跳转到当日飞书详细版文档 URL。
 - 底部只保留「长期趋势沉淀」入口，链接到长期知识库。
 - 卡片内容必须来自最终结构化沉淀文档，不为卡片额外编造新闻。
+- 不显示「建议推送」「打开结构化沉淀」或旧「养虾实践」文案。
 
 ## 产物二：Markdown / 飞书详细版文档
 
@@ -791,8 +792,9 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 
 结构：
 - 顶部保留日期、条目数、高信号数、QA 状态等 metadata。
-- 主体按板块、公司、赛道和信号等级沉淀条目。
-- 每条只保留标题、事实性简要摘要、来源、URL、事实核验状态和是否推送；不把详细版的批判性判断、风险推演或趋势解读带入结构化沉淀。
+- 主体使用截图式 3 列分组表格：`大类 | 板块 | 结构化条目`。`偏fact类` 下依次放大厂动向、初创动向、生态动向、技术博客&论文；`偏观点类` 下放观点与深度、海外建设者；有动作时增加 `行动沉淀 | 💪今天就做`。
+- 同一板块的新闻合并在同一个“结构化条目”单元格中，每条只保留信号灯、首个原始来源链接和一句事实摘要；不拆成一条新闻一行。
+- 顶部看点只写当天新闻发生了什么和信号图例，不把详细版的批判性判断、风险推演或趋势解读带入结构化沉淀。
 - 用途是长期知识库、选题池、复盘趋势命中率和团队运营素材库。
 
 ## 产物四：CSV 格式（12 列）
@@ -807,11 +809,30 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 - 自包含基础样式，无需构建即可浏览器打开。
 - 用于历史归档、内部静态站点、周报回看和跨团队分享。
 
-## 产物六：每日趋势可视化输入与 Mck PPT 后端
+## 产物六：每日趋势可视化输入与 ImageGen 默认后端
 
 Goal 9 同步写出 `output/daily-trends.json`，只保存最终三条趋势及其佐证、结构判断和下周观察。这样可视化阶段不需要重新读取全量新闻，也不会在新的上下文里重写趋势。
 
-需要咨询式高信息密度视觉时，在最终 Markdown 通过 QA 后执行：
+默认使用 `image_gen__imagegen` 为三条趋势分别生成带中文标题与批判性判断的 16:9 PNG，图中文字直接写入图片。视觉后端由 `VISUAL_BACKEND` 控制：默认 `imagegen`，可选 `artist-lottery` 或 `mck-ppt`。全局视觉控制词默认使用：`粗颗粒胶片质感，高细节，Swiss editorial layout, retro computer UI, cybernetic collage, tech noir, brutalist graphic design`；它约束三张图的共同材质、版式纪律、信息密度和光影关系。只有 `artist-lottery` 启用时，才按日期 seed 从艺术家/艺术运动风格池 lottery 一个当日风格，并将 Lottery 作为叠加的艺术语法；不固定复古 poster、1920s fashion、Georgia O'Keeffe、Pollock 或任何单一模板。三张图共享全局控制词和当日视觉语法，但必须按趋势各自重做主体和构图，不能只换字换色。用 `view_image` 检查字号、错字、遮挡、主题关联和比例，不合格就重新优化 prompt。除非用户明确要求，不生成趋势可视化 HTML，也不使用 HTML/SVG/CSS 代替 imagegen。
+- `daily-trends.json` / `visual-spec` 必须记录 `global_style_control`、`global_style_override` 和 `style_control_application`；三张独立 imagegen prompt 必须原样携带全局控制词。
+- `daily-trends.json` 必须写入 `visual_spec.style_lottery`：风格池、seed、选中风格、选择理由和近期排除风格；明确用户指定风格时记录 override。
+- `style_lottery` 还必须写入目录 ID、艺术家/艺术运动、时期、馆藏机构、官方来源 URL 和 `museum_grounded`；同时写入风格目录版本与机构来源注册表。
+- 图片只保留“大字号标题 + 人话核心观点 + 一句批判性判断”，不堆长摘要、机构名单或参数；默认不出现可识别身份的人脸。
+- 风格质量门槛是时尚感、编辑感和清晰层次：至少形成前景/主体/背景或等价的层叠关系；装饰不能压过标题和判断，避免廉价渐变、卡通化科技纹理和模板化信息图。
+- 默认 lottery 库必须来自 MoMA、Centre Pompidou 等现当代机构的官方馆藏/分类页，限定现代艺术、战后艺术、当代艺术、媒体艺术、装置、设计和视觉运动；古典艺术家、古代艺术和无机构出处的网络风格不进入默认池。
+- 同步巡检 Art Basel Basel、Miami Beach、Hong Kong、Paris 的官方展商与艺术家名录，作为当代艺术家和视觉趋势的发现层；只由艺术博览会发现的候选必须补做现代/当代语境、来源可靠性和视觉可执行性复核，不能因市场曝光直接入池。
+
+### 可选艺术风格 Lottery 统一沉淀
+
+只有 `VISUAL_BACKEND=artist-lottery` 时启用。首次启用时新建并保存 `AI日报｜艺术风格 Lottery` 飞书文档的 URL、document id 和 owner 到 `data/art-style-lottery-doc.json`；后续每天追加一整张日记录表，不覆盖历史。每日表格统一使用“字段 | 记录”两列；趋势记录单元格可用左右网格并排放置趋势说明与对应截图，不能把同一天拆成多段表格、表外说明或单独图片区。
+
+每日表格至少记录日期、抽中风格、艺术家/艺术运动、时期、馆藏机构、艺术博览会信号、官方来源 URL、seed/override、全局视觉控制、风格介绍、三条趋势的视觉主体与适配理由、三张 PNG、详细版文档链接和 QA 结果。全局视觉控制必须写入表内，说明它如何约束材质、版式、层次和字体。
+
+QA 参考 Qwen-Image-Bench 的五个一级维度：Quality（真实感/细节/分辨率）、Aesthetics（构图/色彩/光影/风格控制）、Alignment（属性/布局/关系/场景）、Real-world Fidelity（安全合规/世界知识/信息可视化/文化元素）、Creative Generation（想象力/逻辑解析/文字渲染/设计应用/视觉叙事）。日报工作流只做可读的人工 QA 记录，不声称已运行 Q-Judger；评分沿用 0=Fail、1=Pass、2=Excel、N/A。
+
+详细版「📊 质量审核报告」的最后必须有一小段「🎨 今日视觉 Lottery」：只写抽中风格、通俗介绍和时尚感/层次感执行标准。新闻结构化沉淀表不混入这段视觉说明，完整历史统一放在艺术风格 Lottery 文档。
+
+只有用户明确要求 MCK PPT 或咨询式高信息密度视觉时，才在最终 Markdown 通过 QA 后执行：
 
 ```bash
 python visualization/mck-ppt-design/render_daily_trends.py \
@@ -819,7 +840,7 @@ python visualization/mck-ppt-design/render_daily_trends.py \
   --out-dir output/mck-ppt-design
 ```
 
-渲染器使用 `likaku/Mck-ppt-design-skill` 的 MckEngine 和 S3/S4 机器门禁，输出三页 16:9 PPT 及三张 PNG。PNG 可插入飞书详细版或公众号 HTML；艺术化模板仍可读取同一个 JSON，按场景选择视觉语言。
+渲染器使用 `likaku/Mck-ppt-design-skill` 的 MckEngine 和 S3/S4 机器门禁，输出三页 16:9 PPT 及三张 PNG。PNG 可插入飞书详细版；不应默认生成趋势可视化 HTML。艺术化模板仍可读取同一个 JSON，按场景选择视觉语言。
 
 ## 输出路径
 - `output/feishu-card.md`
@@ -828,6 +849,8 @@ python visualization/mck-ppt-design/render_daily_trends.py \
 - `output/daily-report.csv`
 - `output/daily-report.html`
 - `output/daily-trends.json`
+- `output/art-style-lottery-entry.json`
+- `data/art-style-lottery-doc.json`（统一飞书艺术风格日志文档配置）
 
 ## 完成条件
 - [ ] 首次使用时已确认并保存 `data/output-preferences.json`

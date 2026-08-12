@@ -8,15 +8,25 @@ Differences from stage9.py:
 """
 import json
 import csv
+import hashlib
+import os
 import re
+from datetime import date
 from html import escape
 from pathlib import Path
 
 DATA_DIR = Path("/data/userdata/daily-report/data")
 OUT_DIR = Path("/data/userdata/daily-report/output")
+DATE = os.environ.get("REPORT_DATE") or date.today().isoformat()
+VISUAL_BACKEND = os.environ.get("VISUAL_BACKEND", "imagegen").strip().lower()
+VALID_VISUAL_BACKENDS = {"imagegen", "artist-lottery", "mck-ppt"}
+if VISUAL_BACKEND not in VALID_VISUAL_BACKENDS:
+    raise SystemExit(
+        f"Unsupported VISUAL_BACKEND={VISUAL_BACKEND!r}; "
+        f"choose one of {sorted(VALID_VISUAL_BACKENDS)}"
+    )
+ARTIST_LOTTERY_ENABLED = VISUAL_BACKEND == "artist-lottery"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-DATE = "2026-06-01"
 
 items = json.loads((DATA_DIR / "07b-deduped.json").read_text(encoding="utf-8"))
 qa = json.loads((DATA_DIR / "08-qa-report.json").read_text(encoding="utf-8"))
@@ -102,8 +112,271 @@ def card_highlight(it):
 
 def item_link(it):
     title = it.get("title", "")
-    url = it.get("url", "")
+    url = first_source_url(it)
     return f"[{title}]({url})" if url else title
+
+
+def first_source_url(it):
+    """Return the first recommended/original source, preserving editorial order."""
+    candidates = (
+        it.get("recommended_links"),
+        it.get("source_links"),
+        it.get("sources"),
+        it.get("links"),
+    )
+    for value in candidates:
+        if isinstance(value, str) and value.startswith(("http://", "https://")):
+            return value
+        if not isinstance(value, list):
+            continue
+        for entry in value:
+            if isinstance(entry, str) and entry.startswith(("http://", "https://")):
+                return entry
+            if isinstance(entry, dict):
+                url = entry.get("url") or entry.get("link") or entry.get("href")
+                if isinstance(url, str) and url.startswith(("http://", "https://")):
+                    return url
+    return it.get("url", "") or it.get("source_url", "")
+
+
+MUSEUM_SOURCE_REGISTRY = [
+    {
+        "name": "MoMA Collection",
+        "url": "https://www.moma.org/collection/about/",
+        "scope": "modern and contemporary art, design, media and performance",
+    },
+    {
+        "name": "MoMA Contemporary Art",
+        "url": "https://www.moma.org/collection/terms/contemporary-art",
+        "scope": "art made in the present and recent past, roughly 1980 to today",
+    },
+    {
+        "name": "Centre Pompidou Visual Arts",
+        "url": "https://www.centrepompidou.fr/en/collection/visual-arts",
+        "scope": "major artistic movements of the 20th and 21st centuries",
+    },
+    {
+        "name": "Centre Pompidou Film and New Media",
+        "url": "https://www.centrepompidou.fr/en/collection/film-and-new-media",
+        "scope": "video, sound, moving image and experimental media",
+    },
+]
+
+ART_FAIR_SOURCE_REGISTRY = [
+    {
+        "name": "Art Basel Basel",
+        "url": "https://www.artbasel.com/basel/galleries?lang=en",
+        "overview_url": "https://www.artbasel.com/BASEL?lang=en",
+        "scope": "official exhibitors, sectors and contemporary practices in Basel",
+    },
+    {
+        "name": "Art Basel Miami Beach",
+        "url": "https://www.artbasel.com/miami-beach/galleries?lang=en",
+        "scope": "official exhibitors and sectors in Miami Beach",
+    },
+    {
+        "name": "Art Basel Hong Kong",
+        "url": "https://www.artbasel.com/hong-kong/galleries?lang=en",
+        "scope": "official exhibitors and sectors in Hong Kong",
+    },
+    {
+        "name": "Art Basel Paris",
+        "url": "https://www.artbasel.com/paris/galleries?lang=en",
+        "scope": "official exhibitors and sectors in Paris",
+    },
+    {
+        "name": "Art Basel Artists",
+        "url": "https://www.artbasel.com/stories/artists?lang=en",
+        "scope": "official artist stories and current contemporary-art signals",
+    },
+]
+
+# Museum-grounded modern/contemporary pool. Do not add a style without an
+# institutional collection anchor and a source URL.
+VISUAL_STYLE_CATALOG = [
+    {
+        "id": "okeeffe-organic-abstraction",
+        "label": "Georgia O'Keeffe-inspired organic abstraction",
+        "artist_or_movement": "Georgia O'Keeffe / American modernism",
+        "period": "20th-century modern art",
+        "museum_basis": ["MoMA Collection"],
+        "source_urls": ["https://www.moma.org/collection/about/"],
+        "note": "用局部放大的有机轮廓、柔软曲面和克制留白制造高级感；适合把抽象行业变化转成可感知的形体关系。",
+    },
+    {
+        "id": "rothko-color-field",
+        "label": "Mark Rothko-inspired color field painting",
+        "artist_or_movement": "Mark Rothko / color field painting",
+        "period": "postwar modern art",
+        "museum_basis": ["MoMA Collection"],
+        "source_urls": ["https://www.moma.org/collection/about/"],
+        "note": "用大面积色场和半透明叠染制造纵深，不靠复杂装饰堆信息；适合表达成本、风险和情绪张力。",
+    },
+    {
+        "id": "klee-poetic-geometry",
+        "label": "Paul Klee-inspired poetic geometric drawing",
+        "artist_or_movement": "Paul Klee / Bauhaus and poetic abstraction",
+        "period": "early 20th-century modern art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用细线、符号、手绘几何和错落层次组织信息；兼具轻盈感与编辑感，适合把复杂机制讲得更亲近。",
+    },
+    {
+        "id": "kandinsky-musical-abstraction",
+        "label": "Wassily Kandinsky-inspired musical abstraction",
+        "artist_or_movement": "Wassily Kandinsky / abstract art",
+        "period": "early 20th-century modern art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用节奏化线条、圆形、斜向结构和色彩对位形成视觉动势；适合表达系统协作、流动和多变量变化。",
+    },
+    {
+        "id": "matisse-cut-paper",
+        "label": "Henri Matisse-inspired cut-paper collage",
+        "artist_or_movement": "Henri Matisse / late modern collage",
+        "period": "20th-century modern art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用干净的剪纸块面、错位叠层和大胆但克制的色块形成时尚编辑感；适合表达应用入口、关系和分发。",
+    },
+    {
+        "id": "mondrian-neoplastic-grid",
+        "label": "Piet Mondrian-inspired neoplastic grid",
+        "artist_or_movement": "Piet Mondrian / De Stijl",
+        "period": "early 20th-century modern art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用严格网格、非对称分区和有限色彩建立秩序感；适合表达基础设施、路由、约束和资源配置。",
+    },
+    {
+        "id": "warhol-pop-repetition",
+        "label": "Andy Warhol-inspired pop repetition and screenprint",
+        "artist_or_movement": "Andy Warhol / Pop Art",
+        "period": "postwar contemporary art",
+        "museum_basis": ["MoMA Collection"],
+        "source_urls": ["https://www.moma.org/collection/about/"],
+        "note": "用重复、消费品式图像、网版颗粒和有限撞色制造传播性；适合表达规模化分发、注意力和产品同质化。",
+    },
+    {
+        "id": "bourgeois-material-memory",
+        "label": "Louise Bourgeois-inspired material memory and spatial tension",
+        "artist_or_movement": "Louise Bourgeois / sculpture and installation",
+        "period": "late 20th-century contemporary art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用织物、线、身体感曲线和局部空间制造亲密却不安的层次；适合表达安全、信任和组织关系中的隐性成本。",
+    },
+    {
+        "id": "tinguely-kinetic-machine",
+        "label": "Jean Tinguely-inspired kinetic machine assemblage",
+        "artist_or_movement": "Jean Tinguely / kinetic and assemblage art",
+        "period": "postwar modern and contemporary art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用可见的机械零件、循环运动和带有故障感的拼装制造动势；适合表达 Agent 工作流、自动化和系统失灵。",
+    },
+    {
+        "id": "paik-media-installation",
+        "label": "Nam June Paik-inspired media installation",
+        "artist_or_movement": "Nam June Paik / video and media art",
+        "period": "postwar and contemporary media art",
+        "museum_basis": ["MoMA Collection", "Centre Pompidou Film and New Media"],
+        "source_urls": ["https://www.moma.org/collection/about/", "https://www.centrepompidou.fr/en/collection/film-and-new-media"],
+        "note": "用屏幕、信号、重复画面和物理装置形成多层媒介空间；适合表达 AI 入口、数据流和人机共处。",
+    },
+    {
+        "id": "riley-op-art",
+        "label": "Bridget Riley-inspired optical rhythm",
+        "artist_or_movement": "Bridget Riley / Op Art",
+        "period": "postwar contemporary art",
+        "museum_basis": ["MoMA Collection"],
+        "source_urls": ["https://www.moma.org/collection/about/"],
+        "note": "用重复线条、密度变化和视错觉制造强节奏；适合表达模型路由、规模效应和看似稳定系统中的波动。",
+    },
+    {
+        "id": "kusama-infinite-repetition",
+        "label": "Yayoi Kusama-inspired infinite repetition and immersive field",
+        "artist_or_movement": "Yayoi Kusama / installation and repetition",
+        "period": "contemporary art",
+        "museum_basis": ["MoMA Contemporary Art", "Centre Pompidou Visual Arts"],
+        "source_urls": ["https://www.moma.org/collection/terms/contemporary-art", "https://www.centrepompidou.fr/en/collection/visual-arts"],
+        "note": "用重复单元、镜面式延展和沉浸空间制造规模感；适合表达算力扩张、内容复制和注意力吞噬。",
+    },
+]
+
+VISUAL_STYLE_POOL = [entry["label"] for entry in VISUAL_STYLE_CATALOG]
+VISUAL_STYLE_NOTES = {entry["label"]: entry["note"] for entry in VISUAL_STYLE_CATALOG}
+VISUAL_STYLE_LOOKUP = {entry["label"]: entry for entry in VISUAL_STYLE_CATALOG}
+
+
+def choose_visual_style():
+    """Pick one reproducible style per day, avoiding caller-supplied recent styles."""
+    if not ARTIST_LOTTERY_ENABLED:
+        return {
+            "enabled": False,
+            "pool": [],
+            "seed": None,
+            "selected_style": None,
+            "recent_styles_excluded": [],
+            "override": False,
+            "catalog_id": None,
+            "artist_or_movement": None,
+            "period": None,
+            "museum_basis": [],
+            "source_urls": [],
+            "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
+            "museum_grounded": False,
+            "style_note": "艺术家 Lottery 未启用；当前视觉后端由 VISUAL_BACKEND 控制。",
+            "selection_reason": "使用默认 imagegen 或其他显式视觉后端；未抽取艺术家风格。",
+        }
+    override = os.environ.get("VISUAL_STYLE_OVERRIDE", "").strip()
+    if override:
+        entry = VISUAL_STYLE_LOOKUP.get(override)
+        return {
+            "enabled": True,
+            "pool": VISUAL_STYLE_POOL,
+            "seed": None,
+            "selected_style": override,
+            "recent_styles_excluded": [],
+            "override": True,
+            "catalog_id": entry["id"] if entry else None,
+            "artist_or_movement": entry["artist_or_movement"] if entry else override,
+            "period": entry["period"] if entry else "user override",
+            "museum_basis": entry["museum_basis"] if entry else [],
+            "source_urls": entry["source_urls"] if entry else [],
+            "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
+            "museum_grounded": bool(entry),
+            "style_note": VISUAL_STYLE_NOTES.get(override, "用户指定风格；需通过时尚感、层次感、主题相关性和中文可读性验收。"),
+            "selection_reason": "用户明确指定风格，覆盖当日 lottery；若不在博物馆锚定目录中，必须保留 override 标记并单独复核来源。",
+        }
+    recent = {
+        value.strip()
+        for value in os.environ.get("RECENT_VISUAL_STYLES", "").split(",")
+        if value.strip()
+    }
+    available = [style for style in VISUAL_STYLE_POOL if style not in recent]
+    if not available:
+        available = VISUAL_STYLE_POOL
+    seed = hashlib.sha256(f"{DATE}|ai-daily-style-lottery".encode("utf-8")).hexdigest()
+    selected = available[int(seed[:8], 16) % len(available)]
+    entry = VISUAL_STYLE_LOOKUP[selected]
+    return {
+        "enabled": True,
+        "pool": VISUAL_STYLE_POOL,
+        "seed": seed,
+        "selected_style": selected,
+        "recent_styles_excluded": sorted(recent),
+        "override": False,
+        "catalog_id": entry["id"],
+        "artist_or_movement": entry["artist_or_movement"],
+        "period": entry["period"],
+        "museum_basis": entry["museum_basis"],
+        "source_urls": entry["source_urls"],
+        "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
+        "museum_grounded": True,
+        "style_note": VISUAL_STYLE_NOTES[selected],
+        "selection_reason": "按日期可复现抽签；候选均来自博物馆锚定的现代/当代目录，若指定近期风格则优先排除，主题相关性和中文可读性仍高于随机性。",
+    }
 
 
 red_count = sum(1 for it in items if it["signal_level"] == "🔴")
@@ -246,6 +519,15 @@ if vtrace:
     md.append(f"| G0.8 版本一致性 (Kleisli) | {vtrace['status']} | {len(vtrace.get('conflicts',[]))} 项版本冲突 |")
 md.append("")
 
+visual_style = choose_visual_style()
+if ARTIST_LOTTERY_ENABLED:
+    md.append("### 🎨 今日视觉 Lottery\n")
+    md.append(f"- **抽中风格**：{visual_style['selected_style']}")
+    md.append(f"- **馆藏锚点**：{'、'.join(visual_style.get('museum_basis') or ['用户指定 override，待补来源'])}")
+    md.append(f"- **风格介绍**：{visual_style['style_note']}")
+    md.append("- **执行标准**：保持时尚感、清晰的前中后景层次和编辑感；三张图共享视觉语法但分别重做构图，文字必须大且无遮挡。")
+    md.append("")
+
 md.append("## 📌 三大关键趋势\n")
 
 trends = []
@@ -289,6 +571,26 @@ trend_payload = {
     "title": "AI 日报每日关键趋势",
     "source_markdown": "daily-report.md",
     "source": "AI News Digest Goal 9 (Kleisli rev) · sources and links remain in daily-report.md",
+    "visual_spec": {
+        "fresh_graphic": True,
+        "visual_backend": VISUAL_BACKEND,
+        "style_lottery": visual_style,
+        "style_catalog_version": "museum-and-art-fair-modern-contemporary-v2",
+        "museum_source_registry": MUSEUM_SOURCE_REGISTRY,
+        "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
+        "catalog_policy": "默认只抽取有现当代机构馆藏锚点的 20/21 世纪艺术家或艺术运动；同步巡检 Art Basel Basel、Miami Beach、Hong Kong、Paris 官方展商与艺术家名录作为当代发现层。仅由艺术博览会发现的候选必须经过现代/当代语境、来源可靠性和视觉可执行性复核；古典艺术家不进入默认池。",
+        "qa_framework": {
+            "name": "Qwen-Image-Bench",
+            "source_url": "https://github.com/QwenLM/Qwen-Image-Bench",
+            "dimensions": ["Quality", "Aesthetics", "Alignment", "Real-world Fidelity", "Creative Generation"],
+            "scoring": {"Fail": 0, "Pass": 1, "Excel": 2, "N/A": None},
+            "human_review_only": True,
+        },
+        "format": "16:9 PNG",
+        "text_policy": "大字号中文标题 + 人话核心观点 + 一句批判性判断；不堆参数、机构名单或长摘要。",
+        "composition_policy": "三张图共享当日抽中的艺术家视觉语法，但主体、构图骨架和阅读路径必须不同。",
+        "no_identifiable_faces": True,
+    },
     "trends": [
         {
             "index": i,
@@ -305,6 +607,40 @@ trend_payload = {
 }
 (OUT_DIR / "daily-trends.json").write_text(
     json.dumps(trend_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+)
+
+style_entry = {
+    "date": DATE,
+    "enabled": ARTIST_LOTTERY_ENABLED,
+    "visual_backend": VISUAL_BACKEND,
+    "style_lottery": visual_style,
+    "style_catalog_version": "museum-and-art-fair-modern-contemporary-v2",
+    "museum_source_registry": MUSEUM_SOURCE_REGISTRY,
+    "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
+    "catalog_policy": "默认只抽取有现当代机构馆藏或顶级艺术博览会官方名录锚点的现代/当代视觉语言；艺术博览会只作为发现层，不自动替代艺术史与来源复核。",
+    "trend_titles": [t["title"] for t in trends],
+    "visual_assets": [
+        f"reports/{DATE}-ai-daily/trends-imagegen/trend-{i}.png"
+        for i in range(1, len(trends) + 1)
+    ],
+    "lottery_table_layout": {
+        "one_table_per_day": True,
+        "columns": ["字段", "记录"],
+        "trend_rows_include_embedded_screenshots": True,
+        "no_standalone_daily_appendix": True,
+    },
+    "qa_framework": {
+        "name": "Qwen-Image-Bench",
+        "source_url": "https://github.com/QwenLM/Qwen-Image-Bench",
+        "dimensions": ["Quality", "Aesthetics", "Alignment", "Real-world Fidelity", "Creative Generation"],
+        "scoring": {"Fail": 0, "Pass": 1, "Excel": 2, "N/A": None},
+        "human_review_only": True,
+    },
+    "qa_status": "pending_visual_qa" if ARTIST_LOTTERY_ENABLED else "not_run_visual_backend_disabled",
+    "structured_log_target": "AI日报｜艺术风格 Lottery",
+}
+(OUT_DIR / "art-style-lottery-entry.json").write_text(
+    json.dumps(style_entry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
 )
 
 md.append("---")
@@ -390,6 +726,34 @@ def render_feishu_card():
 
 
 def render_structured_archive():
+    board_groups = [
+        ("偏fact类", "大厂动向"),
+        ("", "初创动向"),
+        ("", "生态动向"),
+        ("", "技术博客&论文"),
+        ("偏观点类", "观点与深度"),
+        ("", "海外建设者"),
+        ("行动沉淀", "今天就做"),
+    ]
+
+    def table_cell(board, selected_items=None):
+        board_items = selected_items if selected_items is not None else [
+            it for it in items if it.get("board", "未分类") == board
+        ]
+        if not board_items:
+            return "—"
+        entries = []
+        for it in board_items:
+            summary = compact(
+                it.get("structured_summary") or it.get("summary") or "",
+                120,
+                ellipsis=False,
+            )
+            detail = f"{item_link(it)}：{summary}" if summary else item_link(it)
+            detail = detail.replace("|", "／").replace("\n", " ")
+            entries.append(f"• {it.get('signal_level', '⚪')} {detail}")
+        return "<br>".join(entries)
+
     lines = [
         "---",
         f"date: {DATE}",
@@ -405,23 +769,22 @@ def render_structured_archive():
         f"今日共汇总 {total} 条 AI 行业资讯（🔴重磅 {red_count} / 🟡值得关注 {yellow_count}）。重点条目：{focus_titles}",
         "",
         "## 结构化条目",
+        "",
+        "| 大类 | 板块 | 结构化条目 |",
+        "|---|---|---|",
     ]
-    for board in sorted({it.get("board", "未分类") for it in items}):
-        board_items = [it for it in items if it.get("board", "未分类") == board]
-        lines.append(f"### {board}")
-        for it in board_items:
-            lines.append(f"- {it.get('signal_level', '⚪')} {item_link(it)}")
-            lines.append(f"  - 摘要：{compact(it.get('summary'), 160)}")
-            lines.append(f"  - 来源：{it.get('source', '未知来源')}；事实核验：{'多源验证' if it.get('cross_validated') else '待复核'}")
-        lines.append("")
+    for category, board in board_groups:
+        if any(it.get("board", "未分类") == board for it in items):
+            lines.append(f"| {category} | {board} | {table_cell(board)} |")
+    uncategorized = [it for it in items if it.get("board", "未分类") not in {b for _, b in board_groups}]
+    if uncategorized:
+        lines.append(f"|  | 未分类 | {table_cell('未分类', uncategorized)} |")
     lines.extend([
         "## Kleisli Trace",
         f"- 跨日去重：{trace.get('status') if trace else '未生成'}",
         f"- 版本一致性：{vtrace.get('status') if vtrace else '未生成'}",
         "",
-        "## 运营字段",
-        "- 可进入 CSV / Base / 知识库的字段：日期、板块、标题、信号等级、事实核验、关联公司、关联赛道、来源、URL、摘要、是否推送。",
-        "- 长期沉淀目的：复盘趋势命中率、追踪公司/赛道变化、沉淀选题池和团队运营素材。",
+        "> 结构化沉淀只记录新闻发生了什么；趋势批判性判断、风险推演和壁垒判断保留在详细版。",
     ])
     return "\n".join(lines)
 
@@ -469,6 +832,7 @@ print(f"✅ 飞书卡片草稿已写入: {feishu_card_path}")
 print(f"✅ 结构化沉淀文档已写入: {structured_archive_path}")
 print(f"✅ HTML 日报已写入: {html_path}")
 print(f"✅ 趋势可视化输入已写入: {OUT_DIR / 'daily-trends.json'}")
+print(f"✅ 艺术风格 Lottery 单日记录已写入: {OUT_DIR / 'art-style-lottery-entry.json'}")
 
 print("\n=== 完成条件验证 ===")
 print(f"  [{'✓' if (DATA_DIR/'06-hn-consensus.json').exists() else '✗'}] 06 JSON 存在")
@@ -484,3 +848,4 @@ print(f"  [{'✓' if feishu_card_path.exists() else '✗'}] feishu-card.md 存�
 print(f"  [{'✓' if structured_archive_path.exists() else '✗'}] structured-archive.md 存在")
 print(f"  [{'✓' if html_path.exists() else '✗'}] daily-report.html 存在")
 print(f"  [{'✓' if (OUT_DIR / 'daily-trends.json').exists() else '✗'}] daily-trends.json 存在且包含 {len(trends)} 条趋势")
+print(f"  [{'✓' if (OUT_DIR / 'art-style-lottery-entry.json').exists() else '✗'}] art-style-lottery-entry.json 存在")

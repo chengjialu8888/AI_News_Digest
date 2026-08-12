@@ -1,0 +1,12 @@
+{
+  "title": "AI日报｜艺术风格 Lottery",
+  "document_url": "https://<your-tenant>.larkoffice.com/docx/<document_id>",
+  "document_id": "<document_id>",
+  "owner": {
+    "name": "<owner_name>",
+    "open_id": "<owner_open_id>"
+  },
+  "created_date": "YYYY-MM-DD",
+  "latest_revision_id": 0,
+  "latest_entry": "reports/YYYY-MM-DD-ai-daily/art-style-lottery-YYYY-MM-DD.md"
+}
