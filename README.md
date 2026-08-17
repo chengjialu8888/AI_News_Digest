@@ -1,3 +1,5 @@
+
+
 <p align="center">
   <img src="assets/github-header.svg" alt="AI News Digest - From scattered AI signals to a trusted daily brief" width="100%">
 </p>
@@ -252,6 +254,7 @@ AI_News_Digest/
 ├── ai-daily-report/
 │   ├── SKILL.md
 │   ├── evals/
+│   ├── scripts/
 │   └── examples/
 ├── news-aggregator-skill/
 ├── smart-web-fetch/
