@@ -731,7 +731,7 @@ Anthropic、xAI、百度/文心、华为/盘古、MiniMax、月之暗面/Kimi、
 2. 生成每日 AI 日报 Markdown/HTML、CSV、飞书卡片草稿和结构化沉淀草稿，作为可审阅草稿。
 3. 向用户询问是否有补充条目、修改意见或需要调整的趋势判断。
 4. 用户如有补充，按需新增/合并/改写条目，并同步更新 Markdown/HTML、CSV、结构化沉淀草稿和卡片草稿。
-5. 用户补充确认后，基于最终 Markdown 的三大趋势新建当日 `visual-spec-YYYY-MM-DD.json`，读取 `VISUAL_BACKEND`（默认 `imagegen`，可选 `artist-lottery` 或 `mck-ppt`）。按后端重新选择每张图的视觉主体、构图方向、标签和必要颜色；ImageGen 后端为每条趋势生成一张独立的 16:9 PNG，图中文字直接由 imagegen 生成并与主题构图绑定。艺术家 Lottery 后端额外抽取博物馆锚定的当代艺术语法并记录日志；Mck PPT 后端按其专用门禁渲染。模板只复用视觉语法，不复用上一日报的图形、文案、标签、配色或 PNG。除非用户明确要求，不生成趋势可视化 HTML，也不通过 HTML/SVG/CSS 代替 imagegen。
+5. 用户补充确认后，基于最终 Markdown 的三大趋势新建当日 `visual-spec-YYYY-MM-DD.json`，读取 `VISUAL_BACKEND`（默认 `imagegen`，可选 `artist-lottery` 或 `mck-ppt`）。按后端重新选择每张图的视觉主体、构图方向、标签和必要颜色；ImageGen 后端为每条趋势生成一张独立的 16:9 PNG，图中文字直接由 imagegen 生成并与主题构图绑定。艺术家 Lottery 后端额外抽取博物馆锚定的艺术家、艺术运动、工坊传统或文化视觉系统，并记录日志；Mck PPT 后端按其专用门禁渲染。模板只复用视觉语法，不复用上一日报的图形、文案、标签、配色或 PNG。除非用户明确要求，不生成趋势可视化 HTML，也不通过 HTML/SVG/CSS 代替 imagegen。
 6. 只有在可视化 QA 通过后，才把最终版本（含三张趋势图）写入飞书详细版文档和 Newsrun 结构化沉淀文档。
 7. 最后基于最终版结构化沉淀生成飞书 Newsrun 卡片并推送，同时保留本地 CSV、HTML 和可视化资产供长期运营复盘。
 8. 只有 `VISUAL_BACKEND=artist-lottery` 且可视化 QA 通过后，才把当日风格 Lottery 记录追加到统一的「AI日报｜艺术风格 Lottery」飞书文档；该日志与新闻结构化沉淀分开维护，只记录风格资产和复盘字段。
@@ -752,7 +752,7 @@ Anthropic、xAI、百度/文心、华为/盘古、MiniMax、月之暗面/Kimi、
 - 不要通过截断原始摘要生成卡片详情，不要在卡片新闻详情末尾使用 `...` 或 `…`。
 - 每条新闻 bullet 的超链接必须指向该新闻的第一个推荐/原始来源链接（按来源列表顺序取第一条），不能统一指向详细版文档；如果没有来源列表，才回退到条目的 `url/source_url`。
 - 卡片中每个可点击内容模块的 `open_url` 行为必须跳转到当日 Markdown 详细版日报导出的飞书 Docx，而不是结构化沉淀文档。
-- 卡片底部只保留 `长期趋势沉淀` 按钮，链接到 `https://bytedance.larkoffice.com/docx/JPs1dxjemo6HWMxn1mncxBOEnhg`。
+- 卡片底部并列提供两个入口：`长期趋势沉淀` 链接到 `https://bytedance.larkoffice.com/docx/JPs1dxjemo6HWMxn1mncxBOEnhg`，`艺术风格 Lottery` 链接到统一的 `AI日报｜艺术风格 Lottery` 文档（当前为 `https://bytedance.larkoffice.com/docx/SBCBdt4tiodAGBxpnPncXYtqnyg`）。两个按钮使用横向双列布局；前者为主按钮，后者为次按钮。
 
 卡片禁用项（强制）：
 - 不显示 `建议推送` 按钮。
@@ -764,7 +764,7 @@ Anthropic、xAI、百度/文心、华为/盘古、MiniMax、月之暗面/Kimi、
 - 卡片草稿：`output/feishu-card.md`
 - 卡片 JSON 文件：`newsrun-card-YYYY-MM-DD.json`
 - 发送元数据：`newsrun-card-metadata.json`
-- 元数据至少记录：`message_id`、`chat_id`、`create_time`、发送身份、结构化文档链接、长期趋势文档链接、版本变更说明。
+- 元数据至少记录：`message_id`、`chat_id`、`create_time`、发送身份、结构化文档链接、长期趋势文档链接、艺术风格 Lottery 文档链接、版本变更说明。
 - 元数据还必须记录 `detailed_report_doc`（Markdown 详细版日报导出的飞书 Docx URL），且卡片内容模块的默认点击 URL 必须与该字段一致。
 - 发送前必须 dry-run 或做等价 JSON/schema 校验；发送后在最终回复里告知用户已推送，并给出最新 `message_id`。
 
@@ -935,10 +935,14 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 - 每日先用 `YYYY-MM-DD` 作为 seed 从风格池抽签；默认排除最近若干日报已经使用的风格。若用户明确指定风格，用户指定优先于抽签，并在 spec 中记录 override 原因。
 - 每次运行先根据这 3 个最终趋势新建一份 `visual-spec-YYYY-MM-DD.json`；其中必须记录 `source_title`、`source_critical`、`short_title`、`motif`、`labels`、`frame_label`、`footer` 和 `aria_label`。
 - `visual-spec` 必须记录 `visual_backend`。只有 `artist-lottery` 后端启用时，才要求记录 `style_lottery.pool`、`style_lottery.seed`、`style_lottery.selected_style`、`style_lottery.selection_reason` 和 `recent_styles_excluded`，保证第二天能复盘“抽到了什么、为什么适合今天”。
-- `artist-lottery` 的 `style_lottery` 还必须记录 `catalog_id`、`artist_or_movement`、`period`、`museum_basis`、`source_urls`、`museum_grounded` 和 `style_note`；默认目录版本写入 `style_catalog_version`，并保留 `museum_source_registry`。
+- `artist-lottery` 的 `style_lottery` 还必须记录 `catalog_id`、`artist_or_movement`、`period`、`culture_region`、`catalog_kind`、`catalog_query`、`museum_basis`、`source_urls`、`museum_grounded` 和 `style_note`；默认目录版本写入 `style_catalog_version`，并保留 `museum_source_registry`。
+- **机制提取门槛（强制）**：Lottery 不是给图片套一个表面滤镜，也不是搜集某位艺术家的颜色、点阵、切口或笔触。每次抽中后，先从馆藏、艺术家自述、工坊/材料研究和策展资料中提取可证据支持的工作机制，再做当代设计转译。至少写清四件事：艺术家、工坊或文化视觉系统如何组织空间/观看、如何处理材料/动作、如何建立节奏/留白、这些机制如何解释今天的趋势。艺术家姓名或文化标签只作为 provenance 元数据，不能作为 ImageGen 的主要 prompt 捷径。
+- **形似/神似双重 QA（强制）**：`形似`只检查材质、色彩、构图和表面语言是否执行；`神似`检查核心空间关系、工作方法、观看条件和信息隐喻是否被保留。若画面表面很像但无法解释趋势，或只是堆叠标志性装饰，判定为 Fail，必须重写机制转译或重新 lottery；不得用“看起来像”覆盖“为什么这样做”。
+- **机制优先的 prompt 顺序**：`艺术机制事实 -> 当日趋势命题 -> 视觉主体/空间关系 -> 材料与光 -> 版式与文字层级 -> 排除项`。例如空间主义不能只写“黑色切口”，而要写“表面作为阈值、开口必须有背层、边缘和阴影、观看关系因开口改变”；切口只是结果，不是风格本身。
 - `visual-spec` 必须记录 `global_style_control`、`global_style_override` 和 `style_control_application`，说明全局控制词如何作用于材质、版式、主体层次和字体可读性。
 - `visual-spec` 必须声明 `fresh_graphic: true`、绑定当日 Markdown 文件名，并为三条趋势选择三个不同视觉主体；禁止复制上一日报的 visual spec、HTML、PNG、短标题或辅助标签。
 - `visual-spec` 还必须记录 `composition`；三条趋势的 `composition` 必须互不相同，且截图中能看出文本位置、主体占比、阅读方向或画面骨架发生了结构性变化。
+- 启用 `artist-lottery` 时，`visual-spec.style_lottery` 必须额外记录 `mechanism_extract`、`trend_translation`、`surface_fidelity`、`mechanism_fidelity`、`fidelity_verdict` 和 `rejection_reason`；其中 `mechanism_extract` 记录经过来源区分的艺术方法，`trend_translation` 记录它为何适合当天，而不是泛化为长期审美。
 - 每个趋势调用 `image_gen__imagegen` 独立生成 1 张图，顺序与 Markdown、飞书详细版中的趋势 1/2/3 一致；新图使用 `generatedImage` 返回的本地 PNG 资产保存到当日报告目录。
 - 图中只使用已进入最终 Markdown 的标题、`🧭 批判性判断` 和极少量已核验数字/关键词；完整数据、新闻列表、来源链接留在飞书详细版正文。
 
@@ -947,15 +951,16 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 - 画布固定为 **16:9**；源图优先 `1920×1080` 或 `1440×810`，插入飞书文档时使用等比例 `960×540` 或同等 16:9 尺寸。
 - 每张图固定包含：趋势编号/短标题、一个视觉主体、批判性判断；最多保留 3-4 个辅助标签或数字。
 - 艺术家风格只提供材质、形态、色彩关系和视觉语法；不得复制某一张参考图的版式、文字、标签、主体或装饰。优先选择能解释当日趋势的视觉隐喻，不能为了“像艺术”牺牲信息传达。
+- 艺术家风格必须先提供“关系和动作”，再提供材质、形态和色彩：关系包括平面/背层、主体/空白、路径/阻断、观看距离或时间节奏；动作包括切入、覆盖、重复、停顿、堆积、转向或其他经来源支持的工作方法。只复刻表面符号不算风格适配。
 - 三张图共享抽中的艺术家视觉语法，但每张都重新选择主题主体、构图骨架和阅读方向；不得只是替换文字、颜色或主体名。
 - 主题相关性优先于随机性：抽签风格与趋势冲突时，保留抽签记录但调整构图和材质；若仍无法清楚表达，重新抽取一个更适合的风格并记录原因。
 - 不默认使用复古 poster 或高密度拼贴；风格可以是抽象、绘画、版画、拼贴、几何或当代图形，但必须服务于趋势判断。
 - 风格质量门槛：整体要有时尚感、编辑感和视觉层次，画面至少有明确的前景/主体/背景或等价的层叠关系；执行全局控制词时，粗颗粒胶片只提供材质噪点，Swiss editorial layout 负责信息层级，retro computer UI / cybernetic collage 负责结构隐喻，tech noir 负责光影，brutalist graphic design 负责块面和秩序；避免廉价渐变、卡通化装饰和随机艺术滤镜。
 - 视觉层次必须服务信息层次：标题是第一阅读层，核心观点是第二层，批判性判断是第三层；装饰不能压过文字，主体不能穿过文字。
-- 默认风格池可从 Georgia O'Keeffe、Mark Rothko、Paul Klee、Wassily Kandinsky、Henri Matisse、Leonora Carrington、Piet Mondrian 等艺术家/视觉语法中抽取；风格池可扩充，但不得连续机械复用上一日报的视觉结果。
-- 风格池必须以 MoMA、Centre Pompidou 等现当代机构的官方馆藏/分类页为来源锚点，优先收录 20、21 世纪现代艺术、战后艺术、当代艺术、媒体艺术、装置、设计和视觉运动；古典艺术家、古代艺术、无机构出处的网络风格不进入默认 lottery 池。
+- 默认风格池可从 Georgia O'Keeffe、Mark Rothko、Paul Klee、Wassily Kandinsky、Henri Matisse、Leonora Carrington、Piet Mondrian 等艺术家/视觉语法中抽取，也可从 The Met、大英博物馆、卢浮宫、雅典国立考古博物馆、柏林国家博物馆群/佩加蒙博物馆、墨西哥国立人类学博物馆和哥伦比亚国家博物馆的古典与跨文明目录中抽取艺术家、工坊传统或文化视觉系统；风格池可扩充，但不得连续机械复用上一日报的视觉结果。
+- 风格池必须以官方馆藏/分类页为来源锚点：现代/当代部分覆盖 MoMA、Centre Pompidou 和 Art Basel 发现层；古典与跨文明部分覆盖上述全球博物馆目录。古典条目必须写明时期、地域、目录查询词与机制证据，不把无名作品归给个人，不把神圣符号当装饰，也不使用无机构出处的网络风格进入默认 lottery 池。
 - 同步巡检 Art Basel Basel、Miami Beach、Hong Kong、Paris 的官方展商与艺术家名录，作为当代艺术家与视觉趋势的发现层；艺术博览会名录不能单独替代艺术史语境、来源可靠性和视觉可执行性复核。
-- 每个候选风格必须在目录中记录 `artist_or_movement`、`period`、`museum_basis`、`source_urls` 和 `style_note`；每天的 `visual-spec` 与艺术风格日志都要保留这些字段。
+- 每个候选风格必须在目录中记录 `artist_or_movement`、`period`、`culture_region`、`catalog_kind`、`catalog_query`、`museum_basis`、`source_urls` 和 `style_note`；每天的 `visual-spec` 与艺术风格日志都要保留这些字段。
 - 中文字优先保证可读性：标题和批判性判断字号先满足桌面截图，再检查移动端；不得让图中文字互相遮挡、溢出或被装饰形体穿过。
 
 #### 推荐执行方式
@@ -982,6 +987,9 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 - [ ] 每张 PNG 为 16:9，且图中文字由 imagegen 直接生成、清晰可读
 - [ ] 标题、判断和标签无互相遮挡、错位或被主体穿过
 - [ ] 三张图主题主体与当日趋势有明确语义关系
+- [ ] Lottery 风格通过“神似”检查：能指出至少 2 个被保留的艺术机制，并说明它们如何解释当日趋势
+- [ ] Lottery 风格通过“形似”检查：材质、构图、色彩和层次有执行，但没有用表面符号代替机制
+- [ ] 若神似检查失败，已重写 prompt 或重新 lottery；未以“看起来像”作为通过理由
 - [ ] 风格呈现出时尚感、编辑感和至少两层以上的视觉层次，没有廉价模板感
 - [ ] 未生成趋势可视化 HTML；只有用户明确要求时才例外
 - [ ] 图中只保留关键判断；完整事实和来源仍在详细版正文
@@ -1007,10 +1015,11 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 | 馆藏锚点 | MoMA / Centre Pompidou 等机构名与官方来源 URL |
 | 艺术博览会信号 | Art Basel 各地官方展商/艺术家名录、城市场次与来源 URL；标注为发现层，不与馆藏锚点混为一谈 |
 | 风格介绍 | 2-3 句，说明材质、构图、色彩和层次语言 |
+| 艺术机制提取 | 来源支持的空间关系、材料动作、节奏/留白和观看条件；区分 documented fact、机构解释和设计推断 |
 | 今日适配 | 三条趋势分别使用了什么主体/隐喻，为什么与主题相关 |
 | 趋势 1 / 趋势 2 / 趋势 3 | 每条趋势的简要适配说明 + 对应 16:9 截图；趋势说明与截图放在同一记录单元格内 |
 | 视觉资产 | 三张 PNG 路径、源尺寸、文档显示尺寸、详细版文档链接 |
-| QA 结果 | 按 Qwen-Image-Bench 五个一级维度记录：Quality（真实感/细节/分辨率）、Aesthetics（构图/色彩/光影/风格控制）、Alignment（属性/布局/关系/场景）、Real-world Fidelity（安全合规/世界知识/信息可视化/文化元素）、Creative Generation（想象力/逻辑解析/文字渲染/设计应用/视觉叙事）；评分使用 0=Fail、1=Pass、2=Excel、N/A |
+| QA 结果 | 按 Qwen-Image-Bench 五个一级维度记录，并追加“形似/神似”双检：Quality（真实感/细节/分辨率）、Aesthetics（构图/色彩/光影/风格控制）、Alignment（属性/布局/关系/场景）、Real-world Fidelity（安全合规/世界知识/信息可视化/文化元素）、Creative Generation（想象力/逻辑解析/文字渲染/设计应用/视觉叙事）；另记录 `surface_fidelity`、`mechanism_fidelity`、`fidelity_verdict` 和失败重做原因。评分使用 0=Fail、1=Pass、2=Excel、N/A。 |
 
 详细版日报的「质量审核报告」末尾必须同步出现一小段「🎨 今日视觉 Lottery」，只写抽中风格、通俗风格介绍和本日执行标准；不要把完整日志复制进日报。结构化新闻沉淀文档不加入这段视觉说明，艺术风格历史统一进入上述独立飞书文档。
 

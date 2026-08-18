@@ -33,7 +33,7 @@ AI News Digest 是一个面向 **AI 从业者、投资研究者、产品经理�
 - 带信号等级的内容筛选：重磅 / 值得关注 / 常规
 - 可沉淀到表格、看板或知识库的 **12 列 CSV**
 - 飞书 **Newsrun 卡片**、**详细版文档**、**结构化沉淀文档**、CSV 和 HTML 五类产物
-- 详细版默认配套由 imagegen 直接生成“图 + 字”的三张 16:9 趋势 PNG；需要艺术化输出时，可选开启艺术家 Lottery：从 MoMA、Centre Pompidou 等现当代机构馆藏锚定的现代/当代艺术风格池抽取当日视觉语法，同时巡检 Art Basel Basel、Miami Beach、Hong Kong、Paris 官方名录捕捉当代视觉信号；艺术博览会只作为发现层，仍需经过语境、来源和视觉执行复核。开启后每日风格会追加到统一的「AI日报｜艺术风格 Lottery」飞书文档；HTML 仍是独立日报阅读产物，不是趋势图默认中间格式
+- 详细版默认配套由 imagegen 直接生成“图 + 字”的三张 16:9 趋势 PNG；需要艺术化输出时，可选开启艺术家 Lottery：从 MoMA、Centre Pompidou 等现代/当代机构，以及 The Met、大英博物馆、卢浮宫、雅典国立考古博物馆、柏林国家博物馆群/佩加蒙博物馆、墨西哥国立人类学博物馆和哥伦比亚国家博物馆的官方目录抽取艺术家、艺术运动、工坊传统或文化视觉系统。开启后每日风格会追加到统一的「AI日报｜艺术风格 Lottery」飞书文档；HTML 仍是独立日报阅读产物，不是趋势图默认中间格式
 - `初创动向` 每日优先扫描 AI 产品上游供给层与下游产品层的 AI-native startup，关注现金流/经营信号和成长线索；普通垂类公司不纳入，不把融资额当作商业成功
 - 适合团队同步、选题会、投研记录和公众号素材库的结构化输出
 - 面向长程运行的 **Codex Goal × Ralph Loop × Kleisli Gate** 工作流
@@ -142,7 +142,7 @@ AI News Digest 使用 9 层信源系统，把“覆盖面”和“可靠性”�
 | 飞书 Newsrun 卡片 | 每日高信号速览和团队推送 | 降低分发摩擦，让运营动作每天稳定发生 |
 | Markdown / 飞书详细版文档 | 完整日报、趋势判断、QA 说明 | 保留可阅读叙事，方便周报和复盘引用 |
 | ImageGen 趋势图 | 默认后端；三大趋势各一张 16:9 图，图中文字直接生成，只保留批判性判断 | 让趋势先被看懂，再回到详细正文核验 |
-| 艺术家 Lottery 趋势图 | 可选后端；博物馆锚定的艺术家/艺术运动语法 + 三张 16:9 ImageGen 图 + 独立 Lottery 表格日志 | 给日报增加可复盘的视觉语法，风格服务于当日趋势而不是固定模板 |
+| 艺术家 Lottery 趋势图 | 可选后端；博物馆锚定的艺术家/艺术运动/工坊传统/文化视觉系统 + 三张 16:9 ImageGen 图 + 独立 Lottery 表格日志 | 给日报增加可复盘的视觉语法，风格服务于当日趋势而不是固定模板 |
 | Mck PPT 趋势图 | 三页咨询式 16:9 PPT + PNG，行动标题、关键佐证、结构判断、下周观察 | 把每日趋势变成可演示、可插图、可复盘的决策资产 |
 | 结构化沉淀文档 | 按截图式分组表格记录板块、新闻、信号等级和首个原始链接 | 构建长期知识库、选题池和趋势命中率样本 |
 | 12 列 CSV | 表格、Base、Dashboard、检索和二次分析 | 让新闻从文章变成可查询、可聚合的数据资产 |
@@ -157,7 +157,7 @@ VISUAL_BACKEND=artist-lottery \
   python ralph-daily-loop/stage9.py
 ```
 
-Lottery 链路会按日期可复现地从现代/当代目录抽签，优先使用 MoMA、Centre Pompidou 等机构的馆藏锚点，并把 Art Basel 各地官方名录作为发现层。它会把 `style_lottery`、博物馆/艺术博览会来源、三条趋势适配、三张 16:9 PNG、表格布局和 QA 结果写入 `output/daily-trends.json` 与 `output/art-style-lottery-entry.json`；只有开启此后端时，才追加统一的「AI日报｜艺术风格 Lottery」飞书文档。可用 `VISUAL_STYLE_OVERRIDE` 指定目录内风格，`RECENT_VISUAL_STYLES` 排除近期风格。
+Lottery 链路会按日期可复现地从全球博物馆目录抽签，现代/当代与古典/跨文明并置；Art Basel 各地官方名录仍只作为现代/当代发现层。它会把 `style_lottery`、博物馆/艺术博览会来源、时期、地域、目录查询词、三条趋势适配、三张 16:9 PNG、表格布局和 QA 结果写入 `output/daily-trends.json` 与 `output/art-style-lottery-entry.json`；只有开启此后端时，才追加统一的「AI日报｜艺术风格 Lottery」飞书文档。可用 `VISUAL_STYLE_OVERRIDE` 指定目录内风格，`RECENT_VISUAL_STYLES` 排除近期风格。
 
 QA 采用 Qwen-Image-Bench 的五个一级维度：Quality、Aesthetics、Alignment、Real-world Fidelity、Creative Generation；日报工作流只做人工参考评审，不声称运行 Q-Judger。[维度与评分参考](https://github.com/QwenLM/Qwen-Image-Bench)
 
