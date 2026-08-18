@@ -24,6 +24,11 @@ VISUAL_BACKEND=artist-lottery \
 
 - The default catalog includes both modern/contemporary practices and classical or cross-civilizational visual systems with an official museum collection anchor.
 - Modern/contemporary sources include MoMA and Centre Pompidou; classical/global sources include [The Met Collection](https://www.metmuseum.org/art/collection), [British Museum Collection Online](https://www.britishmuseum.org/collection), [Louvre Collections](https://collections.louvre.fr/en/), the [National Archaeological Museum of Athens](https://www.namuseum.gr/en/collections/), [Staatliche Museen zu Berlin Collections Online](https://search.smb.museum/) including the Pergamonmuseum, the [Museo Nacional de Antropología Mexico](https://mna.inah.gob.mx/index.php/inicio/), and [Museo Nacional de Colombia Collections](https://museonacional.gov.co/colecciones/Paginas/default.aspx).
+- The global classical pool is explicitly partitioned into regional groups in the renderer:
+  - **Athens**: Cycladic marble minimal form; Attic black-figure and red-figure vase narrative. Anchored to the National Archaeological Museum of Athens.
+  - **Berlin**: Ancient Near Eastern glazed-brick procession and modular relief; Hellenistic frieze and compressed bodily motion. Anchored to Staatliche Museen zu Berlin and the Pergamonmuseum.
+  - **Mexico**: Maya glyphic narrative and calendrical rhythm; Teotihuacan mural geometry and ceremonial procession. Anchored to the Museo Nacional de Antropología Mexico.
+- These regional pools are implemented in both `ralph-daily-loop/stage9.py` and `ralph-daily-loop/stage9_kleisli.py`, so the standard and Kleisli render paths draw from the same catalog contract.
 - Art Basel Basel, Miami Beach, Hong Kong and Paris official exhibitor/artist pages are discovery sources, not standalone proof of historical or institutional grounding.
 - Classical entries may represent named artists, anonymous workshops, material traditions, or cultural visual systems. They must retain period, region, catalog query and collection source; anonymous works must not be falsely attributed to an individual.
 - A daily seed makes the draw reproducible; recent styles can be excluded; an explicit user override wins and is recorded as `override`.
