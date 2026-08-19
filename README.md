@@ -159,6 +159,12 @@ VISUAL_BACKEND=artist-lottery \
 
 Lottery 链路会按日期可复现地从全球博物馆目录抽签，现代/当代与古典/跨文明并置；Art Basel 各地官方名录仍只作为现代/当代发现层。它会把 `style_lottery`、博物馆/艺术博览会来源、时期、地域、目录查询词、三条趋势适配、三张 16:9 PNG、表格布局和 QA 结果写入 `output/daily-trends.json` 与 `output/art-style-lottery-entry.json`；只有开启此后端时，才追加统一的「AI日报｜艺术风格 Lottery」飞书文档。可用 `VISUAL_STYLE_OVERRIDE` 指定目录内风格，`RECENT_VISUAL_STYLES` 排除近期风格。
 
+#### Lottery 2.0：从随机风格到可积累的视觉研究
+
+每次抽签现在生成一份可执行的 `style_contract`，把馆藏 provenance 翻译成六段 prompt 组件：机制事实、趋势命题、主体/空间关系、材料/光、信息层级、排除项。`evaluation_contract` 把 QA 失败定向返回到 `catalog`、`mechanism_extract`、`trend_translation`、`prompt` 或 `craft`，而不是笼统地写“再优化一次”。评估器只看最终截图、趋势输入和契约，不读取生成器私有推理或自评。
+
+审核结果可用 `visualization/artist-lottery/record_case_review.py` 追加到 `data/art-style-cases.json`。下一次 Lottery 会参考已审核的通过、返工和拒绝案例，避免机械重复，并保留 `case_id`、失败类型、修复动作和用户反馈。案例库让艺术风格从每日皮肤变成可以校准的长期审美资产，也让 prompt 质量、视觉质量和趋势适配逐步形成自己的数据集。
+
 QA 采用 Qwen-Image-Bench 的五个一级维度：Quality、Aesthetics、Alignment、Real-world Fidelity、Creative Generation；日报工作流只做人工参考评审，不声称运行 Q-Judger。[维度与评分参考](https://github.com/QwenLM/Qwen-Image-Bench)
 
 ### Mck PPT Design 趋势可视化
@@ -258,7 +264,16 @@ AI_News_Digest/
 ├── content-trend-researcher/
 ├── wechat-article-fetch/
 ├── visualization/
-│   └── artist-lottery/
+│   ├── artist-lottery/
+│   │   ├── README.md
+│   │   └── record_case_review.py
+│   └── mck-ppt-design/
+├── ralph-daily-loop/
+│   ├── style_contracts.py
+│   ├── stage9.py
+│   └── stage9_kleisli.py
+├── data/
+│   └── art-style-cases.example.json
 ├── assets/
 │   └── github-header.svg
 ├── ai-daily-report.skill
@@ -366,6 +381,12 @@ The workflow produces a set of operational artifacts and asks for preferences be
 | Structured archive doc | Board/company/track/signal-level archive | Builds a long-term knowledge base and topic pool |
 | 12-column CSV | Spreadsheet, Base, dashboard, and search workflows | Turns news into queryable operational data |
 | HTML | Browser preview, static archive, internal sharing | Makes historical reports easy to browse and circulate |
+
+### Artist Lottery as a cumulative visual research system
+
+The Lottery backend now emits a `style_contract`, not just an artist name. It turns museum provenance into six executable prompt slots: mechanism fact, trend proposition, subject/spatial relation, material/light, information hierarchy, and exclusions. An `evaluation_contract` routes a failed review back to `catalog`, `mechanism_extract`, `trend_translation`, `prompt`, or `craft`, so “make it better” becomes a concrete repair action. The evaluator receives the delivered image, trend input, and contract, not the generator's private reasoning or self-assessment.
+
+Review results can be appended with `visualization/artist-lottery/record_case_review.py` to `data/art-style-cases.json`. Future draws use reviewed accepted, rework, and rejected cases to reduce mechanical repetition and retain `case_id`, failure type, repair action, and user feedback. This turns visual taste into a calibratable operating asset for long-run editorial and knowledge work rather than a disposable daily skin.
 
 ### Mck PPT Design trend visuals
 

@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "cases": [
+    {
+      "case_id": "lottery-YYYY-MM-DD-abc123456789",
+      "date": "YYYY-MM-DD",
+      "selected_style": "Mark Rothko-inspired color field painting",
+      "catalog_id": "rothko-color-field",
+      "status": "accepted",
+      "reviewed_at": "YYYY-MM-DDT00:00:00+00:00",
+      "reviewer": "human-review",
+      "surface_fidelity": 1,
+      "mechanism_fidelity": 2,
+      "fidelity_verdict": "pass",
+      "findings": ["大色场保留了成本与能力的张力，标题没有被背景吞没"],
+      "return_plan": {
+        "return_to": "craft",
+        "finding": "No blocking finding recorded",
+        "fix": "继续观察三张图是否保持不同构图"
+      },
+      "note": "可作为后续相似主题的正面案例，但不能直接复制构图。",
+      "contract_version": "1.0",
+      "source_case": "output/art-style-lottery-entry.json"
+    }
+  ]
+}

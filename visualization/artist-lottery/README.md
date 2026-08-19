@@ -37,6 +37,44 @@ VISUAL_BACKEND=artist-lottery \
 - Three images must be newly composed for the three trends. Do not only swap labels, colors or text.
 - Avoid identifiable faces. Keep Chinese titles and critical judgements large, legible and unobstructed.
 
+## Contract, evaluator, and case memory
+
+The Lottery is a small visual research loop, not a name picker:
+
+```text
+museum catalog
+  -> mechanism extract
+  -> trend translation
+  -> prompt trace
+  -> image + screenshot QA
+  -> targeted return route
+  -> accepted / rework / rejected case
+  -> next draw memory
+```
+
+Every enabled run writes:
+
+- `style_contract`: visual intent, mechanisms, translation rules, anti-patterns, fit signals, prompt components, evaluator subchecks and catalog references.
+- `trend_translation`: the two or more mechanisms used for each trend, the structural variable they expose, and the composition job.
+- `prompt_trace`: an auditable prompt skeleton. The artist name remains provenance and `artist_name_as_prompt_shortcut` must be `false`.
+- `evaluation_contract`: an isolated review rubric with return stages `catalog`, `mechanism_extract`, `trend_translation`, `prompt`, and `craft`.
+- `case_memory`: `case_id`, prior case count, current review state and the persistent case store.
+
+Record a human review after inspecting the delivered screenshots:
+
+```bash
+python visualization/artist-lottery/record_case_review.py \
+  --entry output/art-style-lottery-entry.json \
+  --status accepted \
+  --surface-fidelity 2 \
+  --mechanism-fidelity 2 \
+  --fidelity-verdict pass
+```
+
+For a failed review, use `--status rework_requested`, `--return-to mechanism_extract` (or another concrete stage), repeat `--finding` for observable issues, and provide `--fix`. The next Lottery reads reviewed cases from `data/art-style-cases.json` or the path supplied by `STYLE_CASES_PATH`; `data/art-style-cases.example.json` is the schema reference.
+
+The mechanism lexicon is organized around space, material, rhythm, viewing condition, information hierarchy, and anti-patterns. This is the guardrail against AI-slop style transfer: visual resemblance is a result, while the working relation and the reason it clarifies today's trend are the input.
+
 ## Outputs
 
 When enabled, Goal 9 writes:

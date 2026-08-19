@@ -25,6 +25,12 @@ description: |
 
 “相关”不等于“乐观”：访问量、融资、估值、榜单和厂商自报 benchmark 都必须拆成事实、口径和推断，不能因为数字大就自动升为高信号。
 
+### 用户已确认的趋势标题偏好
+
+- 三大趋势标题必须尽量出现本期真正驱动判断的公司、产品或项目名，优先采用“具体主体 + 发生的变化 + 可争辩判断”的细颗粒度结构；避免只写“Agent 加速”“模型竞争加剧”“基础设施升级”等可套用的泛标题。
+- 标题和趋势解释要通过“今日特异性测试”：明确今天/本周哪一个产品落地、价格变化、交易、灰度或安全事件让这个判断成立；与上周日报重复的背景不再包装成新趋势。
+- 趋势正文先写非技术读者能感受到的工作、预算、入口、留存或风险变化，再补充技术机制；技术名词必须服务于“谁会因此改变产品、工作方式或决策”。
+
 ---
 
 ## 第一阶段：信息采集（并行三轨 + 搜索补充）
@@ -937,12 +943,16 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 - `visual-spec` 必须记录 `visual_backend`。只有 `artist-lottery` 后端启用时，才要求记录 `style_lottery.pool`、`style_lottery.seed`、`style_lottery.selected_style`、`style_lottery.selection_reason` 和 `recent_styles_excluded`，保证第二天能复盘“抽到了什么、为什么适合今天”。
 - `artist-lottery` 的 `style_lottery` 还必须记录 `catalog_id`、`artist_or_movement`、`period`、`culture_region`、`catalog_kind`、`catalog_query`、`museum_basis`、`source_urls`、`museum_grounded` 和 `style_note`；默认目录版本写入 `style_catalog_version`，并保留 `museum_source_registry`。
 - **机制提取门槛（强制）**：Lottery 不是给图片套一个表面滤镜，也不是搜集某位艺术家的颜色、点阵、切口或笔触。每次抽中后，先从馆藏、艺术家自述、工坊/材料研究和策展资料中提取可证据支持的工作机制，再做当代设计转译。至少写清四件事：艺术家、工坊或文化视觉系统如何组织空间/观看、如何处理材料/动作、如何建立节奏/留白、这些机制如何解释今天的趋势。艺术家姓名或文化标签只作为 provenance 元数据，不能作为 ImageGen 的主要 prompt 捷径。
+- `style_contract` 必须把抽中风格变成可执行契约：`visual_intent`、`mechanisms`、`translation_rules`、`anti_patterns`、`fit_signals`、`prompt_components`、`evaluator_subchecks` 和 `reference_works`。其中 `prompt_components` 固定覆盖机制事实、趋势命题、主体/空间关系、材料/光、信息层级和排除项，艺术家姓名只能保留在 provenance。
+- `evaluation_contract` 必须与产物一起输出，采用隔离评估：评估器只看最终截图、最终趋势输入和契约，不看生成器私有推理或自评。每个失败都要返回具体阶段 `catalog` / `mechanism_extract` / `trend_translation` / `prompt` / `craft`、可观察 finding 和修复动作。
 - **形似/神似双重 QA（强制）**：`形似`只检查材质、色彩、构图和表面语言是否执行；`神似`检查核心空间关系、工作方法、观看条件和信息隐喻是否被保留。若画面表面很像但无法解释趋势，或只是堆叠标志性装饰，判定为 Fail，必须重写机制转译或重新 lottery；不得用“看起来像”覆盖“为什么这样做”。
 - **机制优先的 prompt 顺序**：`艺术机制事实 -> 当日趋势命题 -> 视觉主体/空间关系 -> 材料与光 -> 版式与文字层级 -> 排除项`。例如空间主义不能只写“黑色切口”，而要写“表面作为阈值、开口必须有背层、边缘和阴影、观看关系因开口改变”；切口只是结果，不是风格本身。
 - `visual-spec` 必须记录 `global_style_control`、`global_style_override` 和 `style_control_application`，说明全局控制词如何作用于材质、版式、主体层次和字体可读性。
 - `visual-spec` 必须声明 `fresh_graphic: true`、绑定当日 Markdown 文件名，并为三条趋势选择三个不同视觉主体；禁止复制上一日报的 visual spec、HTML、PNG、短标题或辅助标签。
 - `visual-spec` 还必须记录 `composition`；三条趋势的 `composition` 必须互不相同，且截图中能看出文本位置、主体占比、阅读方向或画面骨架发生了结构性变化。
 - 启用 `artist-lottery` 时，`visual-spec.style_lottery` 必须额外记录 `mechanism_extract`、`trend_translation`、`surface_fidelity`、`mechanism_fidelity`、`fidelity_verdict` 和 `rejection_reason`；其中 `mechanism_extract` 记录经过来源区分的艺术方法，`trend_translation` 记录它为何适合当天，而不是泛化为长期审美。
+- `case_memory` 必须记录当前 `case_id`、历史案例数量、案例库路径和审核状态；审核完成后用 `visualization/artist-lottery/record_case_review.py` 写入 `data/art-style-cases.json`。Lottery 可将最近已审核风格加入排除集，但不能把“随机”误当成“无记忆”。
+- 视觉词典按 `space`、`material`、`rhythm`、`viewing`、`information` 和 `anti_patterns` 组织；新的艺术家或古典传统先补充可执行机制，再进入默认池，避免只增加名字和颜色。
 - 每个趋势调用 `image_gen__imagegen` 独立生成 1 张图，顺序与 Markdown、飞书详细版中的趋势 1/2/3 一致；新图使用 `generatedImage` 返回的本地 PNG 资产保存到当日报告目录。
 - 图中只使用已进入最终 Markdown 的标题、`🧭 批判性判断` 和极少量已核验数字/关键词；完整数据、新闻列表、来源链接留在飞书详细版正文。
 

@@ -15,6 +15,14 @@ from datetime import date
 from html import escape
 from pathlib import Path
 
+from style_contracts import (
+    build_prompt_trace,
+    build_trend_translation,
+    default_case_path,
+    enrich_style_selection,
+    recent_style_labels,
+)
+
 DATA_DIR = Path("/data/userdata/daily-report/data")
 OUT_DIR = Path("/data/userdata/daily-report/output")
 DATE = os.environ.get("REPORT_DATE") or date.today().isoformat()
@@ -594,6 +602,7 @@ def choose_visual_style():
         for value in os.environ.get("RECENT_VISUAL_STYLES", "").split(",")
         if value.strip()
     }
+    recent.update(recent_style_labels(default_case_path(DATA_DIR)))
     available = [style for style in VISUAL_STYLE_POOL if style not in recent]
     if not available:
         available = VISUAL_STYLE_POOL
@@ -762,7 +771,9 @@ if vtrace:
     md.append(f"| G0.8 版本一致性 (Kleisli) | {vtrace['status']} | {len(vtrace.get('conflicts',[]))} 项版本冲突 |")
 md.append("")
 
-visual_style = choose_visual_style()
+visual_style = enrich_style_selection(
+    choose_visual_style(), VISUAL_STYLE_LOOKUP, DATE, DATA_DIR
+)
 if ARTIST_LOTTERY_ENABLED:
     md.append("### 🎨 今日视觉 Lottery\n")
     md.append(f"- **抽中风格**：{visual_style['selected_style']}")
@@ -806,6 +817,14 @@ for i, t in enumerate(trends, 1):
         md.append(f"- {e}")
     md.append("")
 
+trend_translation = build_trend_translation(
+    visual_style.get("style_contract"), trends
+)
+visual_style["trend_translation"] = trend_translation
+visual_style["prompt_trace"] = build_prompt_trace(
+    visual_style.get("style_contract"), trends, trend_translation
+)
+
 # Keep the renderer input next to the final Markdown so Mck PPT visuals use
 # the same trend titles and evidence instead of re-parsing or re-inventing them.
 trend_payload = {
@@ -818,6 +837,12 @@ trend_payload = {
         "fresh_graphic": True,
         "visual_backend": VISUAL_BACKEND,
         "style_lottery": visual_style,
+        "style_contract_version": visual_style.get("contract_version"),
+        "style_contract": visual_style.get("style_contract"),
+        "evaluation_contract": visual_style.get("evaluation_contract"),
+        "case_memory": visual_style.get("case_memory"),
+        "trend_translation": visual_style.get("trend_translation", []),
+        "prompt_trace": visual_style.get("prompt_trace", []),
         "style_catalog_version": "museum-and-art-fair-global-classical-v3",
         "museum_source_registry": MUSEUM_SOURCE_REGISTRY,
         "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,
@@ -857,6 +882,12 @@ style_entry = {
     "enabled": ARTIST_LOTTERY_ENABLED,
     "visual_backend": VISUAL_BACKEND,
     "style_lottery": visual_style,
+    "style_contract_version": visual_style.get("contract_version"),
+    "style_contract": visual_style.get("style_contract"),
+    "evaluation_contract": visual_style.get("evaluation_contract"),
+    "case_memory": visual_style.get("case_memory"),
+    "trend_translation": visual_style.get("trend_translation", []),
+    "prompt_trace": visual_style.get("prompt_trace", []),
     "style_catalog_version": "museum-and-art-fair-global-classical-v3",
     "museum_source_registry": MUSEUM_SOURCE_REGISTRY,
     "art_fair_source_registry": ART_FAIR_SOURCE_REGISTRY,

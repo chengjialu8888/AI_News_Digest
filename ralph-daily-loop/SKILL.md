@@ -818,6 +818,9 @@ Goal 9 同步写出 `output/daily-trends.json`，只保存最终三条趋势及�
 - `daily-trends.json` 必须写入 `visual_spec.style_lottery`：风格池、seed、选中风格、选择理由和近期排除风格；明确用户指定风格时记录 override。
 - `style_lottery` 还必须写入目录 ID、艺术家/艺术运动/工坊传统/文化视觉系统、时期、地域、目录类型、目录查询词、馆藏机构、官方来源 URL 和 `museum_grounded`；同时写入风格目录版本与机构来源注册表。
 - `style_lottery` 必须先写 `mechanism_extract`：来源支持的空间关系、材料动作、节奏/留白和观看条件，并标注 documented fact、机构解释或设计推断。随后写 `trend_translation`，解释这些机制如何服务当天三条趋势；艺术家姓名只能作为 provenance，不得作为 ImageGen 的主要 prompt 捷径。
+- 每次 Lottery 还必须生成 `style_contract` 与 `evaluation_contract`：前者固定 `visual_intent`、`mechanisms`、`translation_rules`、`anti_patterns`、`fit_signals`、`prompt_components`、`evaluator_subchecks`、`reference_works`；后者固定评估顺序 `catalog -> mechanism_extract -> trend_translation -> prompt -> craft`，每个失败都要给出具体回流阶段、finding 和 fix。评估器只读最终截图、趋势输入和契约，不读生成器私有推理。
+- `case_memory` 必须携带 `case_id`、已审核案例数量、案例库路径和当前状态。人工审核通过 `visualization/artist-lottery/record_case_review.py` 写入 `data/art-style-cases.json`，下一次抽签参考 accepted / rework_requested / rejected 案例，保留失败类型与修复动作，形成可校准的视觉经验。
+- 风格机制词典至少覆盖 `space`、`material`、`rhythm`、`viewing`、`information` 和 `anti_patterns` 六类；新增艺术家、工坊传统或古典文化系统时，先补机制契约，再扩充目录。
 - Lottery 的风格 QA 必须拆成两层：`surface_fidelity` 检查材质、色彩、构图和表面语言；`mechanism_fidelity` 检查工作方法、核心空间关系、观看条件和信息隐喻。表面像但机制说不通，或只是堆叠标志性符号，必须判 Fail 并重写机制转译或重新 lottery。
 - 图片只保留“大字号标题 + 人话核心观点 + 一句批判性判断”，不堆长摘要、机构名单或参数；默认不出现可识别身份的人脸。
 - 风格质量门槛是时尚感、编辑感和清晰层次：至少形成前景/主体/背景或等价的层叠关系；装饰不能压过标题和判断，避免廉价渐变、卡通化科技纹理和模板化信息图。
@@ -854,6 +857,7 @@ python visualization/mck-ppt-design/render_daily_trends.py \
 - `output/daily-trends.json`
 - `output/art-style-lottery-entry.json`
 - `data/art-style-lottery-doc.json`（统一飞书艺术风格日志文档配置）
+- `data/art-style-cases.json`（人工审核后的长期视觉案例；没有审核记录时不强制创建）
 
 ## 完成条件
 - [ ] 首次使用时已确认并保存 `data/output-preferences.json`
