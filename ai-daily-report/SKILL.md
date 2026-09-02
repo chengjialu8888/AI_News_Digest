@@ -933,6 +933,10 @@ Podcast 入选正文时，必须在「观点与深度」或「海外建设者动
 
 默认规则：每条趋势单独生成一张图；图中文字必须直接写入图片，使用最终 Markdown 中的趋势标题、批判性判断和极少量核验数字；完整事实与来源仍留在详细版正文。若文字太小、遮挡、错字或主题关联弱，重新优化 imagegen prompt 生成，不回退到 HTML。
 
+默认 ImageGen 与 Artist Lottery 共享仓库级 [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md) 的 `discover -> define -> enrich -> deliver` 方法。先做至少三个结构不同的视觉方向，记录选择理由和未采用 prompt；再定义 intent、world、subject、material、information hierarchy、invariants 和 output intent。ImageGen 负责建立与趋势相关的主体、空间、材料、光和状态，不只是补背景。交付前必须启动新上下文的独立 critic，只给它最终截图、趋势输入、目标审美/契约和必要参考基线，不给代码、私有推理或生成器自评；做 1-2 轮收敛，独立评分目标为 9/10。最后执行 deletion audit，删除无价值的渐变、发光、容器、随机标签、假数据和重复说明，并逐图检查文字、重叠、16:9 和主题关系。
+
+`visual-spec` / `daily-trends.json` / `art-style-lottery-entry.json` 必须持久化 `design_process`、`design_evaluation_contract`、`direction_candidates`、`selected_direction`、`discarded_prompts`、`critic_reviews`、`deletion_audit` 和 `qa` 字段。design seed 只存 fingerprint，不写进图片或用户可见文案；参考图只作 moodboard 和质量基线，不复制具体作品、版式、人物、logo 或文化符号。
+
 **全局视觉控制词（可被用户指定覆盖，当前默认）**：`粗颗粒胶片质感，高细节，Swiss editorial layout, retro computer UI, cybernetic collage, tech noir, brutalist graphic design`。这组控制词作用于三张趋势图的共同材质、版式纪律、信息密度和光影关系；每日 Lottery 只决定可叠加的艺术语法，不得冲掉全局控制词。若用户指定新的全局视觉控制词，必须在 `visual-spec` 中记录为 `global_style_control`，并在三张图 prompt 中原样保留。
 
 #### 触发与输入
@@ -1066,6 +1070,7 @@ python visualization/mck-ppt-design/render_daily_trends.py \
 - 同一板块的条目放在同一个“结构化条目”单元格里，用信号灯 + 链接标题 + 一句事实短摘要分行列出；不要一条新闻拆成一行，也不要按日期生成散落的小标题。
 - 顶部只写当天简要看点、详细版链接和信号等级图例，不写三大趋势的批判性判断。
 - 结构化条目必须保留每条新闻的第一个推荐/原始来源链接、信号等级和事实性短摘要；只概括新闻发生了什么，不写风险推演、壁垒判断或“待验证”结论。不要使用旧的 `养虾实践` 字样。
+- 【固定格式偏好，长期生效】以后所有结构化沉淀必须严格复刻参考截图：一份文档只使用一张固定三列表格；类别列按 `偏fact类`、`偏观点类`、`行动沉淀` 分组并用 rowspan 合并；每个板块的新闻集中在同一个“结构化条目”单元格内，连续使用无序 bullet，每条以 `•` 开头，紧接信号灯、可点击的链接标题和一句事实摘要，新闻之间不留空行；不得改成段落列表、日期小标题、逐条拆行或加入批判性判断。
 - 保存本地结构化沉淀草稿：`output/structured-archive.md`
 - 保存源文件和元数据：`feishu-newsrun-YYYY-MM-DD.xml`、`feishu-newsrun-metadata.json`
 

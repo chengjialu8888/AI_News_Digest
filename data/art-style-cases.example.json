@@ -12,6 +12,10 @@
       "surface_fidelity": 1,
       "mechanism_fidelity": 2,
       "fidelity_verdict": "pass",
+      "design_process_version": "1.0",
+      "direction_count": 3,
+      "independent_critic_score": 9,
+      "deletion_audit": "removed redundant glow and duplicate labels",
       "findings": ["大色场保留了成本与能力的张力，标题没有被背景吞没"],
       "return_plan": {
         "return_to": "craft",

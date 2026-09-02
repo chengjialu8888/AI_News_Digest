@@ -15,6 +15,8 @@ from pathlib import Path
 STYLE_CONTRACT_VERSION = "1.0"
 CASE_MEMORY_VERSION = "1.0"
 RETURN_STAGES = ("catalog", "mechanism_extract", "trend_translation", "prompt", "craft")
+DESIGN_PROCESS_VERSION = "1.0"
+DESIGN_STAGES = ("discover", "define", "enrich", "deliver")
 
 
 FAMILY_BY_STYLE_ID = {
@@ -431,6 +433,170 @@ def build_evaluation_contract(style_contract):
     }
 
 
+def build_design_process_contract(report_date, visual_backend, selection):
+    """Create the shared Discover -> Define -> Enrich -> Deliver contract.
+
+    The seed is intentionally reduced to a fingerprint. It is an exploration
+    input, never a hidden instruction or text that should appear in an image.
+    """
+    supplied_seed = os.environ.get("DESIGN_SEED", "").strip()
+    seed_source = "DESIGN_SEED" if supplied_seed else "deterministic_report_context"
+    seed_material = supplied_seed or "|".join([
+        str(report_date or ""),
+        str(visual_backend or "imagegen"),
+        str(selection.get("catalog_id") or selection.get("selected_style") or "default"),
+        "design-direction",
+    ])
+    seed_fingerprint = hashlib.sha256(seed_material.encode("utf-8")).hexdigest()[:16]
+    return {
+        "contract_version": DESIGN_PROCESS_VERSION,
+        "framework": "discover_define_enrich_deliver",
+        "visual_backend": visual_backend or "imagegen",
+        "seed": {
+            "fingerprint": seed_fingerprint,
+            "source": seed_source,
+            "not_rendered": True,
+            "purpose": "向方向搜索注入变化，不替代趋势命题、艺术机制或事实证据。",
+        },
+        "discover": {
+            "minimum_direction_candidates": 3,
+            "required_actions": [
+                "先发散至少三个有明确差异的方向，再进入单一方向的深挖。",
+                "方向必须带有具体野心、构图假设和材料/空间动作，不能只是换色或换风格名。",
+                "可视化候选方向并记录主观反应：什么有吸引力、什么空洞、什么与趋势无关。",
+                "保留未采用的 prompt 和方向，供下一次模型、Lottery 或案例复盘使用。",
+            ],
+            "diversity_criteria": [
+                "composition_or_spatial_relation",
+                "material_or_light_behavior",
+                "emotional_or_editorial_response",
+            ],
+            "artifact_fields": ["direction_candidates", "selection_rationale", "discarded_prompt_archive"],
+        },
+        "define": {
+            "identity_fields": [
+                "visual_intent_and_emotional_response",
+                "world_or_working_idea",
+                "subject_and_composition",
+                "material_and_light",
+                "type_and_information_hierarchy",
+                "invariants_and_exclusions",
+                "output_intent",
+            ],
+            "critic_protocol": {
+                "fresh_context": True,
+                "input": "最终截图 + 趋势输入 + 目标审美/契约；不提供实现代码、生成器私有推理或此前自评。",
+                "baseline": "把参考图当 moodboard 和质量基线，不复制其具体版式、对象或装饰。",
+                "review_style": "以顶级设计工作室标准给出大胆、具体、可执行的高层判断和细节修复。",
+                "penalize": ["AI 常见套路", "无价值渐变/发光", "泛化科技符号", "只像风格表面而不解释趋势"],
+                "score_range": [0, 10],
+                "iteration_budget": "1-2 轮，然后检查是否收敛；没有独立评审不得宣称完成。",
+            },
+            "minimum_independent_score": 9,
+            "model_roles": {
+                "implementer": "负责探索、生成和修复；可以使用更轻量但足够可靠的模型。",
+                "critic": "负责独立判断；优先使用更强模型，且不共享生成器私有上下文。",
+            },
+        },
+        "enrich": {
+            "image_generation_is_first_class": True,
+            "required_actions": [
+                "把 ImageGen 当成建立世界、材料和状态的工具，而不是给代码截图补一张好看的背景。",
+                "用图像候选帮助确认方向，但不让图像替代趋势意义、证据和信息层级。",
+                "优先生成具体主体、空间关系、材质和光；避免只靠渐变、圆角卡片、基础几何或随机科技纹理。",
+                "每张图独立生成，保持内容/标题/判断不变量，同时重做主体与构图。",
+            ],
+            "prompt_order": ["scene_or_backdrop", "subject", "key_details", "constraints", "output_intent"],
+        },
+        "deliver": {
+            "deletion_audit_required": True,
+            "delete_when_no_value": [
+                "无助于趋势判断的装饰元素",
+                "不必要的渐变、发光和容器",
+                "随机标签、假数据、无来源文字和 AI 味装饰",
+                "重复表达同一判断的标题或说明",
+            ],
+            "qa_required": [
+                "逐图/逐帧检查标题、判断、主体关系、文字可读性、重叠和 16:9 比例。",
+                "独立 critic 只看交付截图，检查是否仍有未解决的大问题。",
+                "保存失败产物、finding、return_to 和 fix，不能静默覆盖。",
+            ],
+        },
+        "artifact_schema": [
+            "direction_candidates",
+            "selection_rationale",
+            "selected_direction",
+            "discarded_prompt_archive",
+            "critic_reviews",
+            "deletion_audit",
+            "qa",
+        ],
+        "artifacts": {
+            "direction_candidates": [],
+            "selection_rationale": "",
+            "selected_direction": None,
+            "discarded_prompt_archive": [],
+            "critic_reviews": [],
+            "deletion_audit": {"status": "pending", "deleted_elements": [], "reasoning": []},
+            "qa": {"status": "pending", "checks": []},
+        },
+        "prompt_policy": {
+            "seed_not_rendered": True,
+            "artist_name_is_provenance_only": True,
+            "references_are_moodboards_not_copy_targets": True,
+            "no_unrequested_characters_or_props": True,
+        },
+    }
+
+
+def build_design_evaluation_contract(design_process):
+    return {
+        "contract_version": DESIGN_PROCESS_VERSION,
+        "evaluator_isolation": "独立评估器只接收交付截图、趋势输入、设计契约和参考基线，不接收生成器私有推理或自评。",
+        "check_order": list(DESIGN_STAGES),
+        "checks": [
+            {
+                "id": "direction_diversity",
+                "stage": "discover",
+                "question": "是否先探索了至少三个真正不同的方向？",
+                "pass_condition": "方向在构图/空间、材料/光或情绪/编辑回应上有结构差异，不是调色板变体。",
+                "return_to": "discover",
+            },
+            {
+                "id": "design_identity",
+                "stage": "define",
+                "question": "是否定义了可执行的视觉身份和信息不变量？",
+                "pass_condition": "可说明世界观、主体关系、材料/光、信息层级、排除项和输出意图。",
+                "return_to": "define",
+            },
+            {
+                "id": "independent_critic",
+                "stage": "define",
+                "question": "独立 critic 是否以截图为输入给出具体判断，且评分达到门槛？",
+                "pass_condition": "0-10 分独立评审达到 9 分，并已按 finding 完成不超过 1-2 轮的收敛。",
+                "return_to": "define",
+            },
+            {
+                "id": "image_enrichment",
+                "stage": "enrich",
+                "question": "图像生成是否建立了与趋势相关的世界、材料和状态？",
+                "pass_condition": "主体和构图解释趋势，不依赖廉价 AI 视觉套路。",
+                "return_to": "enrich",
+            },
+            {
+                "id": "deletion_and_craft",
+                "stage": "deliver",
+                "question": "是否完成删减审计和逐图 QA？",
+                "pass_condition": "删除无价值元素，截图无折叠/重叠/溢出，标题与判断清楚可读。",
+                "return_to": "deliver",
+            },
+        ],
+        "routing_policy": "失败必须返回具体阶段、可观察 finding 和下一步 fix；不能只写 optimize / make it better。",
+        "status": "pending",
+        "source_contract_version": (design_process or {}).get("contract_version", DESIGN_PROCESS_VERSION),
+    }
+
+
 def build_case_id(report_date, catalog_id, seed):
     raw = f"{report_date}|{catalog_id or 'override'}|{seed or 'override'}"
     return f"lottery-{report_date}-{hashlib.sha256(raw.encode('utf-8')).hexdigest()[:12]}"
@@ -463,6 +629,9 @@ def build_case_memory(selection, report_date, data_dir):
 
 def enrich_style_selection(selection, style_lookup, report_date, data_dir):
     """Attach the contract and memory metadata without changing lottery choice."""
+    visual_backend = os.environ.get("VISUAL_BACKEND", "imagegen").strip().lower() or "imagegen"
+    selection["design_process"] = build_design_process_contract(report_date, visual_backend, selection)
+    selection["design_evaluation_contract"] = build_design_evaluation_contract(selection["design_process"])
     if not selection.get("enabled"):
         selection.update({
             "contract_version": STYLE_CONTRACT_VERSION,
@@ -495,10 +664,16 @@ def _compact(text, limit=180):
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "..."
 
 
-def build_trend_translation(style_contract, trends):
-    if not style_contract:
+def build_trend_translation(style_contract, trends, design_process=None):
+    if not style_contract and not design_process:
         return []
-    mechanisms = style_contract.get("mechanisms", [])
+    mechanisms = (style_contract or {}).get("mechanisms", [])
+    if not mechanisms:
+        mechanisms = [
+            {"id": "trend_specific_subject", "rule": "从趋势中选择一个可观察主体，让它承担核心结构变量。"},
+            {"id": "distinct_composition", "rule": "为每条趋势设计不同的空间骨架和阅读方向，不做同一模板换字。"},
+            {"id": "material_state", "rule": "用具体材料、光线和状态表现变化，避免泛化科技装饰。"},
+        ]
     translations = []
     for index, trend in enumerate(trends, 1):
         selected = [mechanisms[(index - 1) % len(mechanisms)], mechanisms[index % len(mechanisms)]] if mechanisms else []
@@ -515,22 +690,35 @@ def build_trend_translation(style_contract, trends):
     return translations
 
 
-def build_prompt_trace(style_contract, trends, trend_translation):
-    if not style_contract:
+def build_prompt_trace(style_contract, trends, trend_translation, design_process=None):
+    if not style_contract and not design_process:
         return []
+    anti_patterns = (style_contract or {}).get("anti_patterns") or [
+        "不要使用无意义渐变、发光、随机标签或泛化科技纹理。",
+        "不要让种子、参考图或艺术家姓名直接出现在画面中。",
+    ]
+    design_requirements = {
+        "stages": list(DESIGN_STAGES),
+        "minimum_direction_candidates": ((design_process or {}).get("discover") or {}).get("minimum_direction_candidates", 3),
+        "independent_critic": "fresh_context_screenshot_only",
+        "minimum_independent_score": ((design_process or {}).get("define") or {}).get("minimum_independent_score", 9),
+        "deletion_audit_required": True,
+        "seed_not_rendered": True,
+    }
     traces = []
     for translation, trend in zip(trend_translation, trends):
         traces.append({
             "trend_index": translation["trend_index"],
             "trend_title": trend.get("title"),
             "artist_name_as_prompt_shortcut": False,
+            "design_requirements": design_requirements,
             "components": {
                 "mechanism_fact": translation["mechanism_rules"],
                 "trend_proposition": _compact(trend.get("desc"), 280),
                 "subject_and_spatial_relation": translation["visual_thesis"],
-                "material_and_light": "沿用当日契约的材料动作与观看条件；不追加无法解释的科技质感。",
+                "material_and_light": "用具体材料、光线和状态建立趋势世界；不追加无法解释的科技质感。",
                 "type_and_information_hierarchy": "大字号中文标题、单一主判断、证据回查入口，文字不压过主体。",
-                "exclusions_and_cultural_safety": style_contract["anti_patterns"],
+                "exclusions_and_cultural_safety": anti_patterns,
             },
         })
     return traces

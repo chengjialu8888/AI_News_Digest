@@ -25,6 +25,9 @@ def parse_args():
     parser.add_argument("--surface-fidelity", default="N/A")
     parser.add_argument("--mechanism-fidelity", default="N/A")
     parser.add_argument("--fidelity-verdict", default="pending")
+    parser.add_argument("--direction-count", type=int, default=0, help="number of structurally distinct directions explored")
+    parser.add_argument("--critic-score", type=float, default=None, help="independent fresh-context critic score, 0-10")
+    parser.add_argument("--deletion-audit", default="pending", help="what was removed before delivery, or why nothing was removed")
     parser.add_argument("--reviewer", default="human-review")
     parser.add_argument("--note", default="")
     return parser.parse_args()
@@ -36,6 +39,10 @@ def read_json(path):
 
 def main():
     args = parse_args()
+    if args.direction_count < 0:
+        raise SystemExit("--direction-count must be >= 0")
+    if args.critic_score is not None and not 0 <= args.critic_score <= 10:
+        raise SystemExit("--critic-score must be between 0 and 10")
     entry_path = Path(args.entry)
     entry = read_json(entry_path)
     lottery = entry.get("style_lottery") or {}
@@ -69,6 +76,10 @@ def main():
         "surface_fidelity": args.surface_fidelity,
         "mechanism_fidelity": args.mechanism_fidelity,
         "fidelity_verdict": args.fidelity_verdict,
+        "design_process_version": ((lottery.get("design_process") or {}).get("contract_version")),
+        "direction_count": args.direction_count,
+        "independent_critic_score": args.critic_score,
+        "deletion_audit": args.deletion_audit,
         "findings": finding_text,
         "return_plan": return_route(args.return_to, finding_text[0], args.fix),
         "note": args.note,

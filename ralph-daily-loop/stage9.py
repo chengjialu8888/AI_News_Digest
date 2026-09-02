@@ -790,11 +790,11 @@ for i, t in enumerate(trends, 1):
     md.append("")
 
 trend_translation = build_trend_translation(
-    visual_style.get("style_contract"), trends
+    visual_style.get("style_contract"), trends, visual_style.get("design_process")
 )
 visual_style["trend_translation"] = trend_translation
 visual_style["prompt_trace"] = build_prompt_trace(
-    visual_style.get("style_contract"), trends, trend_translation
+    visual_style.get("style_contract"), trends, trend_translation, visual_style.get("design_process")
 )
 
 # Keep the renderer input next to the final Markdown so Mck PPT visuals use
@@ -812,6 +812,9 @@ trend_payload = {
         "style_contract_version": visual_style.get("contract_version"),
         "style_contract": visual_style.get("style_contract"),
         "evaluation_contract": visual_style.get("evaluation_contract"),
+        "design_process": visual_style.get("design_process"),
+        "design_evaluation_contract": visual_style.get("design_evaluation_contract"),
+        "design_artifacts": (visual_style.get("design_process") or {}).get("artifacts", {}),
         "case_memory": visual_style.get("case_memory"),
         "trend_translation": visual_style.get("trend_translation", []),
         "prompt_trace": visual_style.get("prompt_trace", []),
@@ -857,6 +860,9 @@ style_entry = {
     "style_contract_version": visual_style.get("contract_version"),
     "style_contract": visual_style.get("style_contract"),
     "evaluation_contract": visual_style.get("evaluation_contract"),
+    "design_process": visual_style.get("design_process"),
+    "design_evaluation_contract": visual_style.get("design_evaluation_contract"),
+    "design_artifacts": (visual_style.get("design_process") or {}).get("artifacts", {}),
     "case_memory": visual_style.get("case_memory"),
     "trend_translation": visual_style.get("trend_translation", []),
     "prompt_trace": visual_style.get("prompt_trace", []),
@@ -871,8 +877,11 @@ style_entry = {
     ],
     "lottery_table_layout": {
         "one_table_per_day": True,
+        "contract_table_only": True,
         "columns": ["字段", "记录"],
+        "required_sections": ["风格", "关键词", "风格解说", "设计过程", "复用方法", "趋势适配", "截图案例", "独立 critic", "删减审计", "QA"],
         "trend_rows_include_embedded_screenshots": True,
+        "no_additional_daily_style_table": True,
         "no_standalone_daily_appendix": True,
     },
     "qa_framework": {

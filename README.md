@@ -167,6 +167,12 @@ Lottery 链路会按日期可复现地从全球博物馆目录抽签，现代/�
 
 QA 采用 Qwen-Image-Bench 的五个一级维度：Quality、Aesthetics、Alignment、Real-world Fidelity、Creative Generation；日报工作流只做人工参考评审，不声称运行 Q-Judger。[维度与评分参考](https://github.com/QwenLM/Qwen-Image-Bench)
 
+#### Design prompt method：把审美变成可积累的工作方法
+
+视觉输出现在统一遵守 [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md) 的四阶段方法：`discover` 先探索至少三个有结构差异的方向，`define` 定义视觉身份与信息不变量，`enrich` 用 ImageGen 建立主体/材料/状态，`deliver` 让新上下文的独立 critic 审核最终截图并完成删减审计。它同时作用于默认 ImageGen 和 Artist Lottery，因此 Lottery 不再是随机挑一个名字，ImageGen 也不再是直接把趋势套进一个漂亮模板。
+
+每次运行会保存 seed fingerprint、方向候选、未采用 prompt、选择理由、critic 评分、删除记录和 QA 回流动作；艺术家姓名仍只作 provenance，参考图只作 moodboard。长期价值是把“我喜欢/我不喜欢”变成可复盘的审美数据：下一次运行可以避开机械重复，编辑可以解释每个视觉决定如何服务趋势，运营可以稳定地产出适合不同渠道的资产，而不是每次从上下文里重新猜风格。
+
 ### Mck PPT Design 趋势可视化
 
 仓库已接入 [likaku/Mck-ppt-design-skill](https://github.com/likaku/Mck-ppt-design-skill)（当前远端版本：`e190e083`）。它作为用户明确指定时使用的咨询式视觉后端，不替换默认的 imagegen 图像生成：同一份 `daily-trends.json` 可以按场景输出飞书插图或三页 PPT；趋势可视化 HTML 不默认生成。
@@ -401,6 +407,12 @@ python visualization/mck-ppt-design/render_daily_trends.py \
 ```
 
 The renderer follows Mck's machine-readable S3/S4 gates and produces `content.json`, `gate_s3.json`, `gate_result.json`, a three-slide `.pptx`, and `trend-1-mck.png` through `trend-3-mck.png`. The PNGs are fixed at 16:9 for Feishu; WeChat HTML requires an explicit user request. Full source evidence remains in the detailed report while the visual layer provides the decision entry point.
+
+### Design prompt method: a durable taste operating system
+
+All visual backends follow the repository-level [DESIGN_PRINCIPLES.md](DESIGN_PRINCIPLES.md) contract: `discover` at least three structurally different directions, `define` a concrete visual identity and information invariants, `enrich` the world with ImageGen, and `deliver` through a fresh-context critic plus a deletion audit. This applies to default ImageGen as well as Artist Lottery. Lottery is therefore not a random artist-name picker, and ImageGen is not a one-shot decoration pass.
+
+Each run persists a seed fingerprint, direction candidates, discarded prompts, selection rationale, critic scores, deletion decisions, and QA return routes. Artist names remain provenance and references remain moodboards, not copy targets. The long-run value is operational: taste becomes reviewable data, future runs avoid mechanical repetition, editors can explain why a visual clarifies a trend, and the team can keep producing channel-specific assets without reconstructing the design brief from a crowded context window.
 
 ## How It Compares
 

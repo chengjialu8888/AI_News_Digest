@@ -59,6 +59,7 @@ Every enabled run writes:
 - `prompt_trace`: an auditable prompt skeleton. The artist name remains provenance and `artist_name_as_prompt_shortcut` must be `false`.
 - `evaluation_contract`: an isolated review rubric with return stages `catalog`, `mechanism_extract`, `trend_translation`, `prompt`, and `craft`.
 - `case_memory`: `case_id`, prior case count, current review state and the persistent case store.
+- `design_process` / `design_evaluation_contract`: the shared Discover -> Define -> Enrich -> Deliver method, isolated critic protocol and deletion/QA gates used by every visual backend.
 
 Record a human review after inspecting the delivered screenshots:
 
@@ -68,12 +69,30 @@ python visualization/artist-lottery/record_case_review.py \
   --status accepted \
   --surface-fidelity 2 \
   --mechanism-fidelity 2 \
-  --fidelity-verdict pass
+  --fidelity-verdict pass \
+  --direction-count 3 \
+  --critic-score 9 \
+  --deletion-audit "removed redundant glow and duplicate labels"
 ```
 
 For a failed review, use `--status rework_requested`, `--return-to mechanism_extract` (or another concrete stage), repeat `--finding` for observable issues, and provide `--fix`. The next Lottery reads reviewed cases from `data/art-style-cases.json` or the path supplied by `STYLE_CASES_PATH`; `data/art-style-cases.example.json` is the schema reference.
 
 The mechanism lexicon is organized around space, material, rhythm, viewing condition, information hierarchy, and anti-patterns. This is the guardrail against AI-slop style transfer: visual resemblance is a result, while the working relation and the reason it clarifies today's trend are the input.
+
+## Design Prompt Method
+
+Lottery follows the repository-wide [DESIGN_PRINCIPLES.md](../../DESIGN_PRINCIPLES.md) contract. The selected artist or visual system is only the provenance and mechanism source; the work must still move through four explicit stages:
+
+```text
+discover: 3+ structurally different directions
+define: a concrete visual identity and information hierarchy
+enrich: independent ImageGen worlds, materials, light and states
+deliver: fresh-context critic + deletion audit + frame-by-frame QA
+```
+
+This applies to the default `imagegen` backend as well as `artist-lottery`. The run records a non-rendered `design_process` seed fingerprint, direction requirements, critic isolation, a minimum independent critic score of 9/10, and a deletion audit. A design is not accepted because the model says it is finished; it is accepted when the final screenshot survives an independent review and the remaining elements all clarify the trend.
+
+For long-run accumulation, keep `direction_candidates`, discarded prompts, critic reviews, deletion decisions and QA findings next to the existing `case_memory`. Rejected directions are useful research data: they help the next Lottery avoid mechanical repetition and help the team understand which visual choices actually improve editorial judgement.
 
 ## Outputs
 
@@ -82,7 +101,7 @@ When enabled, Goal 9 writes:
 - `output/daily-trends.json` with `visual_backend`, `style_lottery`, institutional source registries and trend-specific visual specs.
 - `output/art-style-lottery-entry.json` with one-table-per-day layout metadata and the QA framework.
 - `reports/YYYY-MM-DD-ai-daily/trends-imagegen/trend-1.png` through `trend-3.png` after ImageGen generation.
-- A daily append to the configured Feishu document `AI日报｜艺术风格 Lottery`, containing one complete two-column table. Each trend row keeps its explanation and screenshot together.
+- A daily append to the configured Feishu document `AI日报｜艺术风格 Lottery`, containing exactly one two-column `风格契约` table per day. The table keeps provenance, keywords, style explanation, reuse method, trend translation, screenshots and QA together; do not append a second detailed style table or a standalone image appendix.
 
 ## QA
 

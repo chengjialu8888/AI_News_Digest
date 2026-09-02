@@ -728,7 +728,7 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 
 ## 产物一：飞书 Newsrun 卡片
 
-输出 `output/feishu-card.md` 作为卡片内容草稿，并在实际推送时生成 `newsrun-card-YYYY-MM-DD.json` 与 `newsrun-card-metadata.json`。
+首轮输出 `output/feishu-card.md` 作为卡片内容草稿，并在实际推送时生成 `newsrun-card-YYYY-MM-DD.json` 与 `newsrun-card-metadata.json`；首轮不生成 HTML，HTML 只在最终确认后按需生成。
 
 规则：
 - 卡片只承载可快速消费的主线、指标和高信号条目，不替代详细文档。
@@ -736,6 +736,9 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 - 底部并列提供「长期趋势沉淀」与「艺术风格 Lottery」两个入口；前者链接长期趋势知识库，后者链接统一的艺术风格 Lottery 飞书文档。前者为主按钮，后者为次按钮。
 - 卡片内容必须来自最终结构化沉淀文档，不为卡片额外编造新闻。
 - 不显示「建议推送」「打开结构化沉淀」或旧「养虾实践」文案。
+- 主题兼容性：浅色背景容器内的 markdown 正文、趋势标题和趋势判断必须显式使用不随设备主题漂移的深色 token（如 `wb_claude_chrome_ink`）；橙色/深色强调块使用对应浅色文字 token，禁止依赖 markdown 默认文字色。
+- 推送前必须用同一份 Card JSON 渲染 `light` 与 `dark` 两版预览，检查顶部趋势摘要和三块趋势卡片无低对比度、无浅底浅字；任一模式不可读时不得推送。
+- 修复版 JSON 继承门禁：下一次及后续推送必须以最近一次通过上述双主题 QA 的 Card JSON 为基线，保留显式文字颜色 token；禁止从未修复的旧卡片 JSON 直接复制。发送前重新执行 JSON/schema 校验和 light/dark 预览，并在发送元数据记录实际使用的 JSON 路径及预览版本。
 
 ## 产物二：Markdown / 飞书详细版文档
 
@@ -792,9 +795,10 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 
 结构：
 - 顶部保留日期、条目数、高信号数、QA 状态等 metadata。
-- 主体使用截图式 3 列分组表格：`大类 | 板块 | 结构化条目`。`偏fact类` 下依次放大厂动向、初创动向、生态动向、技术博客&论文；`偏观点类` 下放观点与深度、海外建设者；有动作时增加 `行动沉淀 | 💪今天就做`。
-- 同一板块的新闻合并在同一个“结构化条目”单元格中，每条只保留信号灯、首个原始来源链接和一句事实摘要；不拆成一条新闻一行。
+- 飞书 XML 主体复刻参考格式：顶部使用 `h3` 日期 + 一段引用块，随后使用固定三列表格 `77 / 96 / 627`，表头为 `类别 | 子分类 | 新闻沉淀`；`偏fact类` 对大厂动向、初创动向、生态动向、技术博客&论文做 `rowspan=4` 合并，`偏观点类` 对观点与深度、海外建设者做 `rowspan=2` 合并；有动作时增加 `行动沉淀 | 💪今天就做`。
+- 同一板块的新闻合并在同一个“新闻沉淀”单元格中，每条只保留 `•`、信号灯、首个原始来源链接和一句事实摘要；不使用有序列表，不拆成一条新闻一行。
 - 顶部看点只写当天新闻发生了什么和信号图例，不把详细版的批判性判断、风险推演或趋势解读带入结构化沉淀。
+- 【固定格式偏好，长期生效】以后所有结构化沉淀必须严格复刻参考截图：一份文档只使用一张固定三列表格；类别列按 `偏fact类`、`偏观点类`、`行动沉淀` 分组并用 rowspan 合并；每个板块的新闻集中在同一个“新闻沉淀”单元格内，连续使用无序 bullet，每条以 `•` 开头，紧接信号灯、可点击的链接标题和一句事实摘要，新闻之间不留空行；不得改成段落列表、日期小标题、逐条拆行或加入批判性判断。
 - 用途是长期知识库、选题池、复盘趋势命中率和团队运营素材库。
 
 ## 产物四：CSV 格式（12 列）
@@ -814,25 +818,29 @@ echo "✅ 前置依赖验证通过: data/08-qa-report.json"
 Goal 9 同步写出 `output/daily-trends.json`，只保存最终三条趋势及其佐证、结构判断和下周观察。这样可视化阶段不需要重新读取全量新闻，也不会在新的上下文里重写趋势。
 
 默认使用 `image_gen__imagegen` 为三条趋势分别生成带中文标题与批判性判断的 16:9 PNG，图中文字直接写入图片。视觉后端由 `VISUAL_BACKEND` 控制：默认 `imagegen`，可选 `artist-lottery` 或 `mck-ppt`。全局视觉控制词默认使用：`粗颗粒胶片质感，高细节，Swiss editorial layout, retro computer UI, cybernetic collage, tech noir, brutalist graphic design`；它约束三张图的共同材质、版式纪律、信息密度和光影关系。只有 `artist-lottery` 启用时，才按日期 seed 从艺术家、艺术运动、工坊传统或文化视觉系统池 lottery 一个当日风格，并将 Lottery 作为叠加的艺术语法；不固定复古 poster、1920s fashion、Georgia O'Keeffe、Pollock 或任何单一模板。三张图共享全局控制词和当日视觉语法，但必须按趋势各自重做主体和构图，不能只换字换色。用 `view_image` 检查字号、错字、遮挡、主题关联和比例，不合格就重新优化 prompt。除非用户明确要求，不生成趋势可视化 HTML，也不使用 HTML/SVG/CSS 代替 imagegen。
+
+所有视觉后端都必须遵守仓库级 [DESIGN_PRINCIPLES.md](../DESIGN_PRINCIPLES.md) 的 `discover -> define -> enrich -> deliver` 方法；默认 ImageGen 与 Artist Lottery 不能直接从三条趋势跳到一张“看起来不错”的图。Goal 9 必须先提出至少 3 个在构图/空间、材料/光或情绪/编辑回应上有结构差异的方向，再定义视觉身份和信息不变量；ImageGen 用于建立主体、世界、材质和状态；最后由新上下文的独立 critic 只看最终截图、趋势输入和契约，完成 0-10 评分、1-2 轮收敛和删除审计。没有独立评审、删减记录和逐图 QA，不得标记为完成。
 - `daily-trends.json` / `visual-spec` 必须记录 `global_style_control`、`global_style_override` 和 `style_control_application`；三张独立 imagegen prompt 必须原样携带全局控制词。
 - `daily-trends.json` 必须写入 `visual_spec.style_lottery`：风格池、seed、选中风格、选择理由和近期排除风格；明确用户指定风格时记录 override。
 - `style_lottery` 还必须写入目录 ID、艺术家/艺术运动/工坊传统/文化视觉系统、时期、地域、目录类型、目录查询词、馆藏机构、官方来源 URL 和 `museum_grounded`；同时写入风格目录版本与机构来源注册表。
 - `style_lottery` 必须先写 `mechanism_extract`：来源支持的空间关系、材料动作、节奏/留白和观看条件，并标注 documented fact、机构解释或设计推断。随后写 `trend_translation`，解释这些机制如何服务当天三条趋势；艺术家姓名只能作为 provenance，不得作为 ImageGen 的主要 prompt 捷径。
 - 每次 Lottery 还必须生成 `style_contract` 与 `evaluation_contract`：前者固定 `visual_intent`、`mechanisms`、`translation_rules`、`anti_patterns`、`fit_signals`、`prompt_components`、`evaluator_subchecks`、`reference_works`；后者固定评估顺序 `catalog -> mechanism_extract -> trend_translation -> prompt -> craft`，每个失败都要给出具体回流阶段、finding 和 fix。评估器只读最终截图、趋势输入和契约，不读生成器私有推理。
+- 每次视觉运行还必须生成 `design_process` 与 `design_evaluation_contract`：记录非渲染 seed fingerprint、至少 3 个探索方向、选定理由、独立 critic 隔离协议、9/10 独立评分门槛、ImageGen 丰富规则和 deletion audit。即使 `VISUAL_BACKEND=imagegen` 未启用 Lottery，也必须写入这两个字段。
 - `case_memory` 必须携带 `case_id`、已审核案例数量、案例库路径和当前状态。人工审核通过 `visualization/artist-lottery/record_case_review.py` 写入 `data/art-style-cases.json`，下一次抽签参考 accepted / rework_requested / rejected 案例，保留失败类型与修复动作，形成可校准的视觉经验。
 - 风格机制词典至少覆盖 `space`、`material`、`rhythm`、`viewing`、`information` 和 `anti_patterns` 六类；新增艺术家、工坊传统或古典文化系统时，先补机制契约，再扩充目录。
 - Lottery 的风格 QA 必须拆成两层：`surface_fidelity` 检查材质、色彩、构图和表面语言；`mechanism_fidelity` 检查工作方法、核心空间关系、观看条件和信息隐喻。表面像但机制说不通，或只是堆叠标志性符号，必须判 Fail 并重写机制转译或重新 lottery。
 - 图片只保留“大字号标题 + 人话核心观点 + 一句批判性判断”，不堆长摘要、机构名单或参数；默认不出现可识别身份的人脸。
 - 风格质量门槛是时尚感、编辑感和清晰层次：至少形成前景/主体/背景或等价的层叠关系；装饰不能压过标题和判断，避免廉价渐变、卡通化科技纹理和模板化信息图。
 - **神似优先于形似**：artist-lottery prompt 按“艺术机制事实→当日趋势命题→视觉主体/空间关系→材料与光→版式与文字层级→排除项”组织。禁止把颜色、点阵、切口、笔触等表面符号当作风格本体；必须保留至少两个可解释的关系/动作机制，并在 QA 中逐一指出。
+- **删减是交付的一部分**：加入任何渐变、发光、容器、标签或装饰前都要说明它如何帮助趋势判断；没有独立价值的元素在交付前删除。保留 discarded prompts、critic findings、deleted elements 和 return route，供下一次长程运行复盘。
 - 默认 lottery 库必须来自官方博物馆馆藏/分类页。现代/当代部分继续覆盖 MoMA、Centre Pompidou、媒体艺术、装置、设计和视觉运动；全球古典与跨文明部分可来自 The Met、大英博物馆、卢浮宫、雅典国立考古博物馆、柏林国家博物馆群/佩加蒙博物馆、墨西哥国立人类学博物馆和哥伦比亚国家博物馆。古典艺术家、古代艺术和文化传统可以进入默认池，但必须保留时期、地域、目录查询词和馆藏来源；无机构出处的网络风格不进入默认池。
 - 同步巡检 Art Basel Basel、Miami Beach、Hong Kong、Paris 的官方展商与艺术家名录，作为当代艺术家和视觉趋势的发现层；只由艺术博览会发现的候选必须补做现代/当代语境、来源可靠性和视觉可执行性复核，不能因市场曝光直接入池。
 
 ### 可选艺术风格 Lottery 统一沉淀
 
-只有 `VISUAL_BACKEND=artist-lottery` 时启用。首次启用时新建并保存 `AI日报｜艺术风格 Lottery` 飞书文档的 URL、document id 和 owner 到 `data/art-style-lottery-doc.json`；后续每天追加一整张日记录表，不覆盖历史。每日表格统一使用“字段 | 记录”两列；趋势记录单元格可用左右网格并排放置趋势说明与对应截图，不能把同一天拆成多段表格、表外说明或单独图片区。
+只有 `VISUAL_BACKEND=artist-lottery` 时启用。首次启用时新建并保存 `AI日报｜艺术风格 Lottery` 飞书文档的 URL、document id 和 owner 到 `data/art-style-lottery-doc.json`；后续每天追加一整张日记录表，不覆盖历史。每日只允许一张“风格契约”表，统一使用“字段 | 记录”两列；不得再为同一天生成第二张详细风格表、表外说明或单独图片区。趋势记录单元格可用左右网格并排放置趋势说明与对应截图。
 
-每日表格至少记录日期、抽中风格、艺术家/艺术运动/工坊传统/文化视觉系统、时期、地域、目录类型、目录查询词、馆藏机构、艺术博览会信号、官方来源 URL、seed/override、全局视觉控制、艺术机制提取、风格介绍、三条趋势的视觉主体与适配理由、三张 PNG、详细版文档链接和 QA 结果。全局视觉控制必须写入表内，说明它如何约束材质、版式、层次和字体；QA 还要记录 `surface_fidelity`、`mechanism_fidelity`、`fidelity_verdict` 和失败重做原因。
+唯一的“风格契约”表至少记录日期、抽中风格、艺术家/艺术运动/工坊传统/文化视觉系统、时期、地域、目录类型、目录查询词、馆藏机构、艺术博览会信号、官方来源 URL、seed/override、关键词、风格解说、复用方法、全局视觉控制、艺术机制提取、三条趋势的视觉主体与适配理由、三张 PNG、详细版文档链接和 QA 结果。全局视觉控制必须写入表内，说明它如何约束材质、版式、层次和字体；QA 还要记录 `surface_fidelity`、`mechanism_fidelity`、`fidelity_verdict` 和失败重做原因。
 
 QA 参考 Qwen-Image-Bench 的五个一级维度：Quality（真实感/细节/分辨率）、Aesthetics（构图/色彩/光影/风格控制）、Alignment（属性/布局/关系/场景）、Real-world Fidelity（安全合规/世界知识/信息可视化/文化元素）、Creative Generation（想象力/逻辑解析/文字渲染/设计应用/视觉叙事）。日报工作流只做可读的人工 QA 记录，不声称已运行 Q-Judger；评分沿用 0=Fail、1=Pass、2=Excel、N/A。
 
